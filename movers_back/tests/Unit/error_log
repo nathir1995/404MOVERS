@@ -1,0 +1,12 @@
+[17-Oct-2024 08:40:48 UTC] PHP Fatal error:  Uncaught Error: Class "PHPUnit\Framework\TestCase" not found in /home/hswnktql/api.404movers.ca/mover404/tests/Unit/ExampleTest.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/tests/Unit/ExampleTest.php on line 7
+[17-Oct-2024 09:06:06 UTC] PHP Fatal error:  Uncaught Error: Class "PHPUnit\Framework\TestCase" not found in /home/hswnktql/api.404movers.ca/mover404/tests/Unit/ExampleTest.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/tests/Unit/ExampleTest.php on line 7
+[10-Dec-2024 04:14:20 UTC] PHP Fatal error:  Uncaught Error: Class "PHPUnit\Framework\TestCase" not found in /home/hswnktql/api.404movers.ca/mover404/tests/Unit/ExampleTest.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/tests/Unit/ExampleTest.php on line 7

@@ -1,0 +1,30 @@
+@import "../../assets/scss/common.module.scss";
+@import "../../assets/scss/breakpoints.module.scss";
+@import "../../assets/scss/colors.module.scss";
+
+.container {
+  position: relative;
+
+  background-color: $primary;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  padding-block: 4em;
+
+  box-shadow: $box_shadow;
+
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+  }
+}

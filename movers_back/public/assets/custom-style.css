@@ -1,0 +1,166 @@
+.error_message{
+    color:red;
+}
+
+.page-footer{
+    background-color: #fff;
+    border-top: 2px solid #efefef;
+    color: #869099;
+
+    padding: 20px 20px 20px 255px;
+}
+.dashboard-anchor{
+    color:#fff;
+}
+
+.btn {
+    padding: 6px 12px;
+}
+.profile-logo{
+    background:#bcb7b7;
+    padding: 10px;
+    width: min-content;
+}
+.icon-btn {
+    padding: 6px 9px 5px 9px;
+    display: inline-block;
+    margin-top: 1px;
+}
+
+.card .card-block p {
+    line-height: 12px;
+}
+
+.dashboard_headings{
+    margin-bottom: 3px;
+}
+
+.dash_heading{
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.profile_image img{
+    height: 100px;
+}
+
+.password-icon{
+    position: absolute;
+    right: 30px;
+    display: block;
+    top: 170px;
+}    
+
+
+.new-password-icon{
+    position: absolute;
+    right: 22px;
+    display: block;
+    top: 85px;
+}    
+
+.confirm-password-icon{
+    position: absolute;
+    right: 22px;
+    display: block;
+    top: 135px;
+}
+
+.admin-new-password-icon{
+    position: absolute;
+    right: 22px;
+    top: 5px;
+}
+    
+.note-btn-group .note-icon-caret{
+	display:none;
+}
+
+.pcoded-trigger {
+    font-weight: 600;
+}
+  
+.users-sidebar{
+    border: 1px solid #efefef;
+    box-shadow: 1px 5px 6px 1px;
+}    
+
+.filter-btn{
+    margin: 31px 0px 0px 0px;
+}
+
+.badge {
+    padding: 8px 8px 10px 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+/* .main-body .page-wrapper {
+    padding: 10px;
+} */
+
+.form-control {
+    font-size: 13px;
+   
+}
+.card-footer .align-items-center a{
+    color: #fff;
+
+}
+
+.mandatoryicon{
+    padding: 4px;
+    color: red;
+}
+
+.profile-info {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+.profile-info img {
+    width: 200px;
+}
+
+div.dataTables_wrapper div.dataTables_paginate {
+    margin: 5px 0 0 0 !important;
+}
+
+
+table.dataTable {
+    border-collapse: initial !important;
+}
+
+.list-group .list-group-item{
+    color: #000;
+   
+}
+
+.read-align{
+    float: right;
+    font-size: 12px;
+}
+
+.date-style{
+    color: #939292;
+    font-size: 12px;
+}
+.noti-content{
+    padding: 0px;
+    margin: 0px;
+}
+
+.starfill {
+    color: orange;
+}
+
+.align-items-center i.fa{
+    font-size: 30px;
+}
+
+
+.location-div {
+    font-size: 15px;
+    font-weight: 600;
+}

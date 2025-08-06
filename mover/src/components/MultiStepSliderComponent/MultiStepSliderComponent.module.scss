@@ -1,0 +1,47 @@
+.outside_container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  //   .inner_container {
+  //     display: flex;
+  //     transition: transform 0.3s ease-in-out;
+  //   }
+
+  .child {
+    // margin: 1rem;
+    // margin-inline: 5px;
+
+    // flex-shrink: 0;
+    width: 100%;
+
+    height: 100%;
+    margin: auto;
+
+    // opacity: 0;
+    transition: transform 300ms, opacity 300ms;
+  }
+
+  .child.active {
+    opacity: 1;
+  }
+}
+
+.fade_enter {
+  opacity: 0;
+}
+.fade_exit {
+  opacity: 1;
+}
+.fade_enter_active {
+  transform: translateX(0);
+  opacity: 1;
+}
+.fade_exit_active {
+  transform: translateX(-3rem);
+  opacity: 0;
+}
+.fade_enter_active,
+.fade_exit_active {
+  transition: transform 300ms, opacity 300ms;
+}

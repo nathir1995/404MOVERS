@@ -1,0 +1,40 @@
+@import "../assets/scss/breakpoints.module.scss";
+@import "../assets/scss/common.module.scss";
+@import "../assets/scss/animation.module.scss";
+
+.layout_container {
+  display: grid;
+  gap: 1rem;
+
+  margin-inline: auto;
+  @include breakpoint(lg) {
+    grid-template-columns: 0.65fr 1fr;
+  }
+  @include breakpoint(md) {
+    gap: 2rem;
+    max-width: 600px;
+  }
+}
+
+.logo {
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+
+.social_media_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  margin-top: 1rem;
+
+  a {
+    transition: transform 200ms;
+  }
+  a:hover {
+    transform: scale(1.1);
+  }
+}

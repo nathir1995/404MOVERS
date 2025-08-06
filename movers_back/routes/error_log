@@ -1,0 +1,156 @@
+[26-Jul-2024 00:04:03 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[26-Jul-2024 00:04:03 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[26-Jul-2024 00:04:04 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[26-Jul-2024 00:04:04 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[26-Jul-2024 00:04:05 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[26-Jul-2024 00:04:05 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[26-Jul-2024 00:04:05 UTC] PHP Fatal error:  Uncaught Error: Class "Auth" not found in /home/hswnktql/api.404movers.ca/mover404/routes/web.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/web.php on line 35
+[26-Jul-2024 00:04:05 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[26-Jul-2024 00:04:06 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[26-Jul-2024 00:04:07 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[26-Jul-2024 00:05:03 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[26-Jul-2024 00:05:07 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[26-Jul-2024 00:05:27 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[03-Aug-2024 04:40:55 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[03-Aug-2024 04:42:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[03-Aug-2024 04:44:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[17-Oct-2024 08:40:35 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[17-Oct-2024 08:40:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[17-Oct-2024 08:40:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[17-Oct-2024 08:40:37 UTC] PHP Fatal error:  Uncaught Error: Class "Auth" not found in /home/hswnktql/api.404movers.ca/mover404/routes/web.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/web.php on line 35
+[17-Oct-2024 09:05:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[17-Oct-2024 09:05:49 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[17-Oct-2024 09:05:49 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[17-Oct-2024 09:05:50 UTC] PHP Fatal error:  Uncaught Error: Class "Auth" not found in /home/hswnktql/api.404movers.ca/mover404/routes/web.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/web.php on line 35
+[11-Nov-2024 06:33:39 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[11-Nov-2024 07:48:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[11-Nov-2024 08:19:30 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[11-Nov-2024 08:28:29 UTC] PHP Fatal error:  Uncaught Error: Class "Auth" not found in /home/hswnktql/api.404movers.ca/mover404/routes/web.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/web.php on line 35
+[11-Nov-2024 23:04:03 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[11-Nov-2024 23:04:43 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[12-Nov-2024 07:53:40 UTC] PHP Fatal error:  Uncaught Error: Class "Auth" not found in /home/hswnktql/api.404movers.ca/mover404/routes/web.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/web.php on line 35
+[09-Dec-2024 18:48:19 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[09-Dec-2024 18:48:21 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[09-Dec-2024 18:48:23 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[09-Dec-2024 18:48:28 UTC] PHP Fatal error:  Uncaught Error: Class "Auth" not found in /home/hswnktql/api.404movers.ca/mover404/routes/web.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/web.php on line 35
+[09-Dec-2024 19:29:47 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/hswnktql/api.404movers.ca/mover404/routes/api.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/api.php on line 34
+[09-Dec-2024 19:29:50 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Broadcast" not found in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/channels.php on line 16
+[09-Dec-2024 19:29:53 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Artisan" not found in /home/hswnktql/api.404movers.ca/mover404/routes/console.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/console.php on line 17
+[09-Dec-2024 19:29:59 UTC] PHP Fatal error:  Uncaught Error: Class "Auth" not found in /home/hswnktql/api.404movers.ca/mover404/routes/web.php:35
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/routes/web.php on line 35

@@ -1,0 +1,60 @@
+@import "./breakpoints.module.scss";
+
+$navbar_height_lg: 90.1px;
+$navbar_height_md: 80px;
+$navbar_height_sm: 67px;
+
+$max_width: 1200px;
+$content_width: min(100%, $max_width);
+
+$border_radius: 6px;
+$box_shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+@mixin pt_plus_navbar($pt) {
+  @include breakpoint(lg) {
+    padding-top: calc($pt + $navbar_height_lg);
+  }
+  @include breakpoint(md) {
+    padding-top: calc($pt + $navbar_height_md);
+  }
+  @include breakpoint(sm) {
+    padding-top: calc($pt + $navbar_height_sm);
+  }
+}
+
+.pt_navbar {
+  @include breakpoint(lg) {
+    padding-top: $navbar_height_lg;
+  }
+  @include breakpoint(md) {
+    padding-top: $navbar_height_md;
+  }
+  @include breakpoint(sm) {
+    padding-top: $navbar_height_sm;
+  }
+}
+
+.page {
+  flex-grow: 1;
+  @include breakpoint(lg) {
+    padding-top: $navbar_height_lg;
+  }
+  @include breakpoint(md) {
+    padding-top: $navbar_height_md;
+  }
+  @include breakpoint(sm) {
+    padding-top: $navbar_height_sm;
+  }
+}
+
+.full_height {
+  @include breakpoint(lg) {
+    min-height: calc(100vh - $navbar_height_lg);
+  }
+  @include breakpoint(md) {
+    min-height: calc(100vh - $navbar_height_md);
+  }
+  @include breakpoint(sm) {
+    min-height: calc(100vh - $navbar_height_sm);
+  }
+}

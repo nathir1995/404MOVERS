@@ -1,0 +1,39 @@
+@import "../../assets/scss/common.module.scss";
+@import "../../assets/scss/colors.module.scss";
+@import "../../assets/scss/breakpoints.module.scss";
+
+.container {
+  background-color: $bg;
+  border-radius: $border_radius;
+  box-shadow: $box_shadow;
+  padding: 2rem 1.5rem;
+  @include breakpoint(sm) {
+    padding-inline: 1rem;
+    svg {
+      transform: scale(0.9);
+    }
+  }
+}
+
+.form {
+  & > div {
+    margin-bottom: 1rem;
+  }
+}
+
+.btn_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 2rem;
+
+  button {
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-block: 0.75rem;
+    padding-inline: 3rem;
+  }
+}

@@ -1,0 +1,101 @@
+@import "../assets/scss/breakpoints.module.scss";
+@import "../assets/scss/colors.module.scss";
+@import "../assets/scss/common.module.scss";
+@import "../assets/scss/animation.module.scss";
+
+.hero_section {
+  img {
+    max-width: min(100%, 600px) !important;
+  }
+
+  p {
+    font-weight: bold;
+    margin-block: 2rem;
+  }
+
+  .helpers_hero_img {
+    max-width: min(100%, 500px) !important;
+  }
+}
+
+.become_btns_container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  padding-block: 3rem;
+}
+
+.items_container {
+  margin-block: 2rem;
+
+  display: grid;
+  gap: 1.5rem;
+  @include breakpoint(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include breakpoint(md) {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+    margin-inline: auto;
+  }
+  @include breakpoint(sm) {
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  .item {
+    background-color: $bg;
+    width: 100%;
+    border-radius: $border_radius;
+    box-shadow: $box_shadow;
+    padding: 1.5rem 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    * {
+      text-align: center;
+    }
+
+    h5 {
+      color: $primary;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 0.9em;
+    }
+  }
+}
+
+.items_container.helpers {
+  display: grid;
+  gap: 1.5rem;
+  @include breakpoint(lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include breakpoint(md) {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+    margin-inline: auto;
+  }
+  @include breakpoint(sm) {
+    max-width: 400px;
+    margin-inline: auto;
+  }
+}
+
+.why_to_join {
+  @include breakpoint(lg) {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  @include breakpoint(md) {
+    grid-template-columns: repeat(3, 1fr) !important;
+    max-width: 100% !important;
+    // margin-inline: auto;
+  }
+}

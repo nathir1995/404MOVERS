@@ -1,0 +1,42 @@
+@import "../assets/scss/colors.module.scss";
+@import "../assets/scss/breakpoints.module.scss";
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg;
+  min-height: 100vh;
+}
+
+.title {
+  * {
+    text-align: center;
+  }
+
+  display: flex;
+  align-items: flex-end;
+
+  @include breakpoint(sm) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    color: $primary;
+
+    padding-inline-end: 0.5em;
+    margin-inline-end: 0.5em;
+    border-inline-end: 2px solid $primary;
+    @include breakpoint(sm) {
+      border-inline-end: none;
+      margin-inline: 0;
+    }
+  }
+
+  p {
+    color: $text_primary;
+    margin-bottom: 0.75rem;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,40 @@
+$box_shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+.container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  height: 100%;
+  width: min(90%, 300px);
+  background-color: #fff;
+  box-shadow: $box_shadow;
+  border: 1px solid #eee;
+
+  visibility: none;
+  pointer-events: none;
+  transition: transform 200ms;
+  overflow: auto;
+  transform: translateX(100%);
+
+  padding: 1rem;
+}
+
+.container[data-is-open="true"] {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: visible;
+}
+
+.role_badge {
+  background-color: #ca3f50;
+  display: inline-block;
+  padding-inline: 1rem;
+  padding-block: 0.25em;
+  margin-bottom: 0.5em;
+  font-size: 0.85em;
+  color: #fff;
+  border-radius: 6px;
+  text-transform: uppercase;
+}

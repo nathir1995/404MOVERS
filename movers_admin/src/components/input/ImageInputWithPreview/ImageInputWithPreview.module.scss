@@ -1,0 +1,43 @@
+.label {
+  width: 150px;
+  height: 150px;
+  position: relative;
+
+  border: 1px solid lightgray;
+  border-radius: 5px;
+
+  //   float: right;
+  cursor: pointer;
+
+  input {
+    display: none;
+  }
+
+  padding: 0.25rem;
+
+  .preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .layer {
+    width: 100%;
+    height: 100%;
+    inset: 0;
+
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: opacity 200ms;
+    opacity: 0;
+  }
+
+  &:hover .layer {
+    opacity: 1;
+  }
+}

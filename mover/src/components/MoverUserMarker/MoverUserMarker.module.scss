@@ -1,0 +1,28 @@
+@import "../../assets/scss/colors.module.scss";
+@import "../../assets/scss/breakpoints.module.scss";
+@import "../../assets/scss/common.module.scss";
+
+.btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: $primary;
+  box-shadow: $box_shadow;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  border-radius: 100%;
+
+  transition: opacity 200ms, transform 200ms;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.btn[data-is-clicked="true"] {
+  transform: scale(1.25);
+}

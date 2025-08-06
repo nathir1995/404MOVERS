@@ -1,0 +1,29 @@
+@import "../../../assets/scss/breakpoints.module.scss";
+@import "../../../assets/scss/common.module.scss";
+@import "../../../assets/scss/colors.module.scss";
+
+.padding_container {
+  padding: 1.5rem;
+  @include breakpoint(sm) {
+    padding: 1rem;
+  }
+}
+
+.moves_container {
+  display: grid;
+  gap: 1rem;
+
+  @include combine_breakpoint(md, lg) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.load_more_btn_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+
+  button {
+    font-weight: bold;
+  }
+}

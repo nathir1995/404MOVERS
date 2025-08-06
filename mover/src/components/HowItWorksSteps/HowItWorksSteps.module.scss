@@ -1,0 +1,103 @@
+@import "../../assets/scss/breakpoints.module.scss";
+@import "../../assets/scss/colors.module.scss";
+
+.container {
+  margin-block: 2rem;
+
+  max-width: 1000px;
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  @include breakpoint(sm) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .img_wrapper {
+    display: flex;
+    justify-content: center;
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      max-height: 30rem;
+      object-fit: contain;
+    }
+  }
+}
+
+.steps_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.step_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  margin-block: 0.75rem;
+  @include breakpoint(sm) {
+    margin-block: 1rem;
+    flex-direction: column;
+    padding: 0 2rem;
+    gap: 1rem;
+    * {
+      text-align: center;
+    }
+  }
+
+  .id {
+    width: 3rem;
+    height: 3rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    // outline: none;
+
+    @include breakpoint(sm) {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    cursor: pointer;
+    background-color: $bg;
+    padding: 0.5rem 1rem;
+    border-radius: 100%;
+    box-shadow: 0 0 0 10px #fff, 0 0 5px 9px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    transition: background-color 0.2s ease-in;
+
+    h4 {
+      padding: 1rem;
+      transition: color 0.2s ease-in;
+    }
+  }
+}
+.step_wrapper_active {
+  .id {
+    background-color: $primary;
+
+    h4 {
+      color: #fff;
+    }
+  }
+}
+
+.step_texts {
+  cursor: pointer;
+  h5,
+  p {
+    margin: 0;
+    line-height: 1.1;
+  }
+  h5 {
+    color: $primary;
+    margin-bottom: 0.2rem;
+  }
+}

@@ -1,0 +1,12 @@
+[17-Oct-2024 08:35:58 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Console\Kernel" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Kernel.php on line 8
+[17-Oct-2024 09:01:53 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Console\Kernel" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Kernel.php on line 8
+[10-Dec-2024 06:09:00 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Console\Kernel" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Kernel.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Kernel.php on line 8

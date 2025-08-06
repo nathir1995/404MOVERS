@@ -1,0 +1,87 @@
+@import "../assets/scss/breakpoints.module.scss";
+@import "../assets/scss/common.module.scss";
+@import "../assets/scss/colors.module.scss";
+
+.teams_container {
+  transform: translateY(1rem);
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+
+  margin-block: 2rem;
+
+  display: grid;
+  gap: 1.5rem;
+  margin-inline: auto;
+
+  @include breakpoint(lg) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include breakpoint(md) {
+    max-width: 600px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include breakpoint(sm) {
+    max-width: 350px;
+  }
+
+  .item {
+    * {
+      text-align: center;
+    }
+
+    padding: 2rem 1rem;
+
+    border-radius: $border_radius;
+    box-shadow: $box_shadow;
+    background-color: $bg;
+  }
+
+  .image_container {
+    box-shadow: $box_shadow;
+    max-width: 50%;
+    margin-inline: auto;
+    border-radius: 100%;
+    margin-bottom: 1rem;
+
+    img {
+      display: block;
+      border-radius: 100%;
+      object-fit: contain;
+      height: auto;
+      width: 100%;
+    }
+  }
+
+  .item {
+    &,
+    .image_container img {
+      transition: transform 200ms;
+    }
+  }
+  .item:hover {
+    transform: translateY(-2px);
+    .image_container img {
+      transform: scale(1.025);
+    }
+  }
+
+  .social_media {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    img {
+      height: auto;
+      object-fit: contain;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    transform: translate(0);
+    opacity: 1;
+  }
+}

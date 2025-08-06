@@ -1,0 +1,24 @@
+.btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ca3f50;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  border-radius: 100%;
+
+  transition: opacity 200ms, transform 200ms;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.btn[data-is-clicked="true"] {
+  transform: scale(1.25);
+}

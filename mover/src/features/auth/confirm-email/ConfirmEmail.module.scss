@@ -1,0 +1,104 @@
+@import "../../../assets/scss/colors.module.scss";
+@import "../../../assets/scss/common.module.scss";
+
+.container {
+  max-width: 400px;
+  margin-inline: auto;
+  padding-block: 1rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h5 {
+    text-align: center;
+    color: $primary;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+}
+
+.divider {
+  box-shadow: $box_shadow;
+  background-color: $primary;
+  margin-block: 2rem;
+  margin-inline: auto;
+  border-radius: $border_radius;
+  max-width: 85%;
+}
+
+.sent_message {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.check_description {
+  font-size: 0.9em;
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.code_container {
+  margin-block: 2rem;
+
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .code_input {
+    max-width: 50px;
+    font-size: 1.1em;
+    @include breakpoint(sm) {
+      font-size: 1em;
+      max-width: 40px;
+    }
+
+    aspect-ratio: 1 / 1;
+    text-align: center;
+    font-weight: bold;
+
+    border-radius: $border_radius;
+    border: 1px solid $text_primary;
+  }
+}
+
+.verify_btn {
+  width: 100%;
+  font-weight: bold;
+}
+
+.resend_code {
+  margin-top: 1rem;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  font-size: 0.9em;
+  font-weight: bold;
+  color: $primary;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &:disabled {
+    text-decoration: none;
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.error_message {
+  margin-bottom: 1rem;
+  color: red;
+  text-align: center;
+  line-height: 1.1;
+}

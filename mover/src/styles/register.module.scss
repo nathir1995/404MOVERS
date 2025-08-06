@@ -1,0 +1,76 @@
+@import "../assets/scss/breakpoints.module.scss";
+@import "../assets/scss/colors.module.scss";
+@import "../assets/scss/common.module.scss";
+
+.content {
+  max-width: 600px;
+  margin-inline: auto;
+
+  .img_container {
+    display: none;
+    @include breakpoint(lg) {
+      display: flex;
+    }
+
+    border-top-left-radius: $border_radius;
+    border-bottom-left-radius: $border_radius;
+    box-shadow: $box_shadow;
+
+    justify-content: center;
+    align-items: center;
+
+    background-color: #fff;
+    width: 100%;
+  }
+
+  img {
+    width: min(75%, 25rem);
+    height: auto;
+  }
+
+  @include breakpoint(lg) {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    min-height: 500px;
+
+    max-width: 1200px;
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+
+  & > * {
+    width: 100%;
+  }
+
+  h4 {
+    margin-bottom: 1rem;
+  }
+
+  // max-width: 500px;
+  // margin-inline: auto;
+
+  background-color: $bg;
+  border-radius: $border_radius;
+  box-shadow: $box_shadow;
+
+  padding: 1.5rem;
+  @include breakpoint(lg) {
+    border-top-left-radius: initial;
+    border-bottom-left-radius: initial;
+  }
+  @include breakpoint(md) {
+    padding: 2rem;
+  }
+  @include breakpoint(sm) {
+    padding-block: 1.5rem;
+    padding-inline: 1rem;
+    svg {
+      transform: scale(0.9);
+    }
+  }
+}

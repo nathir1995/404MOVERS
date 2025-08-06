@@ -1,0 +1,113 @@
+@import "../../../assets/scss/common.module.scss";
+@import "../../../assets/scss/colors.module.scss";
+@import "../../../assets/scss/breakpoints.module.scss";
+
+.child_classname {
+  @include breakpoint(md) {
+    margin-block: 0 !important;
+  }
+  @include breakpoint(sm) {
+    margin-block: 0 !important;
+  }
+}
+
+.form {
+  width: 100%;
+
+  & > div {
+    margin-bottom: 1rem;
+  }
+}
+
+.row {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  @include breakpoint(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+
+  margin-top: 2rem;
+
+  button {
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    // padding-block: 0.75rem;
+    padding-inline: 0;
+  }
+}
+
+.links_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.5em;
+  gap: 0.5em;
+}
+
+.link {
+  font-size: 0.8em;
+
+  color: #333;
+
+  a {
+    color: $primary;
+    font-weight: bold;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.error_message {
+  color: red;
+  text-align: center;
+  font-weight: bold;
+}
+
+.congrats_container {
+  max-width: 500px;
+  margin-inline: auto;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    width: 100%;
+  }
+
+  h4 {
+    color: $primary;
+    text-align: center;
+  }
+
+  p {
+    color: $text_primary;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .texts {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  button {
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+}

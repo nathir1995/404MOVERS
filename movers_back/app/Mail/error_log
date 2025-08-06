@@ -1,0 +1,28 @@
+[05-Aug-2024 01:50:33 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Mail\Mailable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php on line 10
+[05-Aug-2024 02:01:42 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Mail\Mailable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php on line 10
+[07-Aug-2024 01:45:33 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Mail\Mailable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php on line 10
+[10-Aug-2024 10:13:12 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Mail\Mailable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php on line 10
+[17-Oct-2024 08:37:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Mail\Mailable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php on line 10
+[17-Oct-2024 09:03:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Mail\Mailable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php on line 10
+[10-Dec-2024 04:01:43 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Mail\Mailable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Mail/VerificationMail.php on line 10

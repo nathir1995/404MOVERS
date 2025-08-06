@@ -1,0 +1,130 @@
+@import "../assets/scss/breakpoints.module.scss";
+@import "../assets/scss/colors.module.scss";
+@import "../assets/scss/common.module.scss";
+
+.hero_section {
+  padding-block: 2rem;
+  * {
+    text-align: center;
+  }
+
+  img {
+    max-width: min(100%, 450px);
+    margin-inline: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: $box_shadow;
+  }
+
+  p {
+    max-width: 500px;
+    margin-inline: auto;
+  }
+
+  display: grid;
+  place-items: center;
+  gap: 2rem;
+
+  @include breakpoint(lg) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .content {
+    transform: translateX(-2rem);
+  }
+  img {
+    transform: translateX(2rem);
+  }
+  .content,
+  img {
+    opacity: 0;
+    animation: animateIn 1.25s forwards;
+  }
+}
+
+@keyframes animateIn {
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+.reviewsSection {
+  margin-block: 4rem;
+
+  @include breakpoint(md) {
+    max-width: 600px;
+    margin-inline: auto;
+  }
+}
+
+.same_day_section {
+  margin-block: 4rem;
+  opacity: 0;
+  transform: translateY(3rem);
+  animation: animateIn 1.25s forwards;
+
+  .title,
+  .desc {
+    text-align: center;
+    margin-inline: auto;
+    margin-bottom: 0.25rem;
+  }
+
+  .items_container {
+    margin-block: 2rem;
+
+    display: grid;
+    gap: 1.5rem;
+    @include breakpoint(lg) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @include breakpoint(md) {
+      max-width: 500px;
+      margin-inline: auto;
+    }
+
+    .item {
+      background-color: $bg;
+      width: 100%;
+      border-radius: $border_radius;
+      box-shadow: $box_shadow;
+      padding: 1.5rem 1rem;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        height: auto;
+        max-width: 4rem;
+        object-fit: contain;
+        margin-bottom: 1rem;
+      }
+      * {
+        text-align: center;
+      }
+    }
+  }
+}
+
+.section {
+  margin-block: 5rem;
+}
+
+.last_section {
+  * {
+    text-align: center;
+  }
+
+  p {
+    font-weight: bold;
+  }
+}
+.btn_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block: 2rem;
+}

@@ -1,0 +1,114 @@
+@import "../../../assets/scss/breakpoints.module.scss";
+@import "../../../assets/scss/common.module.scss";
+@import "../../../assets/scss/colors.module.scss";
+
+.padding_container {
+  padding: 1.5rem;
+  @include breakpoint(sm) {
+    padding: 1rem;
+  }
+}
+
+.row_2_sm_1 {
+  display: grid;
+  gap: 1rem;
+
+  grid-template-columns: 1fr 1fr;
+  @include breakpoint(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card_row {
+  margin-block: 0.25rem;
+  display: flex;
+  // align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  line-height: 1.25;
+}
+
+.basic_card_content {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  @include breakpoint(sm) {
+    grid-template-columns: 1fr;
+  }
+
+  padding-top: 0.75rem;
+}
+
+.address_card_container {
+  display: flex;
+  flex-direction: column;
+
+  .address_content {
+    padding-top: 0.75rem;
+    flex-grow: 1;
+
+    p {
+      font-size: 0.8em;
+    }
+  }
+}
+
+.addresses_container {
+  margin-block: 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+
+  @include combine_breakpoint(md, lg) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.view_on_map_btn {
+  outline: none;
+  border: none;
+  background-color: transparent;
+
+  cursor: pointer;
+  color: $primary;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.items_card_content {
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+  gap: 1rem;
+
+  // display: flex;
+  // flex-wrap: wrap;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.divider {
+  margin-top: 1rem;
+  background-color: #cfcfcf;
+  opacity: 0.5;
+}
+
+.view_accepted_movers_btn {
+  border: none;
+  background-color: transparent;
+  color: $primary;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.me_chip {
+  background-color: $primary;
+  color: #fff;
+  border-radius: $border_radius;
+  padding: 1px 8px;
+  font-size: 0.75em;
+}

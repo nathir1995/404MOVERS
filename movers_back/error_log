@@ -1,0 +1,60 @@
+[25-Jul-2024 22:29:11 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[25-Jul-2024 22:29:11 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[25-Jul-2024 22:29:11 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[25-Jul-2024 22:29:11 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[25-Jul-2024 22:29:11 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[25-Jul-2024 22:29:11 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[25-Jul-2024 22:31:40 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[25-Jul-2024 22:31:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[02-Aug-2024 08:39:49 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[02-Aug-2024 08:39:49 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[04-Aug-2024 08:56:19 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[04-Aug-2024 08:56:19 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[04-Aug-2024 09:47:03 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[04-Aug-2024 09:47:03 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[17-Oct-2024 08:35:52 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[17-Oct-2024 08:35:52 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[17-Oct-2024 09:01:42 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[17-Oct-2024 09:01:42 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[09-Dec-2024 09:06:00 UTC] PHP Warning:  require(/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34
+[09-Dec-2024 09:06:00 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/hswnktql/api.404movers.ca/mover404/public/../vendor/autoload.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/hswnktql/api.404movers.ca/mover404/public/index.php:34
+Stack trace:
+#0 /home/hswnktql/api.404movers.ca/mover404/server.php(21): require_once()
+#1 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/public/index.php on line 34

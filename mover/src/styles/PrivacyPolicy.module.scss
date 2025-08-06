@@ -1,0 +1,30 @@
+@import "../assets/scss/colors.module.scss";
+
+.page {
+  background-color: $bg;
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  ol,
+  ul {
+    padding-inline-start: 2em;
+
+    li {
+      margin-block: 0.5em;
+    }
+  }
+
+  section {
+    margin-block: 1.5rem;
+
+    h4 {
+      margin-bottom: 0.25em;
+    }
+  }
+
+  .link {
+    color: blue;
+  }
+}

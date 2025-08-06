@@ -1,0 +1,50 @@
+@import "../../assets/scss/breakpoints.module.scss";
+@import "../../assets/scss/colors.module.scss";
+@import "../../assets/scss/common.module.scss";
+
+.footer {
+  box-shadow: $box_shadow;
+  background-color: $primary;
+  * {
+    color: #fff;
+  }
+
+  .content_container {
+    padding-block: 2rem;
+
+    display: grid;
+    gap: 1rem;
+    @include breakpoint(lg) {
+      grid-template-columns: repeat(3, 1fr);
+      justify-items: center;
+    }
+    @include breakpoint(md) {
+      grid-template-columns: repeat(3, 1fr);
+      justify-items: center;
+    }
+  }
+
+  a {
+    max-width: fit-content;
+    transition: opacity 200ms;
+  }
+  a:hover {
+    opacity: 0.8;
+  }
+  .links_container {
+    display: grid;
+  }
+  .social_media_container {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .copyright_container {
+    padding-block: 1rem;
+    border-top: 1px solid rgba(#fff, 0.75);
+    p {
+      text-align: center;
+      font-size: 0.9em;
+    }
+  }
+}

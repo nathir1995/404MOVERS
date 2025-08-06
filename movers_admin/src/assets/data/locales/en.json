@@ -1,0 +1,107 @@
+{
+  "brand_name": "404 Movers",
+  "home": "Home",
+  "jobs": "Jobs",
+  "upcoming_jobs": "Upcoming Jobs",
+  "past_jobs": "Past Jobs",
+
+  "accounts": "Accounts",
+  "users": "Users",
+  "drivers": "Drivers",
+  "labors": "Labors",
+  "movers": "Movers",
+  "moves": "Moves",
+
+  "settings": "Settings",
+
+  "move_packages": "Move Packages",
+
+  "no_records": "No data to display",
+
+  "status": "Status",
+  "save": "Save",
+  "active": "Active",
+  "inactive": "Inactive",
+  "image_preview": "Image Preview",
+  "add": "Add",
+  "name": "Name",
+  "sort": "Sort",
+  "back": "Back",
+  "english": "English",
+  "arabic": "Arabic",
+  "all": "All",
+
+  "admin": "Admin",
+
+  "Image": "Image",
+  "no_image": "No Image",
+
+  "loading": "Loading...",
+  "_loading": {
+    "delete": "Deleting..."
+  },
+  "email": "Email",
+  "login_again": "Please login with your new account information",
+  "password": "Password",
+  "login": "Login",
+  "welcome_login": "Welcome back, please login to your account.",
+  "fill_fields": "Please fill all the fields!",
+
+  "logout": "Log out",
+  "delete_are_you_sure": "DELETE, Are you sure?",
+  "yes_delete_it": "Yes, delete it!",
+  "no_revert": "You won't be able to revert this!",
+  "cancel": "Cancel",
+
+  "ok": "OK",
+  "page_not_found": "Page Not Found!",
+  "back_to_home": "Back To Home",
+
+  "an_error_occured": "An Error Occured, Please try again!",
+  "edit": "Edit",
+  "delete": "Delete",
+  "close": "Close",
+  "optional": "Optional",
+
+  "_search": {},
+
+  "password_confirmation": "Password Confirmation",
+  "required": "Required",
+  "_required": {
+    "email": "Email is Required",
+    "password": "Password is Required",
+    "restaurant": "Restaurant is Required"
+  },
+  "_validation": {
+    "invalid_email": "Invalid Email",
+    "link": "Invalid Link",
+    "passwords_match": "Passwords MUST MATCH"
+  },
+
+  "_success": {
+    "add_category": "New Category has been Added successfully",
+    "update_category": "Category has been updated successfully",
+    "toggle_category": "Category status has been toggled successfully",
+
+    "add_data": "Data has been added successfully",
+    "update_data": "Data has been updated successfully",
+    "delete_data": "Data has been deleted successfully",
+    "upload_data": "Data has been uploaded successfully",
+
+    "update_settings": "Settings has been updated successfully"
+  },
+  "_error": {
+    "add_category": "An error occured while adding a new category",
+    "update_category": "An error occured while updating the category",
+    "toggle_category": "Failed to toggle category status",
+
+    "add_data": "An error occured while adding new data",
+    "update_data": "An error occured while updating the data",
+    "delete_data": "An error occured while deleting the data",
+    "upload_data": "An error occured while uploading the data",
+
+    "update_settings": "An error occured while updating the Settings",
+
+    "get_data": "Failed to Get Data"
+  }
+}

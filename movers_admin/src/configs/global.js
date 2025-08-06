@@ -1,0 +1,2 @@
+export const MAX_NUMBER_OF_PRODUCT_ADDITIONAL_IMAGES = 2;
+export const APP_NAME = "404_MOVERS_ADMIN";

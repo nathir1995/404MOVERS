@@ -1,0 +1,24 @@
+@mixin breakpoint($point) {
+  @if $point == lg {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  } @else if $point == md {
+    @media (min-width: 769px) and (max-width: 1199px) {
+      @content;
+    }
+  } @else if $point == sm {
+    @media (max-width: 768px) {
+      @content;
+    }
+  }
+}
+
+@mixin combine_breakpoint($point1, $point2) {
+  @include breakpoint($point1) {
+    @content;
+  }
+  @include breakpoint($point2) {
+    @content;
+  }
+}

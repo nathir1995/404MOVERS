@@ -1,0 +1,29 @@
+@import "../assets/scss/breakpoints.module.scss";
+@import "../assets/scss/colors.module.scss";
+@import "../assets/scss/common.module.scss";
+
+.content {
+  display: grid;
+
+  max-width: 600px;
+  margin-inline: auto;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: none;
+
+    border-top-left-radius: $border_radius;
+    border-bottom-left-radius: $border_radius;
+    box-shadow: $box_shadow;
+  }
+  @include breakpoint(lg) {
+    grid-template-columns: 1fr 1fr;
+    max-width: 1000px;
+
+    img {
+      display: block;
+      height: 100%;
+    }
+  }
+}

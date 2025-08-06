@@ -1,0 +1,170 @@
+@import "../assets/scss/common.module.scss";
+@import "../assets/scss/colors.module.scss";
+
+// @import "https://fonts.googleapis.com/css2?family=Poppins&display=swap";
+// @import "https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap";
+
+@import "./fonts.scss";
+@import "../assets/scss/Modal.scss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  // max-width: 100vw;
+  max-width: calc(100vw - (100vw - 100%));
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+button {
+  font-family: Poppins, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: $text_primary;
+}
+
+body,
+p {
+  font-size: clamp(1rem, 0.9636rem + 0.1818vw, 1.1rem);
+}
+
+h1 {
+  font-size: clamp(2.25rem, 1.9773rem + 1.3636vw, 3rem);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 1.5636rem + 1.1818vw, 2.45rem);
+}
+
+h3 {
+  font-size: clamp(1.6rem, 1.4182rem + 0.9091vw, 2.1rem);
+}
+
+h4 {
+  font-size: clamp(1.4rem, 1.2545rem + 0.7273vw, 1.8rem);
+}
+
+h5 {
+  font-size: clamp(1.2rem, 1.1091rem + 0.4545vw, 1.45rem);
+}
+
+h6 {
+  font-size: clamp(0.9rem, 0.8636rem + 0.1818vw, 1rem);
+}
+
+.page__content {
+  max-width: calc($max_width + 3rem);
+  padding-inline: 1.5rem;
+  margin-inline: auto;
+}
+
+.smaller_page__content {
+  max-width: calc($max_width + 1.5rem);
+  padding-inline: 0.75rem;
+  margin-inline: auto;
+}
+
+.user_layout_page_content {
+  max-width: calc(1400px + 1.5rem);
+  padding-inline: 0.75rem;
+  margin-inline: auto;
+}
+
+.anchor {
+  display: block;
+  visibility: hidden;
+
+  @include breakpoint(lg) {
+    height: $navbar_height_lg;
+    margin-top: -$navbar_height_lg;
+  }
+  @include breakpoint(md) {
+    height: $navbar_height_md;
+    margin-top: -$navbar_height_md;
+  }
+  @include breakpoint(sm) {
+    height: $navbar_height_sm;
+    margin-top: -$navbar_height_sm;
+  }
+}
+textarea {
+  resize: none;
+}
+
+.accordion {
+  border-radius: $border_radius !important;
+}
+.accordion__item:first-child {
+  border-top-left-radius: $border_radius !important;
+  border-top-right-radius: $border_radius !important;
+}
+.accordion__item:last-child {
+  border-bottom-left-radius: $border_radius !important;
+  border-bottom-right-radius: $border_radius !important;
+}
+.accordion__button {
+  background-color: $bg !important;
+}
+
+.card-element-container .StripeElement {
+  width: 100%;
+  padding: 1rem 0.75rem;
+  border-width: 1px 1px 3px 1px;
+  border-style: solid;
+  border-color: #cfcfcf;
+  border-radius: 12px;
+}
+
+.styled-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  background: #fff;
+  border-radius: 15px;
+}
+.styled-scrollbar::-webkit-scrollbar-track {
+  background: rgba(#eee, 0.7);
+  border-radius: 15px;
+  opacity: 0.42;
+}
+.styled-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 15px;
+  background: $primary;
+}
+.styled-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba($primary, 0.8);
+}
+
+.react-calendar__tile--active {
+  background-color: $primary !important;
+}

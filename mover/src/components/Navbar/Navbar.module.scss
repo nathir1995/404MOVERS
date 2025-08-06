@@ -1,0 +1,141 @@
+@import "../../assets/scss/colors.module.scss";
+@import "../../assets/scss/breakpoints.module.scss";
+@import "../../assets/scss/common.module.scss";
+
+.header {
+  // width: 100vw;
+  // width: calc(100vw - (100vw - 100%));
+  width: 100%;
+
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  margin: 0;
+  padding: 0.5em 1em;
+  @include breakpoint(sm) {
+    padding-inline: 0;
+  }
+
+  transition: background-color 200ms ease-in;
+  background-color: rgba(#fff, 0.95);
+  // box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-shadow: $box_shadow;
+}
+
+.header.scroll {
+  background-color: #000;
+}
+
+.navbar_header {
+  max-width: calc($max_width + 3rem);
+  padding-inline: 1.5rem;
+
+  margin-inline: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    object-fit: contain;
+    height: auto;
+
+    transform: translateY(3px);
+
+    // margin-inline-start: 1.5rem;
+    @include breakpoint(lg) {
+      // margin-inline-start: 0;
+      max-width: 4.5rem;
+    }
+    @include breakpoint(md) {
+      max-width: 3.75rem;
+    }
+    @include breakpoint(sm) {
+      max-width: 3rem;
+    }
+  }
+}
+
+.language_and_icon_container {
+  // margin-inline-end: 1.5rem;
+  // @include breakpoint(lg) {
+  //   margin-inline-end: 0;
+  // }
+
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.links_conatiner {
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  gap: 1.5em;
+  align-items: center;
+
+  a,
+  li {
+    cursor: pointer;
+    color: $text_primary;
+    text-decoration: none;
+    transition: color 200ms;
+    font-weight: bold;
+    font-size: 0.95em;
+  }
+
+  .active {
+    a {
+      color: $primary;
+    }
+  }
+
+  .active,
+  li:hover,
+  a:hover {
+    color: rgba($primary, 0.8);
+  }
+
+  button {
+    font-size: 0.85em;
+    font-weight: bold;
+    padding-block: 0.75em;
+    // letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .links_conatiner[data-desktop="true"] {
+    & > * {
+      display: none;
+    }
+    .language_and_icon_container {
+      display: flex;
+    }
+  }
+}
+
+.menu_icon {
+  color: $text_primary;
+  cursor: pointer;
+}
+
+.docked_menu {
+  top: 0;
+  width: 100%;
+  background-color: #fff;
+  position: fixed;
+  z-index: 999;
+
+  transition: min-height 300ms ease-in;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+}
+.docked_menu_active {
+  min-height: 100vh;
+  padding-top: 0rem;
+  gap: 3rem;
+}

@@ -1,0 +1,15 @@
+[17-Oct-2024 08:40:21 UTC] PHP Warning:  Undefined variable $notifications in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php on line 54
+[17-Oct-2024 08:40:21 UTC] PHP Fatal error:  Uncaught Error: Call to a member function links() on null in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php:54
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php on line 54
+[17-Oct-2024 09:05:34 UTC] PHP Warning:  Undefined variable $notifications in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php on line 54
+[17-Oct-2024 09:05:34 UTC] PHP Fatal error:  Uncaught Error: Call to a member function links() on null in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php:54
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php on line 54
+[10-Dec-2024 18:40:17 UTC] PHP Warning:  Undefined variable $notifications in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php on line 54
+[10-Dec-2024 18:40:17 UTC] PHP Fatal error:  Uncaught Error: Call to a member function links() on null in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php:54
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/resources/views/admin/notifications/notification.blade.php on line 54

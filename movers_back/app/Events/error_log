@@ -1,0 +1,3 @@
+[17-Oct-2024 08:36:00 UTC] PHP Fatal error:  Trait "Illuminate\Foundation\Events\Dispatchable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Events/SendLocation.php on line 13
+[17-Oct-2024 09:02:08 UTC] PHP Fatal error:  Trait "Illuminate\Foundation\Events\Dispatchable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Events/SendLocation.php on line 13
+[10-Dec-2024 06:09:15 UTC] PHP Fatal error:  Trait "Illuminate\Foundation\Events\Dispatchable" not found in /home/hswnktql/api.404movers.ca/mover404/app/Events/SendLocation.php on line 13

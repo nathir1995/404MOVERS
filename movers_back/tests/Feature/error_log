@@ -1,0 +1,20 @@
+[02-Aug-2024 12:44:50 UTC] PHP Fatal error:  Uncaught Error: Class "Tests\TestCase" not found in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php on line 8
+[17-Oct-2024 08:40:47 UTC] PHP Fatal error:  Uncaught Error: Class "Tests\TestCase" not found in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php on line 8
+[17-Oct-2024 09:06:05 UTC] PHP Fatal error:  Uncaught Error: Class "Tests\TestCase" not found in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php on line 8
+[13-Nov-2024 07:42:46 UTC] PHP Fatal error:  Uncaught Error: Class "Tests\TestCase" not found in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php on line 8
+[10-Dec-2024 04:14:02 UTC] PHP Fatal error:  Uncaught Error: Class "Tests\TestCase" not found in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/tests/Feature/ExampleTest.php on line 8

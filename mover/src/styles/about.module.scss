@@ -1,0 +1,85 @@
+@import "../assets/scss/breakpoints.module.scss";
+@import "../assets/scss/common.module.scss";
+@import "../assets/scss/animation.module.scss";
+
+.section {
+  p {
+    margin-block: 1rem;
+    line-height: 1.6;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+    height: auto;
+    max-height: 500px;
+  }
+
+  display: grid;
+  gap: 1.5rem;
+
+  @include breakpoint(lg) {
+    grid-template-columns: 1fr 0.75fr;
+  }
+  @include breakpoint(md) {
+    max-width: 700px;
+    margin-inline: auto;
+  }
+}
+
+.section.top {
+  & > div:first-child {
+    transform: translateX(-2rem);
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+  }
+  & > img {
+    transform: translateX(2rem);
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+  }
+}
+
+.section.two {
+  img {
+    object-position: center 70%;
+  }
+
+  gap: 1.5rem;
+
+  @include breakpoint(lg) {
+    display: grid;
+    grid-template-columns: 0.75fr 1fr;
+    place-items: center;
+    gap: 2.5rem;
+  }
+  @include breakpoint(md) {
+    max-width: 700px;
+    margin-inline: auto;
+
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  @include breakpoint(sm) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  margin-block: 4rem;
+}
+
+.bottom_section {
+  margin-block: 3rem;
+
+  p {
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  * {
+    text-align: center;
+    max-width: 800px;
+    margin-inline: auto;
+  }
+}

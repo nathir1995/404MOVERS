@@ -1,0 +1,24 @@
+[17-Oct-2024 08:35:58 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Console\Command" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Checkride.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Checkride.php on line 10
+[17-Oct-2024 08:35:59 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Console\Command" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Remove_exp_token.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Remove_exp_token.php on line 9
+[17-Oct-2024 09:01:54 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Console\Command" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Checkride.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Checkride.php on line 10
+[17-Oct-2024 09:01:55 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Console\Command" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Remove_exp_token.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Remove_exp_token.php on line 9
+[11-Dec-2024 00:54:47 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Console\Command" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Checkride.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Checkride.php on line 10
+[11-Dec-2024 00:54:50 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Console\Command" not found in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Remove_exp_token.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Console/Commands/Remove_exp_token.php on line 9

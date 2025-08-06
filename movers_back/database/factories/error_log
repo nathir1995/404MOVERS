@@ -1,0 +1,12 @@
+[17-Oct-2024 08:38:26 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Factories\Factory" not found in /home/hswnktql/api.404movers.ca/mover404/database/factories/UserFactory.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/factories/UserFactory.php on line 8
+[17-Oct-2024 09:04:11 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Factories\Factory" not found in /home/hswnktql/api.404movers.ca/mover404/database/factories/UserFactory.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/factories/UserFactory.php on line 8
+[10-Dec-2024 04:05:51 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Factories\Factory" not found in /home/hswnktql/api.404movers.ca/mover404/database/factories/UserFactory.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/factories/UserFactory.php on line 8

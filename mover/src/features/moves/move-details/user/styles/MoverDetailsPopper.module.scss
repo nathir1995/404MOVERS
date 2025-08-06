@@ -1,0 +1,42 @@
+@import "../../../../../assets/scss/breakpoints.module.scss";
+@import "../../../../../assets/scss/common.module.scss";
+@import "../../../../../assets/scss/colors.module.scss";
+
+.container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  height: 100%;
+  width: min(90%, 300px);
+  background-color: #fff;
+  box-shadow: $box_shadow;
+  border: 1px solid #eee;
+
+  visibility: none;
+  pointer-events: none;
+  transition: transform 200ms;
+  overflow: auto;
+  transform: translateX(100%);
+
+  padding: 1rem;
+}
+
+.container[data-is-open="true"] {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: visible;
+}
+
+.role_badge {
+  background-color: $primary;
+  display: inline-block;
+  padding-inline: 1rem;
+  padding-block: 0.25em;
+  margin-bottom: 0.5em;
+  font-size: 0.85em;
+  color: #fff;
+  border-radius: $border_radius;
+  text-transform: uppercase;
+}

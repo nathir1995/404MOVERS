@@ -1,0 +1,20 @@
+[05-Aug-2024 12:52:30 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Exceptions\Handler" not found in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php on line 8
+[07-Aug-2024 14:04:46 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Exceptions\Handler" not found in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php on line 8
+[17-Oct-2024 08:36:01 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Exceptions\Handler" not found in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php on line 8
+[17-Oct-2024 09:02:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Exceptions\Handler" not found in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php on line 8
+[10-Dec-2024 06:09:36 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Exceptions\Handler" not found in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/app/Exceptions/Handler.php on line 8

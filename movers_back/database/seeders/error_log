@@ -1,0 +1,204 @@
+[17-Oct-2024 08:39:34 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Admin_setting.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Admin_setting.php on line 8
+[17-Oct-2024 08:39:37 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/CancelSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/CancelSeeder.php on line 8
+[17-Oct-2024 08:39:37 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/DatabaseSeeder.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/DatabaseSeeder.php on line 9
+[17-Oct-2024 08:39:38 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Email.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Email.php on line 7
+[17-Oct-2024 08:39:38 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/HearAboutSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/HearAboutSeeder.php on line 8
+[17-Oct-2024 08:39:39 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemCategorySeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemCategorySeeder.php on line 8
+[17-Oct-2024 08:39:40 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemSeeder.php on line 8
+[17-Oct-2024 08:39:41 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MetropolitanAreaSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MetropolitanAreaSeeder.php on line 8
+[17-Oct-2024 08:39:41 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MovePackageSeeder.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MovePackageSeeder.php on line 9
+[17-Oct-2024 08:39:42 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoverAccountStatusSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoverAccountStatusSeeder.php on line 8
+[17-Oct-2024 08:39:47 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveStatusSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveStatusSeeder.php on line 8
+[17-Oct-2024 08:39:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveTypeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveTypeSeeder.php on line 8
+[17-Oct-2024 08:39:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ProvinceSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ProvinceSeeder.php on line 8
+[17-Oct-2024 08:39:49 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/TshirtSizeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/TshirtSizeSeeder.php on line 8
+[17-Oct-2024 08:39:50 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/UserRoleSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/UserRoleSeeder.php on line 8
+[17-Oct-2024 08:39:50 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Users.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Users.php on line 10
+[17-Oct-2024 08:39:51 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/VehicleTypeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/VehicleTypeSeeder.php on line 8
+[17-Oct-2024 09:05:00 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Admin_setting.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Admin_setting.php on line 8
+[17-Oct-2024 09:05:00 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/CancelSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/CancelSeeder.php on line 8
+[17-Oct-2024 09:05:01 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/DatabaseSeeder.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/DatabaseSeeder.php on line 9
+[17-Oct-2024 09:05:01 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Email.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Email.php on line 7
+[17-Oct-2024 09:05:03 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/HearAboutSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/HearAboutSeeder.php on line 8
+[17-Oct-2024 09:05:04 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemCategorySeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemCategorySeeder.php on line 8
+[17-Oct-2024 09:05:04 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemSeeder.php on line 8
+[17-Oct-2024 09:05:05 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MetropolitanAreaSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MetropolitanAreaSeeder.php on line 8
+[17-Oct-2024 09:05:06 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MovePackageSeeder.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MovePackageSeeder.php on line 9
+[17-Oct-2024 09:05:07 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoverAccountStatusSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoverAccountStatusSeeder.php on line 8
+[17-Oct-2024 09:05:07 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveStatusSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveStatusSeeder.php on line 8
+[17-Oct-2024 09:05:08 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveTypeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveTypeSeeder.php on line 8
+[17-Oct-2024 09:05:08 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ProvinceSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ProvinceSeeder.php on line 8
+[17-Oct-2024 09:05:09 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/TshirtSizeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/TshirtSizeSeeder.php on line 8
+[17-Oct-2024 09:05:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/UserRoleSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/UserRoleSeeder.php on line 8
+[17-Oct-2024 09:05:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Users.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Users.php on line 10
+[17-Oct-2024 09:05:11 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/VehicleTypeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/VehicleTypeSeeder.php on line 8
+[10-Dec-2024 04:09:53 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Admin_setting.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Admin_setting.php on line 8
+[10-Dec-2024 04:09:56 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/CancelSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/CancelSeeder.php on line 8
+[10-Dec-2024 04:09:59 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/DatabaseSeeder.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/DatabaseSeeder.php on line 9
+[10-Dec-2024 04:10:03 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Email.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Email.php on line 7
+[10-Dec-2024 04:10:06 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/HearAboutSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/HearAboutSeeder.php on line 8
+[10-Dec-2024 04:10:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemCategorySeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemCategorySeeder.php on line 8
+[10-Dec-2024 04:10:13 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ItemSeeder.php on line 8
+[10-Dec-2024 04:10:17 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MetropolitanAreaSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MetropolitanAreaSeeder.php on line 8
+[10-Dec-2024 04:10:20 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MovePackageSeeder.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MovePackageSeeder.php on line 9
+[10-Dec-2024 04:10:23 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveStatusSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveStatusSeeder.php on line 8
+[10-Dec-2024 04:10:27 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveTypeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoveTypeSeeder.php on line 8
+[10-Dec-2024 04:10:31 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoverAccountStatusSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/MoverAccountStatusSeeder.php on line 8
+[10-Dec-2024 04:10:33 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ProvinceSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/ProvinceSeeder.php on line 8
+[10-Dec-2024 04:10:35 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/TshirtSizeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/TshirtSizeSeeder.php on line 8
+[10-Dec-2024 04:10:38 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/UserRoleSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/UserRoleSeeder.php on line 8
+[10-Dec-2024 04:10:41 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Users.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/Users.php on line 10
+[10-Dec-2024 04:10:43 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Seeder" not found in /home/hswnktql/api.404movers.ca/mover404/database/seeders/VehicleTypeSeeder.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/hswnktql/api.404movers.ca/mover404/database/seeders/VehicleTypeSeeder.php on line 8
