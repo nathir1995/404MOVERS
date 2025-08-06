@@ -14,12 +14,14 @@ export const FirebaseContextProvider = ({
 }) => {
   const [fcmToken, setFcmToken] = React.useState<undefined | string>();
   const [notificationPermission, setNotificationPermission] = React.useState<NotificationPermission>('default');
+  const [isInitialized, setIsInitialized] = React.useState(false);
 
   React.useEffect(() => {
     const requestNotificationPermissionAndGetToken = async () => {
       // Only run in browser environment
       if (typeof window === "undefined" || !("Notification" in window)) {
         console.log("Notifications not supported in this environment");
+        setIsInitialized(true);
         return;
       }
 
@@ -81,6 +83,8 @@ export const FirebaseContextProvider = ({
         
         // Set token to null to indicate failure
         setFcmToken(undefined);
+      } finally {
+        setIsInitialized(true);
       }
     };
 
@@ -116,8 +120,9 @@ export const FirebaseContextProvider = ({
       fcmToken,
       notificationPermission,
       requestNotificationPermission,
+      isInitialized,
     }),
-    [fcmToken, notificationPermission, requestNotificationPermission]
+    [fcmToken, notificationPermission, requestNotificationPermission, isInitialized]
   );
 
   return (
