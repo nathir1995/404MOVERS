@@ -1,105 +1,132 @@
-import React from 'react';
-import useFirebaseContext from '@/firebase/FirebaseContext';
+import React, { createContext, useContext } from "react";
+import FirebaseContextType from "./FirebaseContextType";
+import { app as firebaseApp } from "@/firebase";
+import { getMessaging, getToken } from "firebase/messaging";
 
-const NotificationPermissionHandler: React.FC = () => {
-  const { notificationPermission, requestNotificationPermission, fcmToken } = useFirebaseContext();
+const FirebaseContext = createContext<FirebaseContextType>(
+  {} as FirebaseContextType
+);
 
-  const handleEnableNotifications = async () => {
-    if (requestNotificationPermission) {
-      const granted = await requestNotificationPermission();
-      if (granted) {
-        console.log('Notifications enabled successfully!');
-      } else {
-        console.log('Notifications permission denied.');
+export const FirebaseContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [fcmToken, setFcmToken] = React.useState<undefined | string>();
+  const [notificationPermission, setNotificationPermission] = React.useState<NotificationPermission>('default');
+
+  React.useEffect(() => {
+    const requestNotificationPermissionAndGetToken = async () => {
+      // Only run in browser environment
+      if (typeof window === "undefined" || !("Notification" in window)) {
+        console.log("Notifications not supported in this environment");
+        return;
       }
+
+      try {
+        // Check current permission status
+        const currentPermission = Notification.permission;
+        setNotificationPermission(currentPermission);
+        
+        console.log("Current notification permission:", currentPermission);
+
+        // If permission is denied, don't attempt to get token
+        if (currentPermission === 'denied') {
+          console.log("Notification permission denied. Cannot get FCM token.");
+          return;
+        }
+
+        // If permission not yet granted, request it
+        if (currentPermission === 'default') {
+          console.log("Requesting notification permission...");
+          const permission = await Notification.requestPermission();
+          setNotificationPermission(permission);
+          
+          if (permission !== 'granted') {
+            console.log("Notification permission not granted:", permission);
+            return;
+          }
+        }
+
+        // Only try to get token if permission is granted
+        if (currentPermission === 'granted' || Notification.permission === 'granted') {
+          console.log("Getting FCM token...");
+          const messaging = getMessaging(firebaseApp);
+          
+          // Add VAPID key if you have one (optional but recommended for web push)
+          const currentToken = await getToken(messaging, {
+            // vapidKey: "YOUR_VAPID_KEY_HERE" // Uncomment and add your VAPID key if you have one
+          });
+          
+          if (currentToken) {
+            console.log("FCM token obtained successfully");
+            setFcmToken(currentToken);
+          } else {
+            console.log("No registration token available. Request permission to generate one.");
+          }
+        }
+      } catch (error) {
+        console.error("Error with FCM token:", error);
+        
+        // Handle specific Firebase errors
+        if (error instanceof Error) {
+          if (error.message.includes('permission-blocked')) {
+            console.error("Notifications are blocked. Please enable them in browser settings.");
+          } else if (error.message.includes('unsupported-browser')) {
+            console.error("This browser doesn't support the notification service.");
+          } else if (error.message.includes('vapid-key-required')) {
+            console.error("VAPID key required for this browser.");
+          }
+        }
+        
+        // Set token to null to indicate failure
+        setFcmToken(undefined);
+      }
+    };
+
+    requestNotificationPermissionAndGetToken();
+  }, []);
+
+  // Function to manually request permission (can be called from UI)
+  const requestNotificationPermission = React.useCallback(async () => {
+    if (typeof window === "undefined" || !("Notification" in window)) {
+      return false;
     }
-  };
 
-  // Don't show anything if notifications aren't supported
-  if (typeof window === "undefined" || !("Notification" in window)) {
-    return null;
-  }
+    try {
+      const permission = await Notification.requestPermission();
+      setNotificationPermission(permission);
+      
+      if (permission === 'granted') {
+        // Try to get token after permission granted
+        const messaging = getMessaging(firebaseApp);
+        const currentToken = await getToken(messaging);
+        setFcmToken(currentToken);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Error requesting notification permission:", error);
+      return false;
+    }
+  }, []);
 
-  // Show different UI based on permission status
-  switch (notificationPermission) {
-    case 'granted':
-      return (
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium text-green-800">
-                Notifications enabled! You'll receive important updates.
-              </p>
-              {fcmToken && (
-                <p className="text-xs text-green-600 mt-1">
-                  Token: {fcmToken.substring(0, 20)}...
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-      );
+  const memoedValue = React.useMemo(
+    () => ({
+      fcmToken,
+      notificationPermission,
+      requestNotificationPermission,
+    }),
+    [fcmToken, notificationPermission, requestNotificationPermission]
+  );
 
-    case 'denied':
-      return (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium text-red-800">
-                Notifications blocked
-              </p>
-              <p className="text-sm text-red-700 mt-1">
-                To receive updates, please enable notifications in your browser settings:
-              </p>
-              <ul className="text-xs text-red-600 mt-2 list-disc list-inside">
-                <li>Click the lock icon in the address bar</li>
-                <li>Select "Site settings" or "Permissions"</li>
-                <li>Change notifications to "Allow"</li>
-                <li>Refresh this page</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'default':
-    default:
-      return (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="ml-3 flex-1">
-              <p className="text-sm font-medium text-blue-800">
-                Stay updated with notifications
-              </p>
-              <p className="text-sm text-blue-700 mt-1">
-                Get notified about important updates and messages.
-              </p>
-              <button
-                onClick={handleEnableNotifications}
-                className="mt-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-md transition-colors"
-              >
-                Enable Notifications
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-  }
+  return (
+    <FirebaseContext.Provider value={memoedValue}>
+      {children}
+    </FirebaseContext.Provider>
+  );
 };
 
-export default NotificationPermissionHandler;
+export default function useFirebaseContext() {
+  return useContext(FirebaseContext);
+}
