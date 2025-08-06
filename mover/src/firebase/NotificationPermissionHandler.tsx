@@ -5,22 +5,18 @@ const NotificationPermissionHandler: React.FC = () => {
   const { notificationPermission, requestNotificationPermission, fcmToken } = useFirebaseContext();
 
   const handleEnableNotifications = async () => {
-    if (requestNotificationPermission) {
-      const granted = await requestNotificationPermission();
-      if (granted) {
-        console.log('Notifications enabled successfully!');
-      } else {
-        console.log('Notifications permission denied.');
-      }
+    const granted = await requestNotificationPermission();
+    if (granted) {
+      console.log('Notifications enabled successfully!');
+    } else {
+      console.log('Notifications permission denied.');
     }
   };
 
-  // Don't show anything if notifications aren't supported
   if (typeof window === "undefined" || !("Notification" in window)) {
     return null;
   }
 
-  // Show different UI based on permission status
   switch (notificationPermission) {
     case 'granted':
       return (
@@ -46,7 +42,7 @@ const NotificationPermissionHandler: React.FC = () => {
       );
 
     case 'denied':
-      return (
+      (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
           <div className="flex">
             <div className="flex-shrink-0">
@@ -86,7 +82,7 @@ const NotificationPermissionHandler: React.FC = () => {
               <p className="text-sm font-medium text-blue-800">
                 Stay updated with notifications
               </p>
-              <p className="text-sm text-blue-700 mt-1">
+             text-sm text-blue-700 mt-1">
                 Get notified about important updates and messages.
               </p>
               <button
@@ -98,8 +94,4 @@ const NotificationPermissionHandler: React.FC = () => {
             </div>
           </div>
         </div>
-      );
-  }
-};
-
-export default NotificationPermissionHandler;
+     Handler;
