@@ -41,7 +41,7 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
         if (Notification.permission === 'granted') {
           const messaging = getMessaging(firebaseApp);
           const token = await getToken(messaging, {
-            vapidKey: "YOUR_VAPID_KEY_HERE" // Replace with your actual VAPID key
+            vapidKey: "YOUR_PUBLIC_VAPID_KEY_HERE" // Replace with your actual VAPID key
           });
 
           if (token) {
@@ -72,7 +72,7 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
       if (permission === 'granted') {
         const messaging = getMessaging(firebaseApp);
         const token = await getToken(messaging, {
-          vapidKey: "YOUR_VAPID_KEY_HERE"
+          vapidKey: "YOUR_PUBLIC_VAPID_KEY_HERE"
         });
         setFcmToken(token);
         return true;
