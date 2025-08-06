@@ -16,12 +16,34 @@ const firebaseConfig = {
   measurementId: "G-XSBF71H3WX",
 };
 
+// Get base URL for environment-specific handling
+const baseUrl = self.location.origin || 'https://404movers.com';
+
+// Retry logic for robust notification handling
+const showNotificationWithRetry = async (title, options, retries = 2) => {
+  try {
+    return await self.registration.showNotification(title, options);
+  } catch (error) {
+    if (retries > 0) {
+      console.log(`Retrying notification... ${retries} attempts left`);
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+      return showNotificationWithRetry(title, options, retries - 1);
+    }
+    throw error;
+  }
+};
+
 // Initialize Firebase with error handling
 let messaging;
 try {
   firebase.initializeApp(firebaseConfig);
   messaging = firebase.messaging();
   console.log('Firebase messaging initialized successfully');
+  
+  // Check notification permission
+  if (typeof Notification !== 'undefined' && Notification.permission !== 'granted') {
+    console.warn('Notification permission not granted. Users may not receive notifications.');
+  }
 } catch (error) {
   console.error('Firebase initialization failed:', error);
 }
@@ -54,21 +76,23 @@ if (messaging) {
           }
         ],
         data: {
-          url: payload.data?.url || 'https://404movers.com',
+          url: payload.data?.url || baseUrl,
           timestamp: Date.now()
         }
       };
 
-      return self.registration.showNotification(notificationTitle, notificationOptions);
+      // Use retry logic for robust notification display
+      return showNotificationWithRetry(notificationTitle, notificationOptions);
     } catch (error) {
       console.error('Error showing notification:', error);
       
-      // Fallback notification
-      return self.registration.showNotification(
+      // Fallback notification with retry
+      return showNotificationWithRetry(
         '404MOVERS',
         {
           body: 'New update available',
-          icon: '/icons/default-icon.png'
+          icon: '/icons/default-icon.png',
+          data: { url: baseUrl, timestamp: Date.now() }
         }
       );
     }
@@ -86,6 +110,7 @@ self.addEventListener('notificationclick', function(event) {
   
   if (action === 'dismiss') {
     // Just close the notification
+    console.log('Notification dismissed by user');
     return;
   }
   
@@ -97,21 +122,27 @@ self.addEventListener('notificationclick', function(event) {
         for (let i = 0; i < clientList.length; i++) {
           const client = clientList[i];
           if (client.url.includes('404movers') && 'focus' in client) {
+            console.log('Focusing existing app window');
             return client.focus();
           }
         }
         
         // Open new window if app is not open
         const urlToOpen = action === 'open' 
-          ? (notificationData.url || 'https://404movers.com')
-          : 'https://404movers.com';
+          ? (notificationData.url || baseUrl)
+          : baseUrl;
           
+        console.log('Opening new app window:', urlToOpen);
         if (clients.openWindow) {
           return clients.openWindow(urlToOpen);
         }
       })
       .catch(error => {
         console.error('Error handling notification click:', error);
+        // Fallback: try to open the base URL
+        if (clients.openWindow) {
+          return clients.openWindow(baseUrl);
+        }
       })
   );
 });
@@ -121,7 +152,16 @@ self.addEventListener('notificationclose', function(event) {
   console.log('Notification closed:', event);
   
   // Track notification dismissal for analytics if needed
-  // analytics.track('notification_dismissed', { tag: event.notification.tag });
+  try {
+    // You can add analytics tracking here
+    // Example: analytics.track('notification_dismissed', { tag: event.notification.tag });
+    console.log('Notification dismissed:', {
+      tag: event.notification.tag,
+      timestamp: Date.now()
+    });
+  } catch (error) {
+    console.error('Error tracking notification close:', error);
+  }
 });
 
 // Handle push events (for additional custom logic)
@@ -132,7 +172,13 @@ self.addEventListener('push', function(event) {
   if (event.data) {
     try {
       const data = event.data.json();
-      console.log('Push data:', data);
+      console.log('Push data (JSON):', data);
+      
+      // Custom push handling logic can go here
+      // For example, different handling based on data.type
+      if (data.type === 'urgent') {
+        console.log('Urgent push notification received');
+      }
     } catch (error) {
       console.log('Push data (text):', event.data.text());
     }
@@ -142,6 +188,18 @@ self.addEventListener('push', function(event) {
 // Error handling for service worker
 self.addEventListener('error', function(event) {
   console.error('Service Worker error:', event.error);
+  
+  // Report critical errors (you can add error reporting service here)
+  try {
+    // Example: Send error to monitoring service
+    console.error('Critical Service Worker Error:', {
+      message: event.error.message,
+      stack: event.error.stack,
+      timestamp: Date.now()
+    });
+  } catch (reportError) {
+    console.error('Failed to report error:', reportError);
+  }
 });
 
 // Handle service worker activation
@@ -159,6 +217,12 @@ self.addEventListener('activate', function(event) {
           }
         })
       );
+    }).then(() => {
+      console.log('Service Worker activation complete');
+      // Take control of all clients immediately
+      return self.clients.claim();
+    }).catch(error => {
+      console.error('Error during service worker activation:', error);
     })
   );
 });
@@ -167,6 +231,25 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('install', function(event) {
   console.log('Service Worker installing');
   
-  // Skip waiting to activate immediately
-  self.skipWaiting();
+  // Pre-cache critical resources during install
+  event.waitUntil(
+    caches.open('404movers-v1').then(cache => {
+      console.log('Pre-caching critical resources');
+      return cache.addAll([
+        '/',
+        '/icons/notification-icon-192.png',
+        '/icons/badge-icon-72.png'
+      ]).catch(error => {
+        console.warn('Some resources failed to pre-cache:', error);
+        // Don't fail the installation if pre-caching fails
+        return Promise.resolve();
+      });
+    }).then(() => {
+      console.log('Service Worker installation complete');
+      // Skip waiting to activate immediately
+      return self.skipWaiting();
+    }).catch(error => {
+      console.error('Service Worker installation failed:', error);
+    })
+  );
 });
