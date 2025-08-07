@@ -1,11 +1,38 @@
 import { useCallback, useState, useEffect } from "react";
 
+/*
+ * Hooks for persisting state in Web Storage.  The Web Storage APIs
+ * (`localStorage` and `sessionStorage`) are only available in a browser
+ * environment. When these hooks are used during server side rendering (SSR)
+ * or in tests without a DOM, direct access to `window.localStorage` or
+ * `window.sessionStorage` will throw. To make these hooks resilient, we
+ * detect whether `window` and the relevant storage object exist and fall
+ * back to a simple in‑memory shim that implements the `getItem`, `setItem`
+ * and `removeItem` interface.
+ */
 export function useLocalStorage(key, defaultValue) {
-  return useStorage(key, defaultValue, window.localStorage);
+  const storage = typeof window !== 'undefined' && window.localStorage ? window.localStorage : createMemoryStorage();
+  return useStorage(key, defaultValue, storage);
 }
 
 export function useSessionStorage(key, defaultValue) {
-  return useStorage(key, defaultValue, window.sessionStorage);
+  const storage = typeof window !== 'undefined' && window.sessionStorage ? window.sessionStorage : createMemoryStorage();
+  return useStorage(key, defaultValue, storage);
+}
+
+function createMemoryStorage() {
+  // simple in‑memory fallback storage. data is lost between renders but
+  // prevents errors when storage is unavailable.
+  let store = {};
+  return {
+    getItem: (key) => (key in store ? store[key] : null),
+    setItem: (key, value) => {
+      store[key] = value;
+    },
+    removeItem: (key) => {
+      delete store[key];
+    },
+  };
 }
 
 function useStorage(key, defaultValue, storageObject) {
@@ -13,11 +40,7 @@ function useStorage(key, defaultValue, storageObject) {
     const jsonValue = storageObject.getItem(key);
     if (jsonValue != null) return JSON.parse(jsonValue);
 
-    if (typeof defaultValue === "function") {
-      return defaultValue();
-    } else {
-      return defaultValue;
-    }
+    return typeof defaultValue === "function" ? defaultValue() : defaultValue;
   });
 
   useEffect(() => {
