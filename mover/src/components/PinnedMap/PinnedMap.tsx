@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import GoogleMapReact from "google-map-react";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 
 import styles from "./PinnedMap.module.scss";
 import colors from "@/assets/scss/colors.module.scss";
@@ -8,69 +8,18 @@ import colors from "@/assets/scss/colors.module.scss";
 const comingSoonDot = "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
 const currentDot = "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
 
+const locations = [
+  { lat: 53.54, lng: -113.49, title: "Edmonton", isCurrent: false },
+  { lat: 52.26, lng: -113.81, title: "Red Deer", isCurrent: false },
+  { lat: 51.04, lng: -114.07, title: "Calgary", isCurrent: true },
+  { lat: 49.69, lng: -112.83, title: "Lethbridge", isCurrent: false },
+  { lat: 50.04, lng: -110.67, title: "Medicine Hat", isCurrent: false },
+  { lat: 49.88, lng: -119.49, title: "Kelowna", isCurrent: false },
+  { lat: 48.42, lng: -123.36, title: "Victoria", isCurrent: false },
+  { lat: 49.26, lng: -123.11, title: "Vancouver", isCurrent: false },
+];
+
 const PinnedMap = () => {
-  const renderMarkers = React.useCallback((map: any, maps: any) => {
-    const edmonton = new maps.Marker({
-      position: { lat: 53.54, lng: -113.49 },
-      map,
-      title: "Edmonton",
-      icon: { url: comingSoonDot },
-    });
-    const redDeer = new maps.Marker({
-      position: { lat: 52.26, lng: -113.81 },
-      map,
-      title: "Red Deer",
-      icon: { url: comingSoonDot },
-    });
-    const calgary = new maps.Marker({
-      position: { lat: 51.04, lng: -114.07 },
-      map,
-      title: "Calgary",
-      icon: { url: currentDot },
-    });
-    const lethbridge = new maps.Marker({
-      position: { lat: 49.69, lng: -112.83 },
-      map,
-      title: "Lethbridge",
-      icon: { url: comingSoonDot },
-    });
-    const medicineHat = new maps.Marker({
-      position: { lat: 50.04, lng: -110.67 },
-      map,
-      title: "Medicine Hat",
-      icon: { url: comingSoonDot },
-    });
-    const kelowna = new maps.Marker({
-      position: { lat: 49.88, lng: -119.49 },
-      map,
-      title: "Kelowna",
-      icon: { url: comingSoonDot },
-    });
-    const victoria = new maps.Marker({
-      position: { lat: 48.42, lng: -123.36 },
-      map,
-      title: "Victoria",
-      icon: { url: comingSoonDot },
-    });
-    const vancouver = new maps.Marker({
-      position: { lat: 49.26, lng: -123.11 },
-      map,
-      title: "Vancouver",
-      icon: { url: comingSoonDot },
-    });
-
-    return [
-      edmonton,
-      redDeer,
-      calgary,
-      lethbridge,
-      medicineHat,
-      kelowna,
-      victoria,
-      vancouver,
-    ];
-  }, []);
-
   return (
     <div>
       <h4 style={{ textAlign: "center" }}>
@@ -90,19 +39,28 @@ const PinnedMap = () => {
       </div>
 
       <div style={{ height: "500px", width: "100%" }}>
-        <GoogleMapReact
-          resetBoundsOnResize={true}
-          options={{ clickableIcons: true }}
-          bootstrapURLKeys={{
-            key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY!,
-          }}
-          defaultCenter={{
-            lat: 51.29,
-            lng: -116.96,
-          }}
-          defaultZoom={5.5}
-          onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
-        ></GoogleMapReact>
+        <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}>
+          <Map
+            defaultCenter={{ lat: 51.29, lng: -116.96 }}
+            defaultZoom={5.5}
+            style={{ width: "100%", height: "100%" }}
+            gestureHandling="greedy"
+          >
+            {locations.map((location, index) => (
+              <AdvancedMarker
+                key={index}
+                position={{ lat: location.lat, lng: location.lng }}
+                title={location.title}
+              >
+                <img
+                  src={location.isCurrent ? currentDot : comingSoonDot}
+                  alt={location.title}
+                  style={{ width: 32, height: 32 }}
+                />
+              </AdvancedMarker>
+            ))}
+          </Map>
+        </APIProvider>
       </div>
     </div>
   );
