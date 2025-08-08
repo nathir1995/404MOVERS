@@ -1,3 +1,4 @@
+Route::get('/', fn() => response()->json(['status' => 'ok', 'app' => 'Movers API']));
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
