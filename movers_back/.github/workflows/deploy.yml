@@ -21,35 +21,35 @@ jobs:
       - name: Cache Composer dependencies
         uses: actions/cache@v3
         with:
-          path: backend/vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('backend/composer.lock') }}
+          path: movers_back/vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('movers_back/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
 
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
-        working-directory: backend
+        working-directory: movers_back
 
       - name: Copy .env file
         run: cp .env.example .env
-        working-directory: backend
+        working-directory: movers_back
 
       - name: Generate app key
         run: php artisan key:generate
-        working-directory: backend
+        working-directory: movers_back
 
       - name: Set correct permissions
         run: chmod -R 775 storage bootstrap/cache
-        working-directory: backend
+        working-directory: movers_back
 
       - name: Cache config
         run: php artisan config:cache
-        working-directory: backend
+        working-directory: movers_back
 
       - name: Cache routes
         run: php artisan route:cache
-        working-directory: backend
+        working-directory: movers_back
 
       - name: Cache views
         run: php artisan view:cache
-        working-directory: backend
+        working-directory: movers_back
