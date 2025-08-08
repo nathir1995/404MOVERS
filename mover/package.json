@@ -1,12 +1,4 @@
 {
-  "dependencies": {
-    "@vis.gl/react-google-maps": "^1.0.0"
-  },
-  "devDependencies": {
-    "@types/google.maps": "^3.54.0"
-  }
-}
-{
   "name": "404movers",
   "version": "0.1.0",
   "private": true,
