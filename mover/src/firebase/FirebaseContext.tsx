@@ -3,18 +3,26 @@ import FirebaseContextType from "./FirebaseContextType";
 import { app as firebaseApp } from "@/firebase";
 import { getMessaging, getToken } from "firebase/messaging";
 
-const FirebaseContext = createContext<FirebaseContextType>({} as FirebaseContextType);
+// Fix: Provide a proper default context value to avoid runtime errors
+const defaultContext: FirebaseContextType = {
+  fcmToken: undefined,
+  notificationPermission: "default",
+  requestNotificationPermission: async () => false,
+  isInitialized: false,
+};
+
+const FirebaseContext = createContext<FirebaseContextType>(defaultContext);
 
 export const FirebaseContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [fcmToken, setFcmToken] = React.useState<string | undefined>();
-  const [notificationPermission, setNotificationPermission] = React.useState<NotificationPermission>('default');
+  const [fcmToken, setFcmToken] = React.useState<string | undefined>(undefined);
+  const [notificationPermission, setNotificationPermission] = React.useState<NotificationPermission>("default");
   const [isInitialized, setIsInitialized] = React.useState(false);
 
   React.useEffect(() => {
     const initFCM = async () => {
-      // Check if we're in browser environment
       if (typeof window === "undefined" || !("Notification" in window)) {
-        console.log("Notifications not supported in this environment");
+        // Fix: use warn for environment issues
+        console.warn("Notifications not supported in this environment");
         setIsInitialized(true);
         return;
       }
@@ -22,39 +30,33 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
       const permission = Notification.permission;
       setNotificationPermission(permission);
 
-      if (permission === 'denied') {
-        console.log("Notifications are blocked. Skipping FCM initialization.");
+      if (permission === "denied") {
+        console.warn("Notifications are blocked. Skipping FCM initialization.");
         setIsInitialized(true);
         return;
       }
 
       try {
-        // Only proceed if permission is granted
-        if (permission === 'granted') {
+        if (permission === "granted") {
           const messaging = getMessaging(firebaseApp);
-          
-          // Try to get token - this might fail if VAPID key is not configured
+
           try {
             const token = await getToken(messaging, {
-              // You need to get your VAPID key from Firebase Console
-              // Go to: Project Settings > Cloud Messaging > Web Push certificates
-              vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY || undefined
+              vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
             });
 
             if (token) {
-              console.log("FCM token obtained:", token);
+              console.info("FCM token obtained:", token);
               setFcmToken(token);
             } else {
-              console.log("No FCM token received - VAPID key might be missing");
+              console.warn("No FCM token received - VAPID key might be missing");
             }
           } catch (tokenError: any) {
-            console.log("FCM token generation failed:", tokenError.message);
-            // Don't throw error, just log it
+            console.error("FCM token generation failed:", tokenError?.message ?? tokenError);
           }
         }
       } catch (error: any) {
-        console.log("FCM initialization failed:", error.message);
-        // Don't throw error, just log it
+        console.error("FCM initialization failed:", error?.message ?? error);
       } finally {
         setIsInitialized(true);
       }
@@ -65,7 +67,7 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
 
   const requestNotificationPermission = React.useCallback(async () => {
     if (typeof window === "undefined" || !("Notification" in window)) {
-      console.log("Notifications not supported");
+      console.warn("Notifications not supported");
       return false;
     }
 
@@ -73,44 +75,43 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
       const permission = await Notification.requestPermission();
       setNotificationPermission(permission);
 
-      if (permission === 'granted') {
+      if (permission === "granted") {
         try {
           const messaging = getMessaging(firebaseApp);
           const token = await getToken(messaging, {
-            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY || undefined
+            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
           });
-          
+
           if (token) {
             setFcmToken(token);
             return true;
           } else {
-            console.log("FCM token not received - check VAPID key configuration");
+            console.warn("FCM token not received - check VAPID key configuration");
             return false;
           }
-        } catch (tokenError) {
-          console.log("FCM token generation failed after permission grant:", tokenError);
+        } catch (tokenError: any) {
+          console.error("FCM token generation failed after permission grant:", tokenError?.message ?? tokenError);
           return false;
         }
       }
       return false;
-    } catch (error) {
-      console.log("Permission request failed:", error);
+    } catch (error: any) {
+      console.error("Permission request failed:", error?.message ?? error);
       return false;
     }
   }, []);
 
-  const memoedValue = React.useMemo(() => ({
-    fcmToken,
-    notificationPermission,
-    requestNotificationPermission,
-    isInitialized,
-  }), [fcmToken, notificationPermission, requestNotificationPermission, isInitialized]);
-
-  return (
-    <FirebaseContext.Provider value={memoedValue}>
-      {children}
-    </FirebaseContext.Provider>
+  const memoedValue = React.useMemo(
+    () => ({
+      fcmToken,
+      notificationPermission,
+      requestNotificationPermission,
+      isInitialized,
+    }),
+    [fcmToken, notificationPermission, requestNotificationPermission, isInitialized]
   );
+
+  return <FirebaseContext.Provider value={memoedValue}>{children}</FirebaseContext.Provider>;
 };
 
 export default function useFirebaseContext() {
