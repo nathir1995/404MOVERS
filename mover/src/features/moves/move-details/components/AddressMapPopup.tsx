@@ -1,15 +1,12 @@
 import React from "react";
 import { PopupUtils } from "@/hooks/usePopup";
 import Modal from "react-modal";
-import GoogleMapReact from "google-map-react";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 import { MdClose } from "react-icons/md";
 import Move from "@/models/Move/Move.model";
 
-import {
-  StartDotImg,
-  EndDotImg,
-  defaultCetner,
-} from "@/features/book-move/utils/mapProps";
+const StartDotImg = "https://maps.google.com/mapfiles/kml/paddle/A.png";
+const EndDotImg = "https://maps.google.com/mapfiles/kml/paddle/B.png";
 
 type IProps = {
   popup: PopupUtils;
@@ -51,6 +48,7 @@ const AddressMapPopup = ({ popup, move, type }: IProps) => {
     }),
     [start_lat, start_lang]
   );
+  
   const end = React.useMemo(
     () => ({
       lat: parseFloat(end_lat),
@@ -59,21 +57,7 @@ const AddressMapPopup = ({ popup, move, type }: IProps) => {
     [end_lat, end_lang]
   );
 
-  const renderMarkers = React.useCallback(
-    (map: any, maps: any) => [
-      new maps.Marker({
-        position: start,
-        map,
-        icon: { url: StartDotImg },
-      }),
-      new maps.Marker({
-        position: end,
-        map,
-        icon: { url: EndDotImg },
-      }),
-    ],
-    [start_lat, start_lang, end_lat, end_lang]
-  );
+  const centerPosition = type === "start" ? start : end;
 
   return (
     <Modal
@@ -85,20 +69,32 @@ const AddressMapPopup = ({ popup, move, type }: IProps) => {
       ariaHideApp={false}
     >
       <div style={{ height: "100%", width: "100%", position: "relative" }}>
-        <GoogleMapReact
-          resetBoundsOnResize={true}
-          options={{
-            clickableIcons: true,
-            fullscreenControl: false,
-            gestureHandling: "greedy",
-          }}
-          bootstrapURLKeys={{
-            key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY!,
-          }}
-          defaultCenter={type === "start" ? start : end}
-          defaultZoom={14}
-          onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
-        ></GoogleMapReact>
+        <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY || ''}>
+          <Map
+            defaultCenter={centerPosition}
+            defaultZoom={14}
+            style={{ width: "100%", height: "100%" }}
+            gestureHandling="greedy"
+            disableDefaultUI={true}
+            zoomControl
+          >
+            <AdvancedMarker position={start} title="Start Location">
+              <img
+                src={StartDotImg}
+                alt="Start"
+                style={{ width: 32, height: 37 }}
+              />
+            </AdvancedMarker>
+            
+            <AdvancedMarker position={end} title="End Location">
+              <img
+                src={EndDotImg}
+                alt="End"
+                style={{ width: 32, height: 37 }}
+              />
+            </AdvancedMarker>
+          </Map>
+        </APIProvider>
 
         <button
           type="button"
