@@ -27,7 +27,12 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install Composer dependencies
-        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+        run: |
+          composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist || cat composer.lock
+        working-directory: movers_back
+
+      - name: Check vendor folder
+        run: ls -la
         working-directory: movers_back
 
       - name: Copy .env file
