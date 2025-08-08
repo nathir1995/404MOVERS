@@ -1,14 +1,13 @@
 // ** Redux Imports
 import { createSlice } from "@reduxjs/toolkit";
 import { APP_NAME } from "configs/global";
-
 import themeConfig from "configs/themeConfig";
 
+// Middleware to persist customizer state to localStorage
 export const customizerLocalStorageMiddleware =
   (store) => (next) => (action) => {
     const result = next(action);
 
-    // Persist customizer state to localStorage only in a browser environment
     if (action.type?.startsWith("customizer/")) {
       const customizerState = store.getState().customizer;
       if (typeof window !== 'undefined' && window.localStorage) {
@@ -21,6 +20,7 @@ export const customizerLocalStorageMiddleware =
     return result;
   };
 
+// Load initial state from localStorage or fallback to default
 const getInitialState = () => {
   if (typeof window !== 'undefined' && window.localStorage) {
     const value = window.localStorage.getItem(`${APP_NAME}_THEME_CONFIG`);
@@ -32,10 +32,13 @@ const getInitialState = () => {
       }
     }
   }
-  // Fallback to default theme config when storage is unavailable or parsing fails
-  return themeConfig;
+  return {
+    ...themeConfig,
+    userRole: null, // Default role
+  };
 };
 
+// Create slice
 export const customizerSlice = createSlice({
   name: "customizer",
   initialState: getInitialState(),
@@ -61,12 +64,22 @@ export const customizerSlice = createSlice({
     hideScrollToTop: (state, action) => {
       state.hideScrollToTop = action.payload;
     },
+    setUserRole: (state, action) => {
+      state.userRole = action.payload;
+    },
   },
 });
 
-export const changeMode = (mode) => {
-  return (dispatch) => dispatch(customizerSlice.actions.changeMode(mode));
-};
+// Action creators
+export const {
+  changeMode,
+  collapseSidebar,
+  changeNavbarColor,
+  changeNavbarType,
+  changeFooterType,
+  changeMenuColor,
+  hideScrollToTop,
+  setUserRole,
+} = customizerSlice.actions;
 
-// ...other exports and reducer remain unchanged
 export default customizerSlice.reducer;
