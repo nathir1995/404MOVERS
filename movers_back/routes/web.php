@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,11 @@ Route::get('/', function () {
         'status' => 'ok',
         'docs' => '/health'
     ], 200);
+});
+
+// Admin-only routes
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
 // Add your other routes below this line
