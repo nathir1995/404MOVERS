@@ -16,30 +16,40 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, json, zip
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, json, zip, fileinfo, openssl, tokenizer
 
       - name: Cache Composer dependencies
         uses: actions/cache@v3
         with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          path: backend/vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('backend/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
 
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+        working-directory: backend
 
       - name: Copy .env file
         run: cp .env.example .env
+        working-directory: backend
 
       - name: Generate app key
         run: php artisan key:generate
+        working-directory: backend
+
+      - name: Set correct permissions
+        run: chmod -R 775 storage bootstrap/cache
+        working-directory: backend
 
       - name: Cache config
         run: php artisan config:cache
+        working-directory: backend
 
       - name: Cache routes
         run: php artisan route:cache
+        working-directory: backend
 
       - name: Cache views
         run: php artisan view:cache
+        working-directory: backend
