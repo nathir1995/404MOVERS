@@ -7,7 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     defaults:
       run:
         working-directory: movers_back
@@ -31,11 +31,16 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install Composer dependencies
-        run: |
-          composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-      - name: Check vendor folder
-        run: ls -la vendor
+      - name: Verify vendor folder exists
+        run: |
+          echo "Checking if vendor/autoload.php exists..."
+          ls -la vendor/autoload.php
+          echo "Current directory:"
+          pwd
+          echo "Directory contents:"
+          ls -la
 
       - name: Copy .env file
         run: cp .env.example .env
@@ -44,7 +49,14 @@ jobs:
         run: php artisan key:generate
 
       - name: Set correct permissions
-        run: chmod -R 775 storage bootstrap/cache
+        run: |
+          chmod -R 775 storage bootstrap/cache
+          chmod -R 755 vendor
+
+      - name: Test PHP and Artisan
+        run: |
+          php -v
+          php artisan --version
 
       - name: Cache config
         run: php artisan config:cache
@@ -54,3 +66,11 @@ jobs:
 
       - name: Cache views
         run: php artisan view:cache
+
+      - name: Prepare deployment artifact
+        run: |
+          echo "Creating deployment package..."
+          tar -czf ../laravel-app.tar.gz .
+          
+      # Add your actual deployment step here
+      # This is where you'd deploy to your server/container
