@@ -1,34 +1,3 @@
-<?php
-
-use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
-// Railway health check route
-Route::get('/', function () {
-    return response()->json([
-        'status' => 'ok',
-        'message' => 'Movers Backend API is running',
-        'version' => '1.0.0',
-        'environment' => config('app.env'),
-        'timestamp' => now()->toISOString()
-    ]);
-});
-
-// Additional health endpoint
-Route::get('/health', function () {
-    return response()->json([
-        'status' => 'healthy',
-        'database' => 'connected', // You can add DB check here later
-        'cache' => 'working'
-    ]);
-});
-
-// Your existing routes below...<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
