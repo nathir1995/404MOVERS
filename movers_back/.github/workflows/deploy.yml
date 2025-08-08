@@ -32,10 +32,10 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist || cat composer.lock
+          composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
       - name: Check vendor folder
-        run: ls -la
+        run: ls -la vendor
 
       - name: Copy .env file
         run: cp .env.example .env
