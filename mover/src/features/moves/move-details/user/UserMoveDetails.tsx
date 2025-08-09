@@ -28,11 +28,16 @@ const UserMoveDetails = ({ moveId }: IProps) => {
     );
   }
 
-  const canShowMoversManagement =
-    move.movers !== undefined &&
-    move.movers.length > 0 &&
-    move.remaining_number_of_labors === 0 &&
-    move.remaining_number_of_drivers === 0;
+  const canShowMoversManagement = React.useMemo(() => {
+    if (!move) return false;
+    
+    const hasMovers = move.movers && Array.isArray(move.movers) && move.movers.length > 0;
+    const noRemainingDrivers = move.remaining_number_of_drivers === 0;
+    const noRemainingLabors = move.remaining_number_of_labors === 0;
+    
+    return hasMovers && noRemainingDrivers && noRemainingLabors;
+  }, [move]);
+
   return (
     <>
       <div className={styles.padding_container}>
