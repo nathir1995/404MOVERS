@@ -1,37 +1,18 @@
 import React from "react";
-import { useGetUpcomingMoves } from "./api";
-import colors from "@/assets/scss/colors.module.scss";
-import MovesView from "./MovesView";
+import { useGetUpcomingMoves } from "./api"; // existing hook
 import useDataToMoves from "../utils/useDataToMoves";
+import MovesView from "./MovesView";
+import useAuth from "@/features/auth/utils/useAuth";
 
-const UpcomingMovesUser = () => {
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useGetUpcomingMoves();
-  const moves = useDataToMoves(data);
+export default function UpcomingMovesUser() {
+  const { data, isLoading, isError } = useGetUpcomingMoves();
+  const { user } = useAuth();
 
-  return (
-    <MovesView
-      moves={moves}
-      isError={isError}
-      isLoading={isLoading}
-      refetch={refetch}
-      title={
-        <>
-          <span style={{ color: colors.primary }}>UPCOMING</span> MOVES
-        </>
-      }
-      hasNextPage={hasNextPage}
-      fetchNextPage={fetchNextPage}
-      isFetchingNextPage={isFetchingNextPage}
-    />
-  );
-};
+  const moves = useDataToMoves<any>(data);
+  const currentUserId = user?.id ?? null;
 
-export default UpcomingMovesUser;
+  if (isLoading) return <div>Loading upcoming moves…</div>;
+  if (isError) return <div>Failed to load moves. Please try again.</div>;
+
+  return <MovesView moves={moves} currentUserId={currentUserId} />;
+}
