@@ -1,70 +1,59 @@
 import React from "react";
-import Move from "@/models/Move/Move.model";
+import { a, findSafe } from "@/utils/safeArray";
+// import types as needed
 
-import styles from "./MoveCard.module.scss";
-import Image from "next/image";
-import CALENDAR_ADD from "@/assets/images/icons/calendar-add.png";
-import START_IMG from "@/assets/images/icons/truck-go.png";
-import END_IMG from "@/assets/images/icons/truck-tick.png";
-import Link from "next/link";
-import sm from "@/configs/site-map";
-import MoveStatus from "../MoveStatus";
-import useAuth from "@/features/auth/utils/useAuth";
-import { ROLE } from "@/constants/roles";
-import { PiPackage } from "react-icons/pi";
-import { formatDateTime } from "@/utility/date";
+export default function MoveCard({
+  move,
+  assignedMover,
+}: {
+  move: any;
+  assignedMover?: any;
+}) {
+  const movers = a(move?.movers);
+  const rooms  = a(move?.rooms);
+  const items  = a(move?.items);
 
-type IProps = {
-  move: Move;
-};
+  // Example of safe find on static steps
+  const steps = a(move?.steps); // or your constant array if applicable
+  const currentStep = findSafe(steps, (s: any) => s?.value === move?.status);
 
-const formatMoveDateTime = (date_time: string): string =>
-  date_time.split("T")[0];
-
-const MoveCard = ({ move }: IProps) => {
-  const { role } = useAuth();
-  const move_id = move.id;
-  const detailsUrl = React.useMemo(() => {
-    if (!role) return "/";
-    if (role === ROLE.USER)
-      return sm.portal.user.moves.details.navLink(move.id);
-    return sm.portal.mover.moves.details.navLink(move.id);
-  }, [move_id, role]);
+  const pickup = move?.pickup_address ?? move?.pickup ?? {};
+  const dropoff = move?.dropoff_address ?? move?.dropoff ?? {};
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <div>
-          <Image src={CALENDAR_ADD} alt="" />
-          <p style={{ fontWeight: "bold" }}>
-            {formatDateTime(move.move_date_time)}
-          </p>
-        </div>
-        <MoveStatus status={move.move_status.key} />
+    <div>
+      <h4>Move #{move?.id ?? "—"}</h4>
+
+      <div>
+        <strong>Status:</strong> {currentStep?.label ?? move?.status ?? "—"}
       </div>
 
-      <div className={styles.content}>
-        <div>
-          <PiPackage />
-          <p>
-            <strong>{move.move_package.name}</strong>
-          </p>
-        </div>
-        <div>
-          <Image src={START_IMG} alt="" />
-          <p>{move.start_point_name}</p>
-        </div>
-        <div>
-          <Image src={END_IMG} alt="" />
-          <p>{move.end_point_name}</p>
-        </div>
+      <div>
+        <strong>Pickup:</strong>{" "}
+        {pickup?.line1 ?? pickup?.address_line_1 ?? "—"}
       </div>
 
-      <div className={styles.footer}>
-        <Link href={detailsUrl}>View Details</Link>
+      <div>
+        <strong>Dropoff:</strong>{" "}
+        {dropoff?.line1 ?? dropoff?.address_line_1 ?? "—"}
       </div>
+
+      <div>
+        <strong>Assigned mover:</strong>{" "}
+        {assignedMover
+          ? `${assignedMover?.first_name ?? ""} ${assignedMover?.last_name ?? ""}`.trim()
+          : "—"}
+      </div>
+
+      <div>
+        <strong>Rooms:</strong> {rooms.length}
+      </div>
+
+      <ul>
+        {items.map((it: any, i: number) => (
+          <li key={it?.id ?? i}>{it?.name ?? "Item"}</li>
+        ))}
+      </ul>
     </div>
   );
-};
-
-export default MoveCard;
+}
