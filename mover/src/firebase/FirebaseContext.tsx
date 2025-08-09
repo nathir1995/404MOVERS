@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import FirebaseContextType from "./FirebaseContextType";
 import { app as firebaseApp } from "@/firebase";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, isSupported } from "firebase/messaging";
 
 const defaultContext: FirebaseContextType = {
   fcmToken: undefined,
@@ -41,26 +41,34 @@ export const FirebaseContextProvider = ({
 
       try {
         if (permission === "granted") {
+          // Check if Firebase Messaging is supported in this browser
+          const supported = await isSupported();
+          if (!supported) {
+            console.warn(
+              "Firebase messaging is not supported in this browser. Skipping FCM initialization."
+            );
+            setIsInitialized(true);
+            return;
+          }
+
           const messaging = getMessaging(firebaseApp);
 
           try {
-            // NEW: check for VAPID key before attempting token generation
+            // Guard against missing VAPID key before attempting token generation
             const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
             if (!vapidKey) {
               console.warn(
                 "NEXT_PUBLIC_FIREBASE_VAPID_KEY is not set. Skipping FCM token generation."
               );
             } else {
-              const token = await getToken(messaging, {
-                vapidKey,
-              });
+              const token = await getToken(messaging, { vapidKey });
 
               if (token) {
                 console.info("FCM token obtained:", token);
                 setFcmToken(token);
               } else {
                 console.warn(
-                  "No FCM token received - check your VAPID key configuration"
+                  "No FCM token received – check your VAPID key configuration"
                 );
               }
             }
@@ -93,8 +101,16 @@ export const FirebaseContextProvider = ({
 
       if (permission === "granted") {
         try {
+          // Check support before requesting a token
+          const supported = await isSupported();
+          if (!supported) {
+            console.warn(
+              "Firebase messaging is not supported in this browser. Skipping FCM token request."
+            );
+            return false;
+          }
+
           const messaging = getMessaging(firebaseApp);
-          // NEW: guard against missing VAPID key when requesting token
           const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
           if (!vapidKey) {
             console.warn(
@@ -102,16 +118,14 @@ export const FirebaseContextProvider = ({
             );
             return false;
           }
-          const token = await getToken(messaging, {
-            vapidKey,
-          });
+          const token = await getToken(messaging, { vapidKey });
 
           if (token) {
             setFcmToken(token);
             return true;
           } else {
             console.warn(
-              "FCM token not received - check VAPID key configuration"
+              "FCM token not received – check VAPID key configuration"
             );
             return false;
           }
