@@ -17,7 +17,6 @@ export default function MovesView({ moves, currentUserId }: Props) {
   return (
     <div className="grid gap-4">
       {list.map((move) => {
-        // Example of safe usage in case cards expect a specific mover
         const assigned = findSafe(move?.movers, (m: any) => m?.id === currentUserId);
         return (
           <MoveCard
