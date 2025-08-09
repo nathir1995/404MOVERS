@@ -14,6 +14,7 @@ const itemStyles: React.CSSProperties = {
   justifyContent: "space-between",
   gap: ".5rem",
 };
+
 const Item = ({ label, value }: { label: string; value: React.ReactNode }) => {
   return (
     <div style={itemStyles}>
@@ -96,6 +97,18 @@ const MoverDetails = ({
 };
 
 const MoversManagementCard = ({ move }: IProps) => {
+  // Safe access to movers array
+  const safeMovers = React.useMemo(() => {
+    if (!move?.movers || !Array.isArray(move.movers)) {
+      return [];
+    }
+    return move.movers;
+  }, [move?.movers]);
+
+  if (safeMovers.length === 0) {
+    return null;
+  }
+
   return (
     <div style={{ marginTop: "1.5rem" }}>
       <h5
@@ -108,11 +121,11 @@ const MoversManagementCard = ({ move }: IProps) => {
         Movers
       </h5>
 
-      {move.movers?.map((mover, index) => (
+      {safeMovers.map((mover, index) => (
         <MoverDetails
           key={mover.id}
           mover={mover}
-          isLast={index === move.movers!.length - 1}
+          isLast={index === safeMovers.length - 1}
           move_id={move.id}
         />
       ))}
