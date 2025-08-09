@@ -3,7 +3,6 @@ import FirebaseContextType from "./FirebaseContextType";
 import { app as firebaseApp } from "@/firebase";
 import { getMessaging, getToken } from "firebase/messaging";
 
-// Fix: Provide a proper default context value to avoid runtime errors
 const defaultContext: FirebaseContextType = {
   fcmToken: undefined,
   notificationPermission: "default",
@@ -21,7 +20,6 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
   React.useEffect(() => {
     const initFCM = async () => {
       if (typeof window === "undefined" || !("Notification" in window)) {
-        // Fix: use warn for environment issues
         console.warn("Notifications not supported in this environment");
         setIsInitialized(true);
         return;
@@ -93,6 +91,9 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
           console.error("FCM token generation failed after permission grant:", tokenError?.message ?? tokenError);
           return false;
         }
+      } else if (permission === "denied") {
+        console.warn("Notification permission was denied");
+        return false;
       }
       return false;
     } catch (error: any) {
