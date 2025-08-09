@@ -16,7 +16,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  output: 'export',
+
+  // Removed the static export so dynamic routes (like authenticated pages) can be server-rendered.
+  // output: 'export',
 };
 
 module.exports = nextConfig;
