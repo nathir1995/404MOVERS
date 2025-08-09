@@ -11,44 +11,66 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 import styles from "./Chats.module.scss";
 import OpenedChatBox from "./OpenedChatBox";
 
+/**
+ * Safely transform a chat object by ensuring the `users` and `messages`
+ * properties are defined before calling `.find()` or `.map()`. Without this
+ * guard, the page crashes with `TypeError: Cannot read properties of undefined`.
+ */
 const transformChat = (chat: any, userId: any) => {
-  const counter_user = chat.users.find((user: any) => user.id !== userId);
-  const current_user = chat.users.find((user: any) => user.id === userId);
+  // Default to empty arrays if chat.users or chat.messages are undefined
+  const users: any[] = Array.isArray(chat?.users) ? chat.users : [];
+  const messages: any[] = Array.isArray(chat?.messages) ? chat.messages : [];
+
+  // Find the current and counter users (may return undefined if not found)
+  const counter_user = users.find((user: any) => user.id !== userId);
+  const current_user = users.find((user: any) => user.id === userId);
+
+  // Map messages and attach the sender; fallback to counter_user if no current_user
+  const mappedMessages = messages.map((message: any) => {
+    const isFromCurrentUser =
+      current_user && message.user_id === current_user.id;
+    return {
+      ...message,
+      sender: isFromCurrentUser ? current_user : counter_user,
+    };
+  });
 
   return {
     id: chat.id,
     counter_user,
-    messages: chat.messages.map((message: any) => ({
-      ...message,
-      sender: message.user_id === current_user.id ? current_user : counter_user,
-    })),
+    messages: mappedMessages,
   };
 };
 
 const Chats = () => {
   const chatsPopper = usePopup();
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
   useOnClickOutside(containerRef, chatsPopper.handleClose);
 
   const { user, openedChatId, setOpenedChatId } = useAuth();
   const userId = user?.id;
   const { data, isLoading, isError, isSuccess } = useGetAllChats();
 
+  // Safely transform the chats array
   const chats = React.useMemo(() => {
-    if (!data) return [];
+    if (!data || !userId) return [];
     return data.map((chat: any) => transformChat(chat, userId));
   }, [data, userId]);
 
-  const openChat = React.useCallback((chatId: number) => {
-    setOpenedChatId(chatId);
-    chatsPopper.handleClose();
-    //eslint-disable-next-line
-  }, []);
+  const openChat = React.useCallback(
+    (chatId: number) => {
+      setOpenedChatId(chatId);
+      chatsPopper.handleClose();
+      // eslint-disable-next-line
+    },
+    [setOpenedChatId, chatsPopper]
+  );
 
   const closeChat = React.useCallback(() => {
     setOpenedChatId(null);
-  }, []);
+  }, [setOpenedChatId]);
 
+  // Find the opened chat safely
   const openedChat = React.useMemo(() => {
     if (!openedChatId) return null;
     return chats.find((chat: any) => chat.id === openedChatId);
@@ -56,90 +78,47 @@ const Chats = () => {
 
   return (
     <>
-      <button
-        type="button"
-        className={styles.button}
-        onClick={chatsPopper.handleToggle}
-      >
-        <IoChatbubbleEllipsesSharp color={colors.text_primary} size={20} />
-      </button>
-      <div
-        ref={containerRef}
-        className={styles.popper}
-        data-is-open={chatsPopper.isOpen}
-      >
-        <div className={styles.header}>
-          <h5>Chats ({chats.length})</h5>
-          <IoMdClose
-            color="#000"
-            fontSize={24}
-            style={{ cursor: "pointer" }}
-            onClick={chatsPopper.handleClose}
-          />
-        </div>
-        {isLoading && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <ScaleLoader color={colors.primary} />
-          </div>
-        )}
-        {isError && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <h6 style={{ textAlign: "center", color: "red" }}>
-              An Error occured, Please refresh the page and try again
-            </h6>
-          </div>
-        )}
-        {isSuccess && (
-          <div className={styles.content}>
-            {chats.length === 0 ? (
-              <h6 style={{ padding: "1rem" }}>No Messages </h6>
-            ) : (
-              <>
-                {chats.map((chat: any) => (
-                  <div
-                    key={chat.id}
-                    className={styles.item}
-                    onClick={() => openChat(chat.id)}
-                  >
-                    <p className={styles.title}>
-                      {chat?.counter_user?.first_name}{" "}
-                      {chat?.counter_user?.last_name}
-                    </p>
-                    <p className={styles.description}>
-                      {chat?.counter_user?.email}
-                    </p>
-                    <p className={styles.description}>
-                      {chat?.counter_user?.phone_number}
-                    </p>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-        )}
+      {/* Chat trigger icon and indicator */}
+      <div onClick={() => chatsPopper.handleOpen()}>
+        <IoChatbubbleEllipsesSharp color={colors.primary} size={20} />
+        Chats ({chats.length})
       </div>
+      {isLoading && (
+        <ScaleLoader color={colors.primary} height={15} margin={2} width={2} />
+      )}
+      {isError && (
+        <div>An error occurred, please refresh the page and try again.</div>
+      )}
+      {isSuccess && (
+        <>
+          {chats.length === 0 ? (
+            <div>No Messages</div>
+          ) : (
+            <>
+              {chats.map((chat: any) => (
+                <div
+                  key={chat.id}
+                  onClick={() => openChat(chat.id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {/* Show the other participant’s name (if available) */}
+                  {chat?.counter_user?.first_name} {chat?.counter_user?.last_name}
+                  <br />
+                  {chat?.counter_user?.email}
+                  <br />
+                  {chat?.counter_user?.phone_number}
+                </div>
+              ))}
+            </>
+          )}
+        </>
+      )}
+      {/* Opened chat dialog */}
       {openedChat && !!openedChatId && (
         <OpenedChatBox
-          closeChat={closeChat}
           openedChat={openedChat}
           openedChatId={openedChatId}
-          key={openedChat?.id}
+          closeChat={closeChat}
         />
       )}
     </>
