@@ -4,16 +4,20 @@ import { User } from "@/features/auth/utils/AuthContextType";
 import Move from "@/models/Move/Move.model";
 
 export const isUserAlreadyAcceptedMove = (user: User, move: Move): boolean => {
-  if (!move.movers) return false;
+  if (!move?.movers || !Array.isArray(move.movers) || !user?.id) {
+    return false;
+  }
   return move.movers.find((mover) => mover.id === user.id) !== undefined;
 };
 
 export const isRemainingDrivers = (move: Move): boolean => {
+  if (!move?.remaining_number_of_drivers) return false;
   // @ts-ignore
   return parseInt(move.remaining_number_of_drivers) > 0;
 };
 
 export const isRemainingLabors = (move: Move): boolean => {
+  if (!move?.remaining_number_of_labors) return false;
   // @ts-ignore
   return parseInt(move.remaining_number_of_labors) > 0;
 };
@@ -23,6 +27,8 @@ export const checkIfMoverCanAccept = (
   role: ROLE,
   user: User
 ): boolean => {
+  if (!move || !user) return false;
+  
   if (move.move_status.key !== MOVE_STATUS.PENDING) {
     return false;
   }
@@ -51,15 +57,15 @@ export const checkIfMoverCanStart = (
   role: ROLE,
   user: User
 ): boolean => {
-  // if (move.move_status.key !== MOVE_STATUS.ONGOING) {
-  //   return false;
-  // }
+  if (!move?.movers || !Array.isArray(move.movers) || !user?.id) {
+    return false;
+  }
 
   if (role !== ROLE.DRIVER && role !== ROLE.LABOR) {
     return false;
   }
 
-  const targetMover = move.movers?.find((mover) => mover.id === user.id);
+  const targetMover = move.movers.find((mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
   }
@@ -72,15 +78,15 @@ export const checkIfMoverCanFinish = (
   role: ROLE,
   user: User
 ): boolean => {
-  // if (move.move_status.key !== MOVE_STATUS.ONGOING) {
-  //   return false;
-  // }
+  if (!move?.movers || !Array.isArray(move.movers) || !user?.id) {
+    return false;
+  }
 
   if (role !== ROLE.DRIVER && role !== ROLE.LABOR) {
     return false;
   }
 
-  const targetMover = move.movers?.find((mover) => mover.id === user.id);
+  const targetMover = move.movers.find((mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
   }
@@ -93,11 +99,15 @@ export const checkIfMoverShouldStreamLocation = (
   role: ROLE,
   user: User
 ): boolean => {
+  if (!move?.movers || !Array.isArray(move.movers) || !user?.id) {
+    return false;
+  }
+
   if (role !== ROLE.DRIVER && role !== ROLE.LABOR) {
     return false;
   }
 
-  const targetMover = move.movers?.find((mover) => mover.id === user.id);
+  const targetMover = move.movers.find((mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
   }
