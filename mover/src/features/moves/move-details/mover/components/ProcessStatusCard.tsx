@@ -13,14 +13,19 @@ type IProps = {
 const ProcessStatusCard = ({ move }: IProps) => {
   const { user } = useAuth();
   const userId = user?.id;
-  const meAsMover = React.useMemo(
-    () => move?.movers?.find((mover) => mover.id === userId),
-    [move, userId]
-  );
+  
+  const meAsMover = React.useMemo(() => {
+    if (!move?.movers || !Array.isArray(move.movers) || !userId) {
+      return null;
+    }
+    
+    return move.movers.find((mover) => mover.id === userId) || null;
+  }, [move, userId]);
 
   if (!meAsMover) {
     return null;
   }
+  
   return (
     <div className={moveCardStyles.container} style={{ marginBottom: "1rem" }}>
       <div className={moveCardStyles.header}>
