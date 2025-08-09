@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetUpcomingMoves } from "./api"; // existing hook
+import { useGetUpcomingMoves } from "./api";
 import useDataToMoves from "../utils/useDataToMoves";
 import MovesView from "./MovesView";
 import useAuth from "@/features/auth/utils/useAuth";
