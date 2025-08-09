@@ -1,78 +1,32 @@
 import React from "react";
-import QueryStatus from "@/components/QueryStatus";
-import Link from "next/link";
-import Button from "@/components/Button";
-import sm from "@/configs/site-map";
-import MoveCard from "../../components/MoveCard";
+import { a, findSafe } from "@/utils/safeArray";
+import MoveCard from "@/features/moves/components/MoveCard/MoveCard";
 
-import styles from "../styles.module.scss";
-import Move from "@/models/Move/Move.model";
-
-const emptyContainerStyles: React.CSSProperties = {
-  minHeight: "20rem",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexDirection: "column",
-  gap: "1rem",
+type Props = {
+  moves?: any[] | null;
+  currentUserId?: number | string | null;
 };
 
-type IProps = {
-  moves: Move[];
-  isLoading: boolean;
-  isError: boolean;
-  refetch: () => void;
-  title: React.ReactNode;
-  hasNextPage: boolean | undefined;
-  fetchNextPage: () => void;
-  isFetchingNextPage: boolean;
-};
+export default function MovesView({ moves, currentUserId }: Props) {
+  const list = a(moves);
 
-const MovesView = ({
-  moves,
-  isLoading,
-  isError,
-  refetch,
-  title,
-  hasNextPage,
-  fetchNextPage,
-  isFetchingNextPage,
-}: IProps) => {
-  if (isLoading || isError) {
-    return (
-      <QueryStatus isError={isError} isLoading={isLoading} refetch={refetch} />
-    );
+  if (list.length === 0) {
+    return <div>No upcoming moves</div>;
   }
-  if (moves.length === 0) {
-    return (
-      <div style={emptyContainerStyles}>
-        <h5 style={{ textAlign: "center" }}>There are no moves to display</h5>
-        <Link href={sm.portal.user.moves.book.url}>
-          <Button>Book a Move</Button>
-        </Link>
-      </div>
-    );
-  }
+
   return (
-    <>
-      <div className={styles.padding_container}>
-        <h4 style={{ marginBottom: "1rem" }}>{title}</h4>
-        <div className={styles.moves_container}>
-          {moves.map((move) => (
-            <MoveCard key={move.id} move={move} />
-          ))}
-        </div>
-
-        {hasNextPage && (
-          <div className={styles.load_more_btn_container}>
-            <Button isLoading={isFetchingNextPage} onClick={fetchNextPage}>
-              Load More
-            </Button>
-          </div>
-        )}
-      </div>
-    </>
+    <div className="grid gap-4">
+      {list.map((move) => {
+        // Example of safe usage in case cards expect a specific mover
+        const assigned = findSafe(move?.movers, (m: any) => m?.id === currentUserId);
+        return (
+          <MoveCard
+            key={move?.id ?? Math.random()}
+            move={move}
+            assignedMover={assigned}
+          />
+        );
+      })}
+    </div>
   );
-};
-
-export default MovesView;
+}
