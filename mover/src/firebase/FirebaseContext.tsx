@@ -33,6 +33,12 @@ export const FirebaseContextProvider = ({
       const permission = Notification.permission;
       setNotificationPermission(permission);
 
+      if (permission === "default") {
+        // User hasn't made a choice yet
+        setIsInitialized(true);
+        return;
+      }
+
       if (permission === "denied") {
         console.warn("Notifications are blocked. Skipping FCM initialization.");
         setIsInitialized(true);
@@ -61,7 +67,7 @@ export const FirebaseContextProvider = ({
             } else {
               const token = await getToken(messaging, { vapidKey });
               if (token) {
-                console.info("FCM token obtained:", token);
+                console.info("FCM token obtained (length):", token.length);
                 setFcmToken(token);
               } else {
                 console.warn(
@@ -96,6 +102,11 @@ export const FirebaseContextProvider = ({
       const permission = await Notification.requestPermission();
       setNotificationPermission(permission);
 
+      if (permission === "default") {
+        console.warn("Notification permission request dismissed");
+        return false;
+      }
+
       if (permission === "granted") {
         try {
           const supported = await isSupported();
@@ -117,6 +128,7 @@ export const FirebaseContextProvider = ({
           const token = await getToken(messaging, { vapidKey });
 
           if (token) {
+            console.info("FCM token obtained (length):", token.length);
             setFcmToken(token);
             return true;
           } else {
@@ -126,11 +138,11 @@ export const FirebaseContextProvider = ({
             return false;
           }
         } catch (tokenError: any) {
-            console.error(
-              "FCM token generation failed after permission grant:",
-              tokenError?.message ?? tokenError
-            );
-            return false;
+          console.error(
+            "FCM token generation failed after permission grant:",
+            tokenError?.message ?? tokenError
+          );
+          return false;
         }
       } else if (permission === "denied") {
         console.warn("Notification permission was denied");
