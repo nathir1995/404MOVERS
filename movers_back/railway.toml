@@ -1,15 +1,16 @@
 [build]
 builder = "nixpacks"
-# Remove the buildCommand - let nixpacks handle it
 
 [deploy]
 healthcheckPath = "/"
-healthcheckTimeout = 100
+healthcheckTimeout = 300
 restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 10
+restartPolicyMaxRetries = 3
 
 [env]
 APP_ENV = "production"
 APP_DEBUG = "false"
 LOG_CHANNEL = "stderr"
 LOG_STDERR_FORMATTER = "json"
+SESSION_DRIVER = "cookie"
+CACHE_DRIVER = "array"
