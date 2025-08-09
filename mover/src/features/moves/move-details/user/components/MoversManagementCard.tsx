@@ -31,65 +31,78 @@ const MoverDetails = ({
 }: {
   mover: Mover;
   isLast: boolean;
-  move_id: number;
+  move_id: number | undefined;
 }) => {
+  // Safely read nested fields with fallbacks
+  const firstName = mover?.first_name ?? "";
+  const lastName = mover?.last_name ?? "";
+  const roleKey = mover?.user_role?.key ?? "—";
+  const phone = mover?.phone_number ?? "—";
+
+  const startedAt =
+    mover?.pivot?.started_at ? formatDateTime(mover.pivot.started_at) : "N/A";
+  const confirmStartedAt =
+    mover?.pivot?.confirm_started_at
+      ? formatDateTime(mover.pivot.confirm_started_at)
+      : null;
+
+  const finishedAt =
+    mover?.pivot?.finished_at ? formatDateTime(mover.pivot.finished_at) : "N/A";
+  const confirmFinishedAt =
+    mover?.pivot?.confirm_finished_at
+      ? formatDateTime(mover.pivot.confirm_finished_at)
+      : null;
+
+  // Only render confirm buttons when we have required IDs
+  const canConfirm = Boolean(move_id && mover?.id);
+
   return (
     <div
       className={moveCardStyles.container}
       style={{
-        ...(!isLast && {
-          marginBottom: "1rem",
-        }),
+        ...(!isLast && { marginBottom: "1rem" }),
       }}
     >
       <div style={itemStyles}>
         <p>
           <strong>
-            {mover.first_name} {mover.last_name}
+            {firstName} {lastName}
           </strong>
         </p>
       </div>
+
       <div style={{ ...itemStyles, marginBottom: ".5rem" }}>
-        <p style={{ textTransform: "capitalize" }}>{mover.user_role.key}</p>
-        <p>{mover.phone_number}</p>
+        <p style={{ textTransform: "capitalize" }}>{roleKey}</p>
+        <p>{phone}</p>
       </div>
 
-      <Item
-        label="Started At"
-        value={
-          mover.pivot.started_at
-            ? formatDateTime(mover.pivot.started_at)
-            : "N/A"
-        }
-      />
+      <Item label="Started At" value={startedAt} />
+
       <Item
         label="Confirmation At"
         value={
-          mover.pivot.confirm_started_at ? (
-            formatDateTime(mover.pivot.confirm_started_at)
+          confirmStartedAt ??
+          (canConfirm ? (
+            <ConfirmMoverStart move_id={move_id as number} mover={mover} />
           ) : (
-            <ConfirmMoverStart move_id={move_id} mover={mover} />
-          )
+            "—"
+          ))
         }
       />
 
-      <div style={{ marginBottom: ".5rem" }}></div>
-      <Item
-        label="Finished At"
-        value={
-          mover.pivot.finished_at
-            ? formatDateTime(mover.pivot.finished_at)
-            : "N/A"
-        }
-      />
+      <div style={{ marginBottom: ".5rem" }} />
+
+      <Item label="Finished At" value={finishedAt} />
+
       <Item
         label="Confirmation At"
         value={
-          mover.pivot.confirm_finished_at ? (
-            formatDateTime(mover.pivot.confirm_finished_at)
+          confirmFinishedAt ??
+          (canConfirm ? (
+            <ConfirmMoverFinish move_id={move_id as number} mover={mover} />
           ) : (
-            <ConfirmMoverFinish move_id={move_id} mover={mover} />
-          )
+            "—"
+          ))
         }
       />
     </div>
@@ -98,16 +111,16 @@ const MoverDetails = ({
 
 const MoversManagementCard = ({ move }: IProps) => {
   // Safe access to movers array
-  const safeMovers = React.useMemo(() => {
-    if (!move?.movers || !Array.isArray(move.movers)) {
-      return [];
-    }
-    return move.movers;
+  const safeMovers = React.useMemo<Mover[]>(() => {
+    const list = move?.movers;
+    return Array.isArray(list) ? list : [];
   }, [move?.movers]);
 
   if (safeMovers.length === 0) {
     return null;
   }
+
+  const safeMoveId = typeof move?.id === "number" ? move.id : undefined;
 
   return (
     <div style={{ marginTop: "1.5rem" }}>
@@ -123,10 +136,10 @@ const MoversManagementCard = ({ move }: IProps) => {
 
       {safeMovers.map((mover, index) => (
         <MoverDetails
-          key={mover.id}
+          key={mover?.id ?? `${index}`}
           mover={mover}
           isLast={index === safeMovers.length - 1}
-          move_id={move.id}
+          move_id={safeMoveId}
         />
       ))}
     </div>
