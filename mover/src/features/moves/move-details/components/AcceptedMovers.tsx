@@ -43,11 +43,14 @@ const AcceptedMovers = ({ movers, mover_type }: IProps) => {
 
   const { canContact, handleContact, isCreatingChat } = useContactUser();
 
+  // Ensure movers is always an array
+  const safeMovers = Array.isArray(movers) ? movers : [];
+
   return (
     <>
       <span>
-        ({movers.length} Accepted){" "}
-        {movers.length > 0 && (
+        ({safeMovers.length} Accepted){" "}
+        {safeMovers.length > 0 && (
           <button
             type="button"
             className={styles.view_accepted_movers_btn}
@@ -73,7 +76,7 @@ const AcceptedMovers = ({ movers, mover_type }: IProps) => {
           </h5>
           <hr />
           <ul style={{ marginBlock: "1rem", marginInlineStart: "1em" }}>
-            {movers.map((mover) => (
+            {safeMovers.map((mover) => (
               <li key={mover.id}>
                 <p>
                   {mover.first_name} {mover.last_name}{" "}
