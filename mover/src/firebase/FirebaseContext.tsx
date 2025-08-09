@@ -12,9 +12,14 @@ const defaultContext: FirebaseContextType = {
 
 const FirebaseContext = createContext<FirebaseContextType>(defaultContext);
 
-export const FirebaseContextProvider = ({ children }: { children: React.ReactNode }) => {
+export const FirebaseContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [fcmToken, setFcmToken] = React.useState<string | undefined>(undefined);
-  const [notificationPermission, setNotificationPermission] = React.useState<NotificationPermission>("default");
+  const [notificationPermission, setNotificationPermission] =
+    React.useState<NotificationPermission>("default");
   const [isInitialized, setIsInitialized] = React.useState(false);
 
   React.useEffect(() => {
@@ -39,18 +44,31 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
           const messaging = getMessaging(firebaseApp);
 
           try {
-            const token = await getToken(messaging, {
-              vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-            });
-
-            if (token) {
-              console.info("FCM token obtained:", token);
-              setFcmToken(token);
+            // NEW: check for VAPID key before attempting token generation
+            const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
+            if (!vapidKey) {
+              console.warn(
+                "NEXT_PUBLIC_FIREBASE_VAPID_KEY is not set. Skipping FCM token generation."
+              );
             } else {
-              console.warn("No FCM token received - VAPID key might be missing");
+              const token = await getToken(messaging, {
+                vapidKey,
+              });
+
+              if (token) {
+                console.info("FCM token obtained:", token);
+                setFcmToken(token);
+              } else {
+                console.warn(
+                  "No FCM token received - check your VAPID key configuration"
+                );
+              }
             }
           } catch (tokenError: any) {
-            console.error("FCM token generation failed:", tokenError?.message ?? tokenError);
+            console.error(
+              "FCM token generation failed:",
+              tokenError?.message ?? tokenError
+            );
           }
         }
       } catch (error: any) {
@@ -76,19 +94,32 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
       if (permission === "granted") {
         try {
           const messaging = getMessaging(firebaseApp);
+          // NEW: guard against missing VAPID key when requesting token
+          const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
+          if (!vapidKey) {
+            console.warn(
+              "NEXT_PUBLIC_FIREBASE_VAPID_KEY is not set. Unable to request FCM token."
+            );
+            return false;
+          }
           const token = await getToken(messaging, {
-            vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+            vapidKey,
           });
 
           if (token) {
             setFcmToken(token);
             return true;
           } else {
-            console.warn("FCM token not received - check VAPID key configuration");
+            console.warn(
+              "FCM token not received - check VAPID key configuration"
+            );
             return false;
           }
         } catch (tokenError: any) {
-          console.error("FCM token generation failed after permission grant:", tokenError?.message ?? tokenError);
+          console.error(
+            "FCM token generation failed after permission grant:",
+            tokenError?.message ?? tokenError
+          );
           return false;
         }
       } else if (permission === "denied") {
@@ -112,7 +143,11 @@ export const FirebaseContextProvider = ({ children }: { children: React.ReactNod
     [fcmToken, notificationPermission, requestNotificationPermission, isInitialized]
   );
 
-  return <FirebaseContext.Provider value={memoedValue}>{children}</FirebaseContext.Provider>;
+  return (
+    <FirebaseContext.Provider value={memoedValue}>
+      {children}
+    </FirebaseContext.Provider>
+  );
 };
 
 export default function useFirebaseContext() {
