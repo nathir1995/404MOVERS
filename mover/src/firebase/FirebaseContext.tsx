@@ -41,7 +41,6 @@ export const FirebaseContextProvider = ({
 
       try {
         if (permission === "granted") {
-          // Check if Firebase Messaging is supported in this browser
           const supported = await isSupported();
           if (!supported) {
             console.warn(
@@ -54,7 +53,6 @@ export const FirebaseContextProvider = ({
           const messaging = getMessaging(firebaseApp);
 
           try {
-            // Guard against missing VAPID key before attempting token generation
             const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
             if (!vapidKey) {
               console.warn(
@@ -62,7 +60,6 @@ export const FirebaseContextProvider = ({
               );
             } else {
               const token = await getToken(messaging, { vapidKey });
-
               if (token) {
                 console.info("FCM token obtained:", token);
                 setFcmToken(token);
@@ -101,7 +98,6 @@ export const FirebaseContextProvider = ({
 
       if (permission === "granted") {
         try {
-          // Check support before requesting a token
           const supported = await isSupported();
           if (!supported) {
             console.warn(
@@ -130,11 +126,11 @@ export const FirebaseContextProvider = ({
             return false;
           }
         } catch (tokenError: any) {
-          console.error(
-            "FCM token generation failed after permission grant:",
-            tokenError?.message ?? tokenError
-          );
-          return false;
+            console.error(
+              "FCM token generation failed after permission grant:",
+              tokenError?.message ?? tokenError
+            );
+            return false;
         }
       } else if (permission === "denied") {
         console.warn("Notification permission was denied");
