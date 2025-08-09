@@ -1,21 +1,12 @@
 import React from "react";
-import { Page } from "@/api/types/Pagination";
-import Move from "@/models/Move/Move.model";
+import { a } from "@/utils/safeArray";
 
-type IData = {
-  pages: Page<Move>[];
-};
+type Page<T> = { data?: T[] | null };
 
-const useDataToMoves = (data: IData | undefined): Move[] => {
-  return React.useMemo(
-    () =>
-      data?.pages?.reduce<Move[]>(
-        (prev, curr) => [...prev, ...curr.data],
-
-        []
-      ) ?? [],
-    [data]
-  );
-};
-
-export default useDataToMoves;
+export default function useDataToMoves<T = any>(data: { pages?: Page<T>[] | null } | undefined) {
+  return React.useMemo<T[]>(() => {
+    if (!data || !Array.isArray(data.pages)) return [];
+    // Flatten pages safely; tolerate pages with undefined/null data
+    return data.pages.reduce<T[]>((acc, curr) => acc.concat(a(curr?.data)), []);
+  }, [data]);
+}
