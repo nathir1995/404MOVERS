@@ -25,12 +25,26 @@ type IProps = {
 
 const BasicDetailsCard = ({ move, contentStyles = {}, footer }: IProps) => {
   const { accepted_drivers, accepted_labors } = React.useMemo(
-    () => ({
-      accepted_drivers: filterAcceptedMovers(move?.movers ?? [], ROLE.DRIVER),
-      accepted_labors: filterAcceptedMovers(move?.movers ?? [], ROLE.LABOR),
-    }),
+    () => {
+      if (!move) {
+        return {
+          accepted_drivers: [],
+          accepted_labors: [],
+        };
+      }
+      
+      const safeMovers = move.movers ?? [];
+      return {
+        accepted_drivers: filterAcceptedMovers(safeMovers, ROLE.DRIVER),
+        accepted_labors: filterAcceptedMovers(safeMovers, ROLE.LABOR),
+      };
+    },
     [move]
   );
+
+  if (!move) {
+    return null;
+  }
 
   return (
     <div className={moveCardStyles.container}>
