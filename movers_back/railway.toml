@@ -1,11 +1,15 @@
 [build]
 builder = "nixpacks"
-buildCommand = "npm run build"
+# Remove the buildCommand - let nixpacks handle it
 
 [deploy]
-healthcheckPath = "/health"
+healthcheckPath = "/"
 healthcheckTimeout = 100
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
 
 [env]
 APP_ENV = "production"
 APP_DEBUG = "false"
+LOG_CHANNEL = "stderr"
+LOG_STDERR_FORMATTER = "json"
