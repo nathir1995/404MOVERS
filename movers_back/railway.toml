@@ -1,10 +1,11 @@
 [build]
 builder = "nixpacks"
+buildCommand = "npm run build"  # or "yarn build" if you're using Yarn
 
 [deploy]
 healthcheckPath = "/health"
 healthcheckTimeout = 100
-restartPolicyType = "never"
+restartPolicyType = "on-failure"  # "never" disables auto-restarts; "on-failure" is safer
 
 [env]
 APP_ENV = "production"
