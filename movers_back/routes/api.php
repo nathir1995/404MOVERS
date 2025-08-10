@@ -15,6 +15,8 @@ use App\Http\Controllers\Api\{
     MoveStatusController,
     MoveTypeController,
     MovePackageController,
+        UserDeletionController,
+
     NotificationController,
     RealTimeTracking
 };
@@ -69,9 +71,11 @@ Route::prefix('admin')->group(function () {
             Route::post('/user', [AdminDashboardController::class, 'user']);
             Route::post('/user/exempt', [AdminDashboardController::class, 'exempt_user']);
             Route::post('/drivers', [AdminDashboardController::class, 'drivers']);
-            Route::post('/driver', [AdminDashboardController::class, 'driver']);
+            ('/driver', [AdminDashboardController::class, 'driver']);
             Route::post('/labors', [AdminDashboardController::class, 'labors']);
             Route::post('/labor', [AdminDashboardController::class, 'labor']);
+                        Route::post('/user/delete', [UserDeletionController::class, 'delete']);
+
             Route::post('/movers', [AdminDashboardController::class, 'movers']);
             Route::prefix('mover')->group(function () {
                 Route::post('/reject-account', [AdminDashboardController::class, 'rejectAccount']);
