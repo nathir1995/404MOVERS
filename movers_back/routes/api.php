@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{
+use App\Http\Controllers\Api{
     AdminDashboardController,
     AdminSettingController,
     UserauthController,
@@ -15,8 +15,7 @@ use App\Http\Controllers\Api\{
     MoveStatusController,
     MoveTypeController,
     MovePackageController,
-        UserDeletionController,
-
+    UserDeletionController,
     NotificationController,
     RealTimeTracking
 };
@@ -31,7 +30,6 @@ use App\Http\Controllers\Api\{
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 
 Route::group(['middleware' => 'logRoute'], function () {
 });
@@ -71,10 +69,12 @@ Route::prefix('admin')->group(function () {
             Route::post('/user', [AdminDashboardController::class, 'user']);
             Route::post('/user/exempt', [AdminDashboardController::class, 'exempt_user']);
             Route::post('/drivers', [AdminDashboardController::class, 'drivers']);
-            ('/driver', [AdminDashboardController::class, 'driver']);
+            Route::post('/driver', [AdminDashboardController::class, 'driver']); // <-- fixed
             Route::post('/labors', [AdminDashboardController::class, 'labors']);
             Route::post('/labor', [AdminDashboardController::class, 'labor']);
-                        Route::post('/user/delete', [UserDeletionController::class, 'delete']);
+
+            // Admin-only deletion (controller blocks deleting admin accounts)
+            Route::post('/user/delete', [UserDeletionController::class, 'delete']);
 
             Route::post('/movers', [AdminDashboardController::class, 'movers']);
             Route::prefix('mover')->group(function () {
