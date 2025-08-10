@@ -9,7 +9,7 @@ class EnsureAdminApi
 {
     public function handle(Request $request, Closure $next)
     {
-        $user = $request->user(); // sanctum user
+        $user = $request->user(); // sanctum
         if (!$user) {
             return response()->json(['message' => 'Unauthenticated'], 401);
         }
