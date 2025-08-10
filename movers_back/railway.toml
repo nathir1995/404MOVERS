@@ -1,16 +1,17 @@
-[build]
-builder = "nixpacks"
+[phases.setup]
+nixPkgs = ["php82", "php82Packages.composer"]
 
-[deploy]
-healthcheckPath = "/"
-healthcheckTimeout = 300
-restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 3
+[phases.install]
+cmds = [
+    "composer install --no-dev --optimize-autoloader --no-interaction"
+]
 
-[env]
-APP_ENV = "production"
-APP_DEBUG = "false"
-LOG_CHANNEL = "stderr"
-LOG_STDERR_FORMATTER = "json"
-SESSION_DRIVER = "cookie"
-CACHE_DRIVER = "array"
+[phases.build]
+cmds = [
+    "cp .env.example .env || echo 'APP_KEY=base64:$(openssl rand -base64 32)' > .env",
+    "mkdir -p storage/logs bootstrap/cache",
+    "chmod -R 775 storage bootstrap/cache"
+]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
