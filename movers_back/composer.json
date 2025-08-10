@@ -14,23 +14,23 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "illuminate/http": "*",
         "laravel/cashier": "^14.12",
-        "laravel/framework": "^10.0",
-        "laravel/sanctum": "^3.2",
-        "laravel/tinker": "^2.5",
-        "laravel/ui": "*",
+        "laravel/framework": "^10.48",
+        "laravel/sanctum": "^3.3",
+        "laravel/tinker": "^2.8",
+        "laravel/ui": "^4.2",
         "pusher/pusher-php-server": "^7.2",
-        "spatie/laravel-medialibrary": "^10.11",
-        "spatie/laravel-permission": "^5.5",
+        "spatie/laravel-medialibrary": "^10.15",
+        "spatie/laravel-permission": "^6.1",
         "yoeunes/toastr": "^2.3"
     },
     "require-dev": {
-        "spatie/laravel-ignition": "^2.0",
-        "fakerphp/faker": "^1.9.1",
+        "spatie/laravel-ignition": "^2.4",
+        "fakerphp/faker": "^1.23",
         "laravel/envoy": "^2.8",
-        "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.0"
+        "laravel/sail": "^1.26",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^7.10",
+        "phpunit/phpunit": "^10.5"
     },
     "autoload": {
         "psr-4": {
@@ -59,7 +59,23 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
+            "@php artisan key:generate --ansi",
+            "@php artisan storage:link --ansi"
+        ],
+        "clear-all": [
+            "@php artisan clear-compiled",
+            "@php artisan cache:clear",
+            "@php artisan route:clear",
+            "@php artisan view:clear",
+            "@php artisan config:clear",
+            "composer dump-autoload -o"
+        ],
+        "fresh-install": [
+            "composer install --no-dev --optimize-autoloader",
+            "@php artisan key:generate --force",
+            "@php artisan config:cache",
+            "@php artisan route:cache",
+            "@php artisan view:cache"
         ]
     },
     "extra": {
@@ -70,7 +86,14 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        },
+        "platform": {
+            "php": "8.2"
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true
