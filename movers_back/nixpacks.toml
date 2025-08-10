@@ -8,9 +8,11 @@ cmds = [
 
 [phases.build]
 cmds = [
-    "cp .env.example .env",
-    "php artisan key:generate --force",
+    "cp .env.example .env || echo 'APP_KEY=' > .env",
+    "mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views",
+    "mkdir -p bootstrap/cache",
     "chmod -R 775 storage bootstrap/cache",
+    "php artisan key:generate --force",
     "php artisan config:cache",
     "php artisan route:cache",
     "php artisan view:cache"
