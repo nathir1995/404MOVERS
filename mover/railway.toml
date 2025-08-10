@@ -1,9 +1,10 @@
 [build]
 builder = "railpack"
+railpackVersion = "0.2.4"
 
 [build.railpack]
 packageManager = "npm"
-installCommand = "npm ci"
+installCommand = "npm ci --only=production"
 buildCommand = "npm run build"
 
 [deploy]
@@ -16,3 +17,5 @@ startCommand = "npm start"
 [env]
 NODE_ENV = "production"
 NPM_CONFIG_UPDATE_NOTIFIER = "false"
+NPM_CONFIG_FUND = "false"
+NPM_CONFIG_AUDIT = "false"
