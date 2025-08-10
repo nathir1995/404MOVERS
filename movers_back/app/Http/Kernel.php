@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'user_status_check' => \App\Http\Middleware\UserStatusCheck::class,
         'logRoute' => \App\Http\Middleware\LogRouteMiddleware::class,
         'user_verify_check' => \App\Http\Middleware\UserVerifyCheck::class,
+        'admin.api' => \App\Http\Middleware\EnsureAdminApi::class,
     ];
-}
+    
