@@ -10,18 +10,23 @@ interface IProps {
   steps: Step[];
 }
 
-const HowItWorksSteps = ({ steps }: IProps) => {
+const HowItWorksSteps = ({ steps = [] }: IProps) => {
   const [activeStep, setActiveStep] = React.useState(1);
 
   const elementRef = React.useRef<HTMLDivElement>(null);
   const isVisible = useElementIsVisible(elementRef);
 
+  // ✅ FIXED: Safety check for steps array
+  const safeSteps = Array.isArray(steps) ? steps : [];
+  const stepsLength = safeSteps.length;
+
   React.useEffect(() => {
     let intervalId: any = null;
 
-    if (isVisible) {
+    // ✅ FIXED: Only run if we have steps and element is visible
+    if (isVisible && stepsLength > 0) {
       intervalId = setInterval(() => {
-        setActiveStep((prev) => (prev % steps.length) + 1);
+        setActiveStep((prev) => (prev % stepsLength) + 1);
       }, 6000);
     } else {
       clearInterval(intervalId);
@@ -30,21 +35,30 @@ const HowItWorksSteps = ({ steps }: IProps) => {
     return () => {
       clearInterval(intervalId);
     };
+  }, [isVisible, stepsLength]);
 
-    //eslint-disable-next-line
-  }, [isVisible]);
+  // ✅ FIXED: Early return if no steps
+  if (!safeSteps || stepsLength === 0) {
+    return (
+      <div className={styles.container} ref={elementRef}>
+        <div style={{ textAlign: 'center', padding: '2rem' }}>
+          <p>No steps available</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container} ref={elementRef}>
       <div className={styles.img_wrapper}>
-        {steps.map((step) => (
+        {safeSteps.map((step) => (
           <FadeIn show={step.id === activeStep} key={step.id}>
             <Image src={step.image} alt="" />
           </FadeIn>
         ))}
       </div>
       <div className={styles.steps_container}>
-        {steps.map((step) => (
+        {safeSteps.map((step) => (
           <div
             key={step.id}
             className={`${styles.step_wrapper} ${
