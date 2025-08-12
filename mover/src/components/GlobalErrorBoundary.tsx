@@ -1,4 +1,5 @@
 import React from 'react';
+import { handleArrayAccessError } from '@/utility/debugArrayAccess';
 
 interface ErrorBoundaryState {
   hasError: boolean;
@@ -25,8 +26,11 @@ class GlobalErrorBoundary extends React.Component<Props, ErrorBoundaryState> {
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     this.setState({ errorInfo });
 
-    // Log specific error types for debugging
-    if (error.message.includes("Cannot read properties of undefined (reading 'find')")) {
+    // Enhanced error handling for array access issues
+    if (error.message.includes("Cannot read properties of undefined (reading 'find')") ||
+        error.message.includes("Cannot read properties of undefined (reading 'map')") ||
+        error.message.includes("Cannot read properties of undefined (reading 'filter')")) {
+      handleArrayAccessError(error, 'GlobalErrorBoundary');
       console.warn('🔍 Array access error caught by ErrorBoundary - this has been fixed in the latest version');
     } else if (error.message.includes("FirebaseError") || error.message.includes("messaging/permission-blocked")) {
       console.warn('🔔 Firebase error caught by ErrorBoundary - notifications may not work');

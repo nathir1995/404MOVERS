@@ -5,6 +5,7 @@ import styles from "./UserLayout.module.scss";
 import { NavItem as NavItemType } from "@/configs/navigation/navigation.type";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const NavItem = ({ item }: { item: NavItemType }) => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const VerticalSidebar = ({
   return (
     <nav className={styles.vertical_sidebar_container}>
       <ul>
-        {navigationConfig.map((navItem) => (
+        {safeMap(navigationConfig, (navItem) => (
           <NavItem key={navItem.url} item={navItem} />
         ))}
       </ul>

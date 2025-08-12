@@ -186,7 +186,7 @@ const ItemsForm = ({
             <AiOutlineCaretLeft />
           </Button>
           <div className={styles.swipeable_categoris} ref={ref}>
-            {(item_categories || []).map((category) => (
+            {safeMap(item_categories, (category) => (
               <CategoryButton
                 key={category.id}
                 category={category}
@@ -204,7 +204,7 @@ const ItemsForm = ({
           </Button>
         </div>
         <br />
-        {items.length === 0 ? (
+        {!hasItems(items) ? (
           <p
             style={{
               fontWeight: "bold",
@@ -217,7 +217,7 @@ const ItemsForm = ({
           </p>
         ) : (
           <div className={styles.items_container}>
-            {items.map((item) => (
+            {safeMap(items, (item) => (
               <Item key={item.id} item={item} />
             ))}
           </div>

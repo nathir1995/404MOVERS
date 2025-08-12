@@ -5,6 +5,7 @@ import MoveCard from "../../components/MoveCard";
 
 import styles from "../styles.module.scss";
 import Move from "@/models/Move/Move.model";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const emptyContainerStyles: React.CSSProperties = {
   minHeight: "20rem",
@@ -41,7 +42,7 @@ const MovesView = ({
       <QueryStatus isError={isError} isLoading={isLoading} refetch={refetch} />
     );
   }
-  if (moves.length === 0) {
+  if (!hasItems(moves)) {
     return (
       <div style={emptyContainerStyles}>
         <h5 style={{ textAlign: "center" }}>There are no moves to display</h5>
@@ -53,7 +54,7 @@ const MovesView = ({
       <div className={styles.padding_container}>
         <h4 style={{ marginBottom: "1rem" }}>{title}</h4>
         <div className={styles.moves_container}>
-          {moves.map((move) => (
+          {safeMap(moves, (move) => (
             <MoveCard key={move.id} move={move} />
           ))}
         </div>

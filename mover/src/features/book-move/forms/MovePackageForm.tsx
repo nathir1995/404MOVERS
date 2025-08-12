@@ -13,6 +13,7 @@ import SelectableItem from "@/components/SelectableItem";
 import { useMovePackages } from "../api/BookMove.hooks";
 import QueryStatus from "@/components/QueryStatus";
 import MovePackage from "@/models/Move/Package";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const Item = ({ item }: { item: MovePackage }) => {
   const formik = useFormikContext<ValuesType>();
@@ -61,7 +62,7 @@ const PackagesForm = ({
         <h5>
           CHOOSE YOUR <span style={{ color: colors.primary }}>PLAN</span>
         </h5>
-        {move_packages.length === 0 ? (
+        {!hasItems(move_packages) ? (
           <p
             style={{
               fontWeight: "bold",
@@ -74,7 +75,7 @@ const PackagesForm = ({
           </p>
         ) : (
           <div className={styles.row_2}>
-            {move_packages.map((item) => (
+            {safeMap(move_packages, (item) => (
               <Item key={item.id} item={item} />
             ))}
           </div>
