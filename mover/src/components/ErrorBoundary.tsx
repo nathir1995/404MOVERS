@@ -1,4 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { AppErrorHandler } from '@/utility/errorHandler';
 
 interface Props {
   children: ReactNode;
@@ -31,11 +32,8 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.group('🚨 Error Boundary Caught Error');
-    console.error('Error:', error);
-    console.error('Error Info:', errorInfo);
-    console.error('Component Stack:', errorInfo.componentStack);
-    console.groupEnd();
+    // Use our centralized error handler
+    AppErrorHandler.handleReactError(error, errorInfo);
 
     this.setState({
       error,
@@ -44,12 +42,6 @@ class ErrorBoundary extends Component<Props, State> {
 
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
-    }
-
-    // ✅ FIXED: Handle specific TypeError for .find() method
-    if (error.message.includes("Cannot read properties of undefined (reading 'find')")) {
-      console.warn('🔍 TypeError detected: Likely caused by undefined array in component');
-      console.info('💡 Solution: Use safe array utilities or add null checks');
     }
   }
 
@@ -66,6 +58,9 @@ class ErrorBoundary extends Component<Props, State> {
       if (this.props.fallback) {
         return this.props.fallback;
       }
+
+      const isArrayError = this.state.error?.message.includes("Cannot read properties of undefined (reading 'find')") ||
+                          this.state.error?.message.includes("Cannot read properties of undefined (reading 'map')");
 
       return (
         <div style={{
@@ -85,7 +80,7 @@ class ErrorBoundary extends Component<Props, State> {
             We encountered an error while loading this section. This might be a temporary issue.
           </p>
 
-          {this.state.error?.message.includes("Cannot read properties of undefined (reading 'find')") && (
+          {isArrayError && (
             <div style={{
               padding: '1rem',
               backgroundColor: '#fbbf24',

@@ -1,6 +1,7 @@
 import usePopup from "@/hooks/usePopup";
 import React from "react";
 import { useGetAllChats } from "./chat.api";
+import { safeFind, safeMap, hasItems } from "@/utility/arraySafety";
 
 import colors from "@/assets/scss/colors.module.scss";
 import useAuth from "@/features/auth/utils/useAuth";
@@ -21,12 +22,12 @@ const transformChat = (chat: any, userId: any) => {
   const users: any[] = Array.isArray(chat?.users) ? chat.users : [];
   const messages: any[] = Array.isArray(chat?.messages) ? chat.messages : [];
 
-  // Find the current and counter users (may return undefined if not found)
-  const counter_user = users.find((user: any) => user.id !== userId);
-  const current_user = users.find((user: any) => user.id === userId);
+  // Use safe array utilities to prevent TypeError
+  const counter_user = safeFind(users, (user: any) => user.id !== userId);
+  const current_user = safeFind(users, (user: any) => user.id === userId);
 
   // Map messages and attach the sender; fallback to counter_user if no current_user
-  const mappedMessages = messages.map((message: any) => {
+  const mappedMessages = safeMap(messages, (message: any) => {
     const isFromCurrentUser =
       current_user && message.user_id === current_user.id;
     return {
@@ -51,10 +52,10 @@ const Chats = () => {
   const userId = user?.id;
   const { data, isLoading, isError, isSuccess } = useGetAllChats();
 
-  // Safely transform the chats array
+  // Safely transform the chats array with proper safety checks
   const chats = React.useMemo(() => {
     if (!data || !userId) return [];
-    return data.map((chat: any) => transformChat(chat, userId));
+    return safeMap(data, (chat: any) => transformChat(chat, userId));
   }, [data, userId]);
 
   const openChat = React.useCallback(
@@ -70,10 +71,10 @@ const Chats = () => {
     setOpenedChatId(null);
   }, [setOpenedChatId]);
 
-  // Find the opened chat safely
+  // Find the opened chat safely using safe array utilities
   const openedChat = React.useMemo(() => {
-    if (!openedChatId) return null;
-    return chats.find((chat: any) => chat.id === openedChatId);
+    if (!openedChatId || !hasItems(chats)) return null;
+    return safeFind(chats, (chat: any) => chat.id === openedChatId);
   }, [chats, openedChatId]);
 
   return (
@@ -91,17 +92,17 @@ const Chats = () => {
       )}
       {isSuccess && (
         <>
-          {chats.length === 0 ? (
+          {!hasItems(chats) ? (
             <div>No Messages</div>
           ) : (
             <>
-              {chats.map((chat: any) => (
+              {safeMap(chats, (chat: any) => (
                 <div
                   key={chat.id}
                   onClick={() => openChat(chat.id)}
                   style={{ cursor: "pointer" }}
                 >
-                  {/* Show the other participant’s name (if available) */}
+                  {/* Show the other participant's name (if available) */}
                   {chat?.counter_user?.first_name} {chat?.counter_user?.last_name}
                   <br />
                   {chat?.counter_user?.email}
