@@ -7,6 +7,11 @@ import socialMedia from "@/data/social_media";
 import { APP_NAME } from "@/configs/globals";
 
 const Footer = () => {
+  // ✅ FIXED: Safety checks for imported arrays
+  const safeCompanyLinks = Array.isArray(companyLinks) ? companyLinks : [];
+  const safeLinks = Array.isArray(links) ? links : [];
+  const safeSocialMedia = Array.isArray(socialMedia) ? socialMedia : [];
+
   return (
     <footer className={styles.footer}>
       <div className="page__content">
@@ -14,7 +19,7 @@ const Footer = () => {
           <div>
             <h4>COMPANY</h4>
             <div className={styles.links_container}>
-              {companyLinks.map((item) => (
+              {safeCompanyLinks.map((item) => (
                 <Link key={item.link} href={item.link}>
                   {item.title}
                 </Link>
@@ -24,7 +29,7 @@ const Footer = () => {
           <div>
             <h4>LINKS</h4>
             <div className={styles.links_container}>
-              {links.map((item) => (
+              {safeLinks.map((item) => (
                 <Link key={item.link} href={item.link}>
                   {item.title}
                 </Link>
@@ -34,7 +39,7 @@ const Footer = () => {
           <div>
             <h4>SOCIAL MEDIA</h4>
             <div className={styles.social_media_container}>
-              {socialMedia.map((item) => (
+              {safeSocialMedia.map((item) => (
                 <Link
                   key={item.link}
                   href={item.link}
