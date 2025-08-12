@@ -21,6 +21,7 @@ import useAuth from "@/features/auth/utils/useAuth";
 import { ROLE } from "@/constants/roles";
 import sm from "@/configs/site-map";
 import { useRouter } from "next/router";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const Notifications = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -117,7 +118,7 @@ const Notifications = () => {
           />
         </div>
         <div className={styles.content}>
-          {notifications.map((notification) => (
+          {safeMap(notifications, (notification) => (
             <div
               key={notification.id}
               className={styles.item}

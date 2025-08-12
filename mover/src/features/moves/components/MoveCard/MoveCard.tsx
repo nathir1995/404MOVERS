@@ -1,5 +1,6 @@
 import React from "react";
 import { a, findSafe } from "@/utils/safeArray";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 // import types as needed
 
 export default function MoveCard({
@@ -50,7 +51,7 @@ export default function MoveCard({
       </div>
 
       <ul>
-        {items.map((it: any, i: number) => (
+        {safeMap(items, (it: any, i: number) => (
           <li key={it?.id ?? i}>{it?.name ?? "Item"}</li>
         ))}
       </ul>
