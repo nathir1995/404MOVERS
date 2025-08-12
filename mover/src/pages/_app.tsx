@@ -1,3 +1,4 @@
+import React from "react";
 import AppHead from "@/components/meta/AppHead";
 import "@/styles/globals.scss";
 
@@ -10,6 +11,7 @@ import { NextPageWithLayout } from "@/layout/types";
 import type { AppProps } from "next/app";
 
 import ErrorBoundary from "@/components/ErrorBoundary";
+import GlobalErrorBoundary from "@/components/GlobalErrorBoundary";
 import { FirebaseContextProvider } from "@/firebase/FirebaseContext";
 
 type AppPropsWithLayout = AppProps & {
@@ -41,16 +43,18 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   }, []);
 
   return (
-    <ErrorBoundary>
-      <FirebaseContextProvider>
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <AppHead />
-            {getLayout(<Component {...pageProps} />)}
-            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-          </QueryClientProvider>
-        </AuthProvider>
-      </FirebaseContextProvider>
-    </ErrorBoundary>
+    <GlobalErrorBoundary>
+      <ErrorBoundary>
+        <FirebaseContextProvider>
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <AppHead />
+              {getLayout(<Component {...pageProps} />)}
+              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+            </QueryClientProvider>
+          </AuthProvider>
+        </FirebaseContextProvider>
+      </ErrorBoundary>
+    </GlobalErrorBoundary>
   );
 }

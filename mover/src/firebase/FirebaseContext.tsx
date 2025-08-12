@@ -2,6 +2,7 @@ import React, { createContext, useContext } from "react";
 import FirebaseContextType from "./FirebaseContextType";
 import { app as firebaseApp } from "@/firebase";
 import { getMessaging, getToken, isSupported } from "firebase/messaging";
+import { isFeatureEnabled, safeFirebaseOperation } from "@/utils/featureFlags";
 
 const defaultContext: FirebaseContextType = {
   fcmToken: undefined,
@@ -34,6 +35,13 @@ export const FirebaseContextProvider = ({
       // ✅ FIXED: Check if we're in a browser environment
       if (typeof window === "undefined" || !("Notification" in window)) {
         console.info("Notifications not supported in this environment");
+        setIsInitialized(true);
+        return;
+      }
+
+      // ✅ FIXED: Check feature flags before initializing Firebase
+      if (!isFeatureEnabled.firebase()) {
+        console.info("Firebase messaging disabled by feature flags");
         setIsInitialized(true);
         return;
       }
