@@ -23,7 +23,6 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render will show the fallback UI
     return {
       hasError: true,
       error,
@@ -32,20 +31,17 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // ✅ FIXED: Better error logging and handling
     console.group('🚨 Error Boundary Caught Error');
     console.error('Error:', error);
     console.error('Error Info:', errorInfo);
     console.error('Component Stack:', errorInfo.componentStack);
     console.groupEnd();
 
-    // Update state with error details
     this.setState({
       error,
       errorInfo,
     });
 
-    // Call custom error handler if provided
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
@@ -54,13 +50,6 @@ class ErrorBoundary extends Component<Props, State> {
     if (error.message.includes("Cannot read properties of undefined (reading 'find')")) {
       console.warn('🔍 TypeError detected: Likely caused by undefined array in component');
       console.info('💡 Solution: Use safe array utilities or add null checks');
-    }
-
-    // ✅ FIXED: Send error to monitoring service (optional)
-    if (process.env.NODE_ENV === 'production') {
-      // You can integrate with error monitoring services here
-      // Example: Sentry, LogRocket, etc.
-      console.info('Error logged for production monitoring');
     }
   }
 
@@ -74,7 +63,6 @@ class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      // ✅ FIXED: Custom fallback UI or use provided fallback
       if (this.props.fallback) {
         return this.props.fallback;
       }
@@ -97,7 +85,6 @@ class ErrorBoundary extends Component<Props, State> {
             We encountered an error while loading this section. This might be a temporary issue.
           </p>
 
-          {/* ✅ FIXED: Show specific error message for .find() TypeError */}
           {this.state.error?.message.includes("Cannot read properties of undefined (reading 'find')") && (
             <div style={{
               padding: '1rem',
@@ -142,7 +129,6 @@ class ErrorBoundary extends Component<Props, State> {
             </button>
           </div>
 
-          {/* ✅ FIXED: Show error details in development */}
           {process.env.NODE_ENV === 'development' && (
             <details style={{ marginTop: '1rem' }}>
               <summary style={{ cursor: 'pointer', fontWeight: 'bold' }}>
@@ -171,34 +157,6 @@ class ErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
   }
-}
-
-// ✅ FIXED: Higher-order component for easy wrapping
-export function withErrorBoundary<P extends object>(
-  Component: React.ComponentType<P>,
-  fallback?: ReactNode,
-  onError?: (error: Error, errorInfo: ErrorInfo) => void
-) {
-  return function WrappedComponent(props: P) {
-    return (
-      <ErrorBoundary fallback={fallback} onError={onError}>
-        <Component {...props} />
-      </ErrorBoundary>
-    );
-  };
-}
-
-// ✅ FIXED: Hook for functional components to catch errors
-export function useErrorHandler() {
-  return React.useCallback((error: Error, errorInfo?: any) => {
-    console.error('Error caught by error handler:', error);
-    if (errorInfo) {
-      console.error('Error info:', errorInfo);
-    }
-    
-    // You can also trigger error boundary here if needed
-    throw error;
-  }, []);
 }
 
 export default ErrorBoundary;
