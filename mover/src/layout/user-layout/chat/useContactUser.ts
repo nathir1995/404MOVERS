@@ -2,16 +2,23 @@ import useAuth from "@/features/auth/utils/useAuth";
 import React from "react";
 import { useCreateChat, useGetAllChats } from "./chat.api";
 
+// Ensure input is always an array; fall back to an empty array when undefined or null.
+const ensureArray = <T,>(v: T[] | undefined | null): T[] =>
+  Array.isArray(v) ? v : [];
+
 const transformChat = (chat: any, userId: any) => {
-  const counter_user = chat.users.find((user: any) => user.id !== userId);
-  const current_user = chat.users.find((user: any) => user.id === userId);
+  const users = ensureArray(chat?.users);
+  const messages = ensureArray(chat?.messages);
+  const counter_user = users.find((user: any) => user.id !== userId);
+  const current_user = users.find((user: any) => user.id === userId);
 
   return {
     id: chat.id,
     counter_user,
-    messages: chat.messages.map((message: any) => ({
+    messages: messages.map((message: any) => ({
       ...message,
-      sender: message.user_id === current_user.id ? current_user : counter_user,
+      sender:
+        message.user_id === current_user?.id ? current_user : counter_user,
     })),
   };
 };
@@ -21,9 +28,11 @@ const useContactUser = () => {
   const { user, setOpenedChatId } = useAuth();
   const userId = user?.id;
 
+  // Normalise `data` to an array to avoid calling `.map()` on undefined
   const chats = React.useMemo(() => {
     if (!data) return [];
-    return data.map((chat: any) => transformChat(chat, userId));
+    const chatArray = Array.isArray(data) ? data : [];
+    return chatArray.map((chat: any) => transformChat(chat, userId));
   }, [data, userId]);
 
   const { mutate: createChat, isLoading } = useCreateChat({
@@ -51,6 +60,7 @@ const useContactUser = () => {
     handleContact,
     canContact: isSuccess,
     isCreatingChat: isLoading,
+    chats,
   };
 };
 
