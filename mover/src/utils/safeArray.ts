@@ -1,9 +1,5 @@
-// ====== SAFE ARRAY UTILITIES ======
-// This matches the imports used in your existing components
-
 /**
  * Safely ensures a value is an array, returning empty array if undefined/null
- * Short name 'a' for convenience (as used in existing code)
  */
 export function a<T>(value: T[] | undefined | null): T[] {
   return Array.isArray(value) ? value : [];
@@ -11,7 +7,6 @@ export function a<T>(value: T[] | undefined | null): T[] {
 
 /**
  * Safely finds an item in an array, handling undefined arrays gracefully
- * Named 'findSafe' for compatibility with existing imports
  */
 export function findSafe<T>(
   array: T[] | undefined | null, 
@@ -76,9 +71,6 @@ export const safeLength = lengthSafe;
 // ====== REACT HOOK FOR SAFE DATA ======
 import { useMemo } from 'react';
 
-/**
- * Custom hook that ensures data is always an array
- */
 export function useSafeArray<T>(data: T[] | undefined | null): T[] {
   return useMemo(() => a(data), [data]);
 }
