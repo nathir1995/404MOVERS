@@ -1,40 +1,21 @@
 import React, { useState, useCallback } from 'react';
 
-// ====== TYPES ======
-interface TestResult {
-  success: boolean;
-  message: string;
-  data?: any;
-  error?: string;
-  requestId?: string;
-  timestamp: string;
-  duration?: number;
-}
-
-interface UploadProgress {
-  loaded: number;
-  total: number;
-  percentage: number;
-}
-
 // ====== MAIN COMPONENT ======
 const EmailUploadTest: React.FC = () => {
   // ====== STATE ======
   const [files, setFiles] = useState<FileList | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [results, setResults] = useState<TestResult[]>([]);
+  const [results, setResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [progress, setProgress] = useState<UploadProgress | null>(null);
   const [testMode, setTestMode] = useState<'basic' | 'upload' | 'webhook'>('basic');
 
   // ====== UTILITY FUNCTIONS ======
   const clearResults = useCallback(() => {
     setResults([]);
     setError(null);
-    setProgress(null);
   }, []);
 
-  const addResult = useCallback((result: TestResult) => {
+  const addResult = useCallback((result: any) => {
     setResults(prev => [result, ...prev].slice(0, 10)); // Keep last 10 results
   }, []);
 
@@ -88,9 +69,7 @@ const EmailUploadTest: React.FC = () => {
       
       const response = await fetch('/api/test', {
         method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-        },
+        headers: { 'Accept': 'application/json' },
       });
 
       const data = await response.json();
@@ -143,44 +122,23 @@ const EmailUploadTest: React.FC = () => {
     const startTime = Date.now();
 
     try {
-      console.log(`📤 Uploading ${files.length} files...`);
+      console.log(`📤 Uploading ${files.length} files to /api/upload...`);
       
       const formData = new FormData();
       
       // Add files
       for (let i = 0; i < files.length; i++) {
         formData.append(`file_${i}`, files[i]);
-        console.log(`📎 Added file: ${files[i].name} (${formatFileSize(files[i].size)})`);
       }
       
       // Add metadata
-      formData.append('from', 'test@404movers.ca');
-      formData.append('subject', `Test Upload - ${files.length} files`);
-      formData.append('text', `Test upload with ${files.length} files from upload test component`);
-      formData.append('source', 'upload-test');
+      formData.append('source', 'upload_test_component');
+      formData.append('timestamp', new Date().toISOString());
 
-      // Simulate progress (real progress would need XMLHttpRequest)
-      const progressInterval = setInterval(() => {
-        setProgress(prev => {
-          if (!prev) return { loaded: 0, total: 100, percentage: 0 };
-          const newLoaded = Math.min(prev.loaded + 10, prev.total);
-          return {
-            loaded: newLoaded,
-            total: prev.total,
-            percentage: Math.round((newLoaded / prev.total) * 100),
-          };
-        });
-      }, 200);
-
-      setProgress({ loaded: 0, total: 100, percentage: 0 });
-
-      const response = await fetch('/api/email/upload', {
+      const response = await fetch('/api/upload', {  // ✅ CORRECTED: Using /api/upload
         method: 'POST',
         body: formData,
       });
-
-      clearInterval(progressInterval);
-      setProgress(null);
 
       const data = await response.json();
       const duration = Date.now() - startTime;
@@ -192,7 +150,7 @@ const EmailUploadTest: React.FC = () => {
       console.log('✅ Upload successful:', data);
       addResult({
         success: true,
-        message: `✅ Upload successful - ${data.data?.attachments || 0} files processed`,
+        message: `✅ Upload successful - ${data.data?.filesProcessed || 0} files processed`,
         data,
         requestId: data.requestId,
         timestamp: new Date().toISOString(),
@@ -212,35 +170,34 @@ const EmailUploadTest: React.FC = () => {
       });
     } finally {
       setUploading(false);
-      setProgress(null);
     }
   };
 
-  const testEmailWebhook = async () => {
+  const testWebhookSimulation = async () => {
     setUploading(true);
     setError(null);
     const startTime = Date.now();
 
     try {
-      console.log('🔗 Testing email webhook simulation...');
+      console.log('🔗 Testing webhook simulation...');
       
-      const testData = {
-        from: 'customer@example.com',
-        to: 'uploads@404movers.ca',
-        subject: 'Move Documents - Test Webhook',
-        text: 'Please find attached documents for my upcoming move request. This is a webhook simulation test.',
-        html: '<p>Please find attached documents for my upcoming move request.</p><p><em>This is a webhook simulation test.</em></p>',
-        timestamp: new Date().toISOString(),
-        'X-Webhook-Source': 'sendgrid-test',
-      };
+      const formData = new FormData();
+      
+      // Simulate email webhook data
+      formData.append('source', 'email_webhook_simulation');
+      formData.append('from', 'customer@example.com');
+      formData.append('to', 'uploads@404movers.ca');
+      formData.append('subject', 'Move Documents Upload');
+      formData.append('timestamp', new Date().toISOString());
+      
+      // Create a small test file for the simulation
+      const testContent = 'This is a simulated document attachment from email webhook.';
+      const testFile = new Blob([testContent], { type: 'text/plain' });
+      formData.append('attachment_1', testFile, 'webhook_simulation.txt');
 
-      const response = await fetch('/api/email/upload', {
+      const response = await fetch('/api/upload', {  // ✅ CORRECTED: Using /api/upload
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Webhook-Test': 'true',
-        },
-        body: JSON.stringify(testData),
+        body: formData,
       });
 
       const data = await response.json();
@@ -252,7 +209,7 @@ const EmailUploadTest: React.FC = () => {
 
       addResult({
         success: true,
-        message: '✅ Email webhook test successful',
+        message: '✅ Webhook simulation successful',
         data,
         requestId: data.requestId,
         timestamp: new Date().toISOString(),
@@ -261,11 +218,11 @@ const EmailUploadTest: React.FC = () => {
 
     } catch (err: any) {
       const duration = Date.now() - startTime;
-      console.error('❌ Webhook test failed:', err);
+      console.error('❌ Webhook simulation failed:', err);
       
       addResult({
         success: false,
-        message: '❌ Email webhook test failed',
+        message: '❌ Webhook simulation failed',
         error: err.message,
         timestamp: new Date().toISOString(),
         duration,
@@ -297,7 +254,7 @@ const EmailUploadTest: React.FC = () => {
           📧 404MOVERS Upload Testing Suite
         </h2>
         <p style={{ color: '#64748b', fontSize: '1.1rem' }}>
-          Comprehensive testing for email upload functionality
+          Test your upload API at <code>/api/upload</code>
         </p>
       </div>
 
@@ -312,7 +269,7 @@ const EmailUploadTest: React.FC = () => {
         {[
           { key: 'basic', label: '🔧 Basic API', desc: 'Test connectivity' },
           { key: 'upload', label: '📁 File Upload', desc: 'Upload files' },
-          { key: 'webhook', label: '🔗 Email Webhook', desc: 'Simulate email' },
+          { key: 'webhook', label: '🔗 Webhook Simulation', desc: 'Simulate email' },
         ].map(({ key, label, desc }) => (
           <button
             key={key}
@@ -412,27 +369,6 @@ const EmailUploadTest: React.FC = () => {
             )}
           </div>
 
-          {progress && (
-            <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ 
-                width: '100%', 
-                backgroundColor: '#e5e7eb', 
-                borderRadius: '4px',
-                overflow: 'hidden',
-              }}>
-                <div style={{
-                  width: `${progress.percentage}%`,
-                  height: '8px',
-                  backgroundColor: '#3b82f6',
-                  transition: 'width 0.3s ease',
-                }} />
-              </div>
-              <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.25rem' }}>
-                {progress.percentage}% Complete
-              </div>
-            </div>
-          )}
-
           <button 
             type="submit" 
             disabled={uploading || !files || files.length === 0}
@@ -453,7 +389,7 @@ const EmailUploadTest: React.FC = () => {
         </form>
       )}
 
-      {/* ====== EMAIL WEBHOOK TEST ====== */}
+      {/* ====== WEBHOOK SIMULATION ====== */}
       {testMode === 'webhook' && (
         <div style={{ 
           padding: '1.5rem', 
@@ -462,12 +398,12 @@ const EmailUploadTest: React.FC = () => {
           border: '1px solid #e2e8f0',
           marginBottom: '2rem',
         }}>
-          <h3 style={{ color: '#1e293b', marginBottom: '1rem' }}>🔗 Email Webhook Simulation</h3>
+          <h3 style={{ color: '#1e293b', marginBottom: '1rem' }}>🔗 Webhook Simulation</h3>
           <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>
-            Simulate an email service webhook (SendGrid, Mailgun) sending data to your API.
+            Simulate an email service webhook sending data to your upload API.
           </p>
           <button 
-            onClick={testEmailWebhook}
+            onClick={testWebhookSimulation}
             disabled={uploading}
             style={{
               padding: '0.75rem 2rem',
@@ -481,7 +417,7 @@ const EmailUploadTest: React.FC = () => {
               transition: 'background-color 0.2s',
             }}
           >
-            {uploading ? '📧 Testing...' : '📧 Simulate Email Webhook'}
+            {uploading ? '📧 Testing...' : '📧 Simulate Webhook'}
           </button>
         </div>
       )}
@@ -606,14 +542,14 @@ const EmailUploadTest: React.FC = () => {
         borderRadius: '8px',
         border: '1px solid #fed7aa',
       }}>
-        <h4 style={{ color: '#92400e', marginBottom: '1rem' }}>📋 Testing Instructions</h4>
-        <ol style={{ color: '#92400e', paddingLeft: '1.5rem', lineHeight: '1.6' }}>
-          <li><strong>Basic API:</strong> Test first to verify API routes are working</li>
-          <li><strong>File Upload:</strong> Test with various file types and sizes</li>
-          <li><strong>Email Webhook:</strong> Simulate email service webhooks</li>
-          <li><strong>Check Logs:</strong> Monitor browser console and terminal for detailed logs</li>
-          <li><strong>File Storage:</strong> Check the <code>uploads/</code> directory for uploaded files</li>
-        </ol>
+        <h4 style={{ color: '#92400e', marginBottom: '1rem' }}>📋 API Endpoints</h4>
+        <div style={{ color: '#92400e', fontSize: '0.9rem', lineHeight: '1.6' }}>
+          <div><strong>GET /api/test</strong> - Basic API connectivity test</div>
+          <div><strong>POST /api/upload</strong> - File upload endpoint (fixes 405 error)</div>
+          <div><strong>Uploads Directory:</strong> <code>uploads/</code></div>
+          <div><strong>Max File Size:</strong> 50MB per file</div>
+          <div><strong>Allowed Types:</strong> PDF, DOC, DOCX, JPG, JPEG, PNG, GIF</div>
+        </div>
       </div>
     </div>
   );
