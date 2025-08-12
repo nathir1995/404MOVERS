@@ -7,6 +7,13 @@ import { useFormikContext } from "formik";
 const SelectField = ({ label, name, options, ...props }) => {
   const formik = useFormikContext();
 
+  // Always use an array to avoid .find() on undefined
+  const safeOptions = Array.isArray(options) ? options : [];
+
+  // react-select expects the selected option object (or null)
+  const selected =
+    safeOptions.find((opt) => opt?.value === formik.values?.[name]) ?? null;
+
   return (
     <ValidatedField
       CustomField={Select}
@@ -14,9 +21,9 @@ const SelectField = ({ label, name, options, ...props }) => {
       name={name}
       className="React"
       classNamePrefix="select"
-      options={options || []}
-      value={options?.find((opt) => opt.value === formik.values[name]) || ""}
-      onChange={(opt) => formik.setFieldValue(name, opt.value)}
+      options={safeOptions}
+      value={selected}
+      onChange={(opt) => formik.setFieldValue(name, opt?.value ?? null)}
       onBlur={() => formik.setFieldTouched(name)}
       // menuPortalTarget={document.body}
       {...props}
