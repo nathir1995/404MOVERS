@@ -9,7 +9,6 @@ export const isUserAlreadyAcceptedMove = (user: User, move: Move): boolean => {
     return false;
   }
   
-  // ✅ FIXED: Use safe find to prevent TypeError
   return findSafe(move.movers, (mover) => mover.id === user.id) !== undefined;
 };
 
@@ -68,7 +67,6 @@ export const checkIfMoverCanStart = (
     return false;
   }
 
-  // ✅ FIXED: Use safe find to prevent TypeError
   const targetMover = findSafe(move.movers, (mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
@@ -90,7 +88,6 @@ export const checkIfMoverCanFinish = (
     return false;
   }
 
-  // ✅ FIXED: Use safe find to prevent TypeError
   const targetMover = findSafe(move.movers, (mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
@@ -112,7 +109,6 @@ export const checkIfMoverShouldStreamLocation = (
     return false;
   }
 
-  // ✅ FIXED: Use safe find to prevent TypeError
   const targetMover = findSafe(move.movers, (mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
