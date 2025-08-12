@@ -93,9 +93,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const timestamp = new Date().toISOString();
 
   // ====== CORS & SECURITY HEADERS ======
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Restrict CORS to trusted domains only
+  const allowedOrigins = [
+    'https://404movers.ca',
+    'https://www.404movers.ca',
+    'https://admin.404movers.ca',
+    process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : null
+  ].filter(Boolean);
+  
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('X-Request-ID', requestId);
 
   // ====== PREFLIGHT HANDLING ======

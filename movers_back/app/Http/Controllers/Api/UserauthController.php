@@ -381,56 +381,50 @@ class UserauthController extends Controller
                         "message"   =>  __("User Email Already verified"),
                         'data'      =>  $fetch_data
                     ], 200);
-                } else if ($user_data->otp != $request->code) {
-                    return response()->json([
-                        "code"      =>  401,
-                        "response"  =>  "error",
-                        "message"   =>  __("OTP is not match"),
-
-                    ], 401);
                 } else {
+                    // Check OTP expiration first for better security
                     if (strtotime($current) > strtotime($user_data->otp_created_at)) {
                         return response()->json([
                             "code"      =>  401,
                             "response"  =>  "error",
                             "message"   =>  __("Otp is expired"),
-
                         ], 401);
-                    } else {
-                        if ($request->code == $user_data->otp) {
-                            if ($user_data->userRole->key == 'user') {
-                                $user_data->mover_account_status_id = MoverAccountStatus::where('key', 'ACCOUNT_APPROVED')->first()->id;
-                            } else {
-                                $user_data->mover_account_status_id = MoverAccountStatus::where('key', 'ADMIN_APPROVAL_PENDING')->first()->id;
-                            }
-                            $user_data->email_verified_at = date('Y-m-d H:i:s');
-                            $user_data->fcm_token = $request->input('fcm_token');
-                            $user_data->save();
-
-                            $user =  User::where('email', $request->email)->first();
-                            $token =  $user->createToken('my-app-token')->plainTextToken;
-                            $fetch_data['token'] = $token;
-                            $fetch_data['user_data'] = $user;
-                            $fetch_data['user_role'] = $user->userRole->key;
-                            $fetch_data['mover_account_status'] = $user->moverAccountStatus->value;
-
-                            $response = [
-                                "code" => 200,
-                                "response" => "success",
-                                "message" => __("Login Successfully"),
-                                'data' => $fetch_data
-                            ];
-
-                            return response()->json($response, 200);
-                        } else {
-                            return response()->json([
-                                "code"      =>  401,
-                                "response"  =>  "error",
-                                "message"   =>  __("Invalid OTP"),
-                                "data"      =>  (object)array()
-                            ], 401);
-                        }
                     }
+                    
+                    // Validate OTP - single validation point
+                    if ($user_data->otp != $request->code) {
+                        return response()->json([
+                            "code"      =>  401,
+                            "response"  =>  "error",
+                            "message"   =>  __("OTP is not match"),
+                        ], 401);
+                    }
+                    
+                    // OTP is valid and not expired - proceed with verification
+                    if ($user_data->userRole->key == 'user') {
+                        $user_data->mover_account_status_id = MoverAccountStatus::where('key', 'ACCOUNT_APPROVED')->first()->id;
+                    } else {
+                        $user_data->mover_account_status_id = MoverAccountStatus::where('key', 'ADMIN_APPROVAL_PENDING')->first()->id;
+                    }
+                    $user_data->email_verified_at = date('Y-m-d H:i:s');
+                    $user_data->fcm_token = $request->input('fcm_token');
+                    $user_data->save();
+
+                    $user =  User::where('email', $request->email)->first();
+                    $token =  $user->createToken('my-app-token')->plainTextToken;
+                    $fetch_data['token'] = $token;
+                    $fetch_data['user_data'] = $user;
+                    $fetch_data['user_role'] = $user->userRole->key;
+                    $fetch_data['mover_account_status'] = $user->moverAccountStatus->value;
+
+                    $response = [
+                        "code" => 200,
+                        "response" => "success",
+                        "message" => __("Login Successfully"),
+                        'data' => $fetch_data
+                    ];
+
+                    return response()->json($response, 200);
                 }
             }
         } catch (Exception $e) {
