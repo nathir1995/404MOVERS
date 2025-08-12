@@ -31,77 +31,78 @@ export const FirebaseContextProvider = ({
       }
       setInitializationAttempted(true);
 
+      // ✅ FIXED: Check if we're in a browser environment
       if (typeof window === "undefined" || !("Notification" in window)) {
-        console.warn("Notifications not supported in this environment");
+        console.info("Notifications not supported in this environment");
         setIsInitialized(true);
         return;
       }
 
       try {
+        // ✅ FIXED: Get current permission state without requesting
         const permission = Notification.permission;
         setNotificationPermission(permission);
 
         if (permission === "default") {
           // User hasn't made a choice yet - don't attempt to get token
-          console.info("Notification permission not yet requested");
+          console.info("Notification permission not yet requested - skipping FCM initialization");
           setIsInitialized(true);
           return;
         }
 
         if (permission === "denied") {
-          console.warn("Notifications are blocked. Skipping FCM initialization.");
+          // ✅ FIXED: Silently handle denied permissions without errors
+          console.info("Notifications are disabled by user - FCM unavailable");
           setIsInitialized(true);
           return;
         }
 
         if (permission === "granted") {
-          // Check if Firebase messaging is supported
-          const supported = await isSupported();
-          if (!supported) {
-            console.warn(
-              "Firebase messaging is not supported in this browser. Skipping FCM initialization."
-            );
-            setIsInitialized(true);
-            return;
-          }
-
-          const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
-          if (!vapidKey) {
-            console.warn(
-              "NEXT_PUBLIC_FIREBASE_VAPID_KEY is not set. Skipping FCM token generation."
-            );
-            setIsInitialized(true);
-            return;
-          }
-
+          // Only proceed if notifications are explicitly granted
           try {
-            const messaging = getMessaging(firebaseApp);
-            const token = await getToken(messaging, { vapidKey });
-            
-            if (token) {
-              console.info("FCM token obtained successfully (length):", token.length);
-              setFcmToken(token);
-            } else {
-              console.warn(
-                "No FCM token received – check your VAPID key configuration"
-              );
+            // Check if Firebase messaging is supported
+            const supported = await isSupported();
+            if (!supported) {
+              console.info("Firebase messaging not supported in this browser");
+              setIsInitialized(true);
+              return;
             }
-          } catch (tokenError: any) {
-            console.error(
-              "FCM token generation failed:",
-              tokenError?.code,
-              tokenError?.message ?? tokenError
-            );
-            
-            // Handle specific Firebase errors
-            if (tokenError?.code === 'messaging/permission-blocked') {
-              console.warn("Permission was blocked after being granted - updating state");
-              setNotificationPermission("denied");
+
+            const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
+            if (!vapidKey) {
+              console.info("VAPID key not configured - FCM token generation skipped");
+              setIsInitialized(true);
+              return;
             }
+
+            // ✅ FIXED: Wrap token generation in try-catch to prevent uncaught errors
+            try {
+              const messaging = getMessaging(firebaseApp);
+              const token = await getToken(messaging, { vapidKey });
+              
+              if (token) {
+                console.info("FCM token obtained successfully");
+                setFcmToken(token);
+              } else {
+                console.info("FCM token not received - check VAPID configuration");
+              }
+            } catch (tokenError: any) {
+              // ✅ FIXED: Handle token errors gracefully without throwing
+              if (tokenError?.code === 'messaging/permission-blocked') {
+                console.info("FCM permission was revoked - updating state");
+                setNotificationPermission("denied");
+              } else {
+                console.info("FCM token generation failed:", tokenError?.code || 'unknown error');
+              }
+            }
+          } catch (firebaseError: any) {
+            // ✅ FIXED: Handle Firebase initialization errors
+            console.info("Firebase messaging initialization failed:", firebaseError?.message || 'unknown error');
           }
         }
       } catch (error: any) {
-        console.error("FCM initialization failed:", error?.message ?? error);
+        // ✅ FIXED: Handle any other errors during initialization
+        console.info("FCM initialization error:", error?.message || 'unknown error');
       } finally {
         setIsInitialized(true);
       }
@@ -112,7 +113,7 @@ export const FirebaseContextProvider = ({
 
   const requestNotificationPermission = React.useCallback(async () => {
     if (typeof window === "undefined" || !("Notification" in window)) {
-      console.warn("Notifications not supported");
+      console.info("Notifications not supported in this environment");
       return false;
     }
 
@@ -120,12 +121,12 @@ export const FirebaseContextProvider = ({
       // Check current permission before requesting
       const currentPermission = Notification.permission;
       if (currentPermission === "denied") {
-        console.warn("Notifications are already denied");
+        console.info("Notifications are disabled by user");
         return false;
       }
 
       if (currentPermission === "granted") {
-        console.info("Notifications are already granted");
+        console.info("Notifications already granted");
         // Try to get token if we don't have one
         if (!fcmToken) {
           return await generateFCMToken();
@@ -133,27 +134,25 @@ export const FirebaseContextProvider = ({
         return true;
       }
 
-      // Request permission
-      const permission = await Notification.requestPermission();
+      // ✅ FIXED: Request permission with proper error handling
+      let permission: NotificationPermission;
+      try {
+        permission = await Notification.requestPermission();
+      } catch (permissionError) {
+        console.info("Permission request failed or was dismissed");
+        return false;
+      }
+
       setNotificationPermission(permission);
-
-      if (permission === "default") {
-        console.warn("Notification permission request dismissed");
-        return false;
-      }
-
-      if (permission === "denied") {
-        console.warn("Notification permission was denied");
-        return false;
-      }
 
       if (permission === "granted") {
         return await generateFCMToken();
+      } else {
+        console.info("Notification permission was not granted");
+        return false;
       }
-
-      return false;
     } catch (error: any) {
-      console.error("Permission request failed:", error?.message ?? error);
+      console.info("Error requesting notification permission:", error?.message || 'unknown error');
       return false;
     }
   }, [fcmToken]);
@@ -162,46 +161,40 @@ export const FirebaseContextProvider = ({
     try {
       const supported = await isSupported();
       if (!supported) {
-        console.warn(
-          "Firebase messaging is not supported in this browser. Cannot generate FCM token."
-        );
+        console.info("Firebase messaging not supported - cannot generate token");
         return false;
       }
 
       const vapidKey = process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY;
       if (!vapidKey) {
-        console.warn(
-          "NEXT_PUBLIC_FIREBASE_VAPID_KEY is not set. Unable to generate FCM token."
-        );
+        console.info("VAPID key not configured - cannot generate token");
         return false;
       }
 
-      const messaging = getMessaging(firebaseApp);
-      const token = await getToken(messaging, { vapidKey });
+      // ✅ FIXED: Better error handling for token generation
+      try {
+        const messaging = getMessaging(firebaseApp);
+        const token = await getToken(messaging, { vapidKey });
 
-      if (token) {
-        console.info("FCM token obtained successfully (length):", token.length);
-        setFcmToken(token);
-        return true;
-      } else {
-        console.warn(
-          "FCM token not received – check VAPID key configuration"
-        );
+        if (token) {
+          console.info("FCM token generated successfully");
+          setFcmToken(token);
+          return true;
+        } else {
+          console.info("FCM token not received - check VAPID configuration");
+          return false;
+        }
+      } catch (tokenError: any) {
+        if (tokenError?.code === 'messaging/permission-blocked') {
+          console.info("FCM permission was blocked during token generation");
+          setNotificationPermission("denied");
+        } else {
+          console.info("FCM token generation failed:", tokenError?.code || 'unknown error');
+        }
         return false;
       }
-    } catch (tokenError: any) {
-      console.error(
-        "FCM token generation failed:",
-        tokenError?.code,
-        tokenError?.message ?? tokenError
-      );
-      
-      // Handle specific Firebase errors
-      if (tokenError?.code === 'messaging/permission-blocked') {
-        console.warn("Permission was blocked - updating state");
-        setNotificationPermission("denied");
-      }
-      
+    } catch (error: any) {
+      console.info("Error generating FCM token:", error?.message || 'unknown error');
       return false;
     }
   };
