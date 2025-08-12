@@ -1,5 +1,6 @@
 import React from "react";
 import { a, findSafe } from "@/utils/safeArray";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 // import types as needed
 
 export default function MoveCard({

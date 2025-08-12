@@ -204,7 +204,7 @@ const ItemsForm = ({
           </Button>
         </div>
         <br />
-        {items.length === 0 ? (
+        {!hasItems(items) ? (
           <p
             style={{
               fontWeight: "bold",

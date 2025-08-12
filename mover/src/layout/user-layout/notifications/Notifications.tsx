@@ -118,9 +118,31 @@ const Notifications = () => {
           />
         </div>
         <div className={styles.content}>
+ cursor/debug-undefined-find-error-on-image-load-5cb6
           {!hasItems(notifications) ? (
             <div className={styles.item}>
               <p className={styles.description}>No notifications</p>
+
+          {safeMap(notifications, (notification) => (
+            <div
+              key={notification.id}
+              className={styles.item}
+              onClick={() => handleClick(notification)}
+            >
+              <p
+                className={styles.title}
+                style={notification.read === 0 ? { fontWeight: "bold" } : {}}
+              >
+                {notification.title}{" "}
+                {notification.read === 0 && (
+                  <span className={styles.unread_dot}></span>
+                )}
+              </p>
+              <p className={styles.description}>{notification.notification}</p>
+              <p className={styles.date}>
+                {formatDateTime(notification.created_at)}
+              </p>
+ main
             </div>
           ) : (
             safeMap(notifications, (notification) => (
