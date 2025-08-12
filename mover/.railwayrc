@@ -1,0 +1,5 @@
+#!/bin/bash
+# Railway build optimization
+rm -rf node_modules/.cache
+rm -rf .next/cache
+npm cache clean --force
