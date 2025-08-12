@@ -1,6 +1,7 @@
 import React from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { safeMap, hasItems } from "@/utility/arraySafety"; // ✅ FIXED: Import array safety
 
 import styles from "./ReviewsCarousel.module.scss";
 
@@ -26,6 +27,17 @@ const items = [
 ];
 
 const ReviewsCarousel = () => {
+  // ✅ FIXED: Check if items exist before rendering
+  if (!hasItems(items)) {
+    return (
+      <div className={styles.container}>
+        <div style={{ textAlign: 'center', padding: '2rem' }}>
+          <p>No reviews available</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Carousel
       autoPlay
@@ -36,7 +48,8 @@ const ReviewsCarousel = () => {
       interval={5000}
       className={styles.container}
     >
-      {items.map((item) => (
+      {/* ✅ FIXED: Using safeMap instead of direct .map() */}
+      {safeMap(items, (item) => (
         <div className={styles.item} key={item.id}>
           <div className={styles.avatar}>
             <h5>{item.name.charAt(0)}</h5>
