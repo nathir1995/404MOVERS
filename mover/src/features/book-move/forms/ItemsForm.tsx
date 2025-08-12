@@ -17,6 +17,7 @@ import MoveItem from "@/models/Move/Item.model";
 import MoveCategory from "@/models/Move/Category.model";
 import { useMoveCategoriesWithItems } from "../api/BookMove.hooks";
 import QueryStatus from "@/components/QueryStatus";
+import { safeFind, safeMap, hasItems } from "@/utility/arraySafety";
 
 const ArrowsButtonsStyles: React.CSSProperties = {
   display: "flex",
@@ -68,7 +69,7 @@ const Item = ({ item }: { item: MoveItem }) => {
   const currentId = item.id;
 
   const targetItem = React.useMemo(
-    () => (item_ids || []).find((_it) => _it.id === item.id),
+    () => safeFind(item_ids || [], (_it) => _it.id === item.id),
     [item_ids, currentId]
   );
   const quantity = targetItem?.quantity;
@@ -82,7 +83,7 @@ const Item = ({ item }: { item: MoveItem }) => {
       ]);
       return;
     }
-    const newItems = safeItemIds.map((_it) =>
+    const newItems = safeMap(safeItemIds, (_it) =>
       _it.id !== currentId
         ? _it
         : {
@@ -147,14 +148,14 @@ const ItemsForm = ({
   >(null);
   const ref = React.useRef<HTMLDivElement>(null);
   const items: MoveItem[] = React.useMemo(() => {
-    if (!selectedCategoryId || !item_categories) return [];
+    if (!selectedCategoryId || !hasItems(item_categories)) return [];
     return (
-      item_categories.find((cat) => cat.id === selectedCategoryId)?.items ?? []
+      safeFind(item_categories, (cat) => cat.id === selectedCategoryId)?.items ?? []
     );
   }, [selectedCategoryId, item_categories]);
 
   React.useLayoutEffect(() => {
-    if (item_categories && item_categories.length > 0) {
+    if (hasItems(item_categories)) {
       setSelectedCategoryId(item_categories.at(0)?.id ?? null);
     }
   }, [item_categories]);

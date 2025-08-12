@@ -13,6 +13,7 @@ import type { AppProps } from "next/app";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import GlobalErrorBoundary from "@/components/GlobalErrorBoundary";
 import { FirebaseContextProvider } from "@/firebase/FirebaseContext";
+import { setupErrorHandling, setupDevelopmentErrorHandling, setupProductionErrorHandling } from "@/utils/errorSetup";
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -21,25 +22,14 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  // ✅ FIXED: Added window error handler for unhandled promise rejections
+  // ✅ FIXED: Initialize comprehensive error handling system
   React.useEffect(() => {
-    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      console.error('Unhandled promise rejection:', event.reason);
-      // Prevent the error from being logged to the console
-      event.preventDefault();
-    };
-
-    const handleError = (event: ErrorEvent) => {
-      console.error('Global error:', event.error);
-    };
-
-    window.addEventListener('unhandledrejection', handleUnhandledRejection);
-    window.addEventListener('error', handleError);
-
-    return () => {
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
-      window.removeEventListener('error', handleError);
-    };
+    // Setup error handlers for all environments
+    setupErrorHandling();
+    
+    // Setup environment-specific error handling
+    setupDevelopmentErrorHandling();
+    setupProductionErrorHandling();
   }, []);
 
   return (

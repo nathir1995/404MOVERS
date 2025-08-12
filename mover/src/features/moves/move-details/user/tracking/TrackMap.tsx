@@ -1,6 +1,7 @@
 import React from "react";
 import Move, { Mover } from "@/models/Move/Move.model";
 import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
+import { safeFind, hasItems } from "@/utility/arraySafety";
 
 import { defaultCetner } from "@/features/book-move/utils/mapProps";
 import useFirebaseContext from "@/firebase/FirebaseContext";
@@ -35,7 +36,8 @@ const TrackMap = ({ move }: IProps) => {
       if (prev.length === 0 && mapRef.current) {
         mapRef.current.panTo({ lat: latitude, lng: longitude });
       }
-      const exists = prev.find((i) => i.mover.id === mover.id) !== undefined;
+      // Use safe array utilities to prevent TypeError
+      const exists = safeFind(prev, (i) => i.mover.id === mover.id) !== undefined;
       if (exists)
         return prev.map((item) =>
           item.mover.id === mover.id ? { mover, longitude, latitude } : item
@@ -87,7 +89,7 @@ const TrackMap = ({ move }: IProps) => {
           zoomControl
           onLoad={handleMapLoad}
         >
-          {moversTracker.map(({ latitude, longitude, mover }) => (
+          {hasItems(moversTracker) && moversTracker.map(({ latitude, longitude, mover }) => (
             <AdvancedMarker
               key={mover.id}
               position={{ lat: latitude, lng: longitude }}
