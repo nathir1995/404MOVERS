@@ -24,7 +24,7 @@ const SystemStatus: React.FC = () => {
         const apiOnline = apiResponse.ok;
 
         // Check upload endpoint
-        const uploadResponse = await fetch('/api/email/upload', { method: 'OPTIONS' });
+        const uploadResponse = await fetch('/api/upload', { method: 'OPTIONS' });
         const uploadReady = uploadResponse.ok;
 
         setStatus({
@@ -107,58 +107,6 @@ const SystemStatus: React.FC = () => {
   );
 };
 
-// ====== ENVIRONMENT INFO COMPONENT ======
-const EnvironmentInfo: React.FC = () => {
-  const [envInfo, setEnvInfo] = useState<any>(null);
-
-  useEffect(() => {
-    const info = {
-      nodeEnv: process.env.NODE_ENV,
-      appName: process.env.NEXT_PUBLIC_APP_NAME,
-      appVersion: process.env.NEXT_PUBLIC_APP_VERSION,
-      apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
-      timestamp: new Date().toISOString(),
-      userAgent: navigator.userAgent,
-      url: window.location.href,
-    };
-    setEnvInfo(info);
-  }, []);
-
-  if (!envInfo) return null;
-
-  return (
-    <details style={{
-      padding: '1rem',
-      backgroundColor: '#f1f5f9',
-      borderRadius: '8px',
-      border: '1px solid #cbd5e1',
-      marginBottom: '2rem',
-    }}>
-      <summary style={{ 
-        cursor: 'pointer',
-        fontWeight: '600',
-        color: '#475569',
-        marginBottom: '1rem',
-      }}>
-        🔧 Environment Information
-      </summary>
-      
-      <div style={{ display: 'grid', gap: '0.5rem', fontSize: '0.875rem' }}>
-        {Object.entries(envInfo).map(([key, value]) => (
-          <div key={key} style={{ display: 'flex', gap: '1rem' }}>
-            <span style={{ fontWeight: '600', minWidth: '120px', color: '#374151' }}>
-              {key}:
-            </span>
-            <span style={{ color: '#64748b', wordBreak: 'break-all' }}>
-              {String(value)}
-            </span>
-          </div>
-        ))}
-      </div>
-    </details>
-  );
-};
-
 // ====== QUICK ACTIONS COMPONENT ======
 const QuickActions: React.FC = () => {
   const [logs, setLogs] = useState<string[]>([]);
@@ -208,7 +156,7 @@ const QuickActions: React.FC = () => {
         </button>
         
         <button
-          onClick={() => testEndpoint('/api/email/upload', 'OPTIONS')}
+          onClick={() => testEndpoint('/api/upload', 'OPTIONS')}
           style={{
             padding: '0.5rem 1rem',
             backgroundColor: '#10b981',
@@ -307,7 +255,7 @@ const TestUploadPage: NextPageWithLayout = () => {
               margin: '0 auto',
               lineHeight: '1.6',
             }}>
-              Comprehensive testing environment for 404MOVERS email upload functionality
+              Comprehensive testing environment for 404MOVERS upload functionality
             </p>
           </div>
 
@@ -320,9 +268,6 @@ const TestUploadPage: NextPageWithLayout = () => {
           {/* ====== MAIN TEST COMPONENT ====== */}
           <EmailUploadTest />
 
-          {/* ====== ENVIRONMENT INFO ====== */}
-          <EnvironmentInfo />
-
           {/* ====== FOOTER INSTRUCTIONS ====== */}
           <div style={{
             padding: '2rem',
@@ -333,8 +278,8 @@ const TestUploadPage: NextPageWithLayout = () => {
           }}>
             <h3 style={{ color: '#1e293b', marginBottom: '1rem' }}>📚 Documentation</h3>
             <p style={{ color: '#64748b', marginBottom: '1.5rem', lineHeight: '1.6' }}>
-              This testing suite validates your email upload API endpoints. Use it during development 
-              to ensure file uploads, email webhooks, and backend integration are working correctly.
+              This testing suite validates your upload API endpoints. Use it during development 
+              to ensure file uploads and backend integration are working correctly.
             </p>
             
             <div style={{ 
@@ -354,7 +299,7 @@ const TestUploadPage: NextPageWithLayout = () => {
                 <div style={{ fontWeight: '600', color: '#0369a1' }}>API Endpoints</div>
                 <div style={{ fontSize: '0.875rem', color: '#0284c7' }}>
                   GET /api/test<br />
-                  POST /api/email/upload
+                  POST /api/upload
                 </div>
               </div>
               
