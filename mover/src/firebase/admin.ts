@@ -1,45 +1,41 @@
-import admin from "firebase-admin";
+// ✅ FIXED: Optional Firebase Admin for environments where it's not needed
 
-declare global {
-  // allow global var reuse in dev
-  // eslint-disable-next-line no-var
-  var _firebaseAdminApp: admin.app.App | undefined;
-}
+let adminAuth: any = null;
+let adminDb: any = null;
 
-if (!global._firebaseAdminApp) {
+// Only initialize in server environments with proper credentials
+if (typeof window === "undefined") {
   try {
-    // ✅ FIXED: Better error handling for missing environment variables
+    const admin = require("firebase-admin");
+    
     const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT;
     const projectId = process.env.FIREBASE_PROJECT_ID;
 
-    if (!serviceAccountKey) {
-      console.warn("FIREBASE_SERVICE_ACCOUNT environment variable not set - Firebase Admin disabled");
-    } else if (!projectId) {
-      console.warn("FIREBASE_PROJECT_ID environment variable not set - Firebase Admin disabled");
-    } else {
+    if (serviceAccountKey && projectId && !admin.apps.length) {
       try {
         const serviceAccount = JSON.parse(serviceAccountKey);
-        global._firebaseAdminApp = admin.initializeApp({
+        const app = admin.initializeApp({
           credential: admin.credential.cert(serviceAccount),
           projectId: projectId,
         });
+        
+        adminAuth = app.auth();
+        adminDb = app.firestore();
         console.info("Firebase Admin initialized successfully");
       } catch (parseError) {
-        console.error("Failed to parse FIREBASE_SERVICE_ACCOUNT JSON:", parseError);
+        console.warn("Failed to parse Firebase Admin credentials:", parseError);
       }
+    } else {
+      console.info("Firebase Admin not configured - running without admin features");
     }
   } catch (error) {
-    console.error("Firebase Admin initialization failed:", error);
+    console.info("Firebase Admin not available - this is OK for client-side builds");
   }
 }
 
-// ✅ FIXED: Export with null checks
-const app = global._firebaseAdminApp;
+export { adminAuth, adminDb };
 
-export const adminAuth = app ? app.auth() : null;
-export const adminDb = app ? app.firestore() : null;
-
-// ✅ FIXED: Helper function to check if admin is available
+// Helper function to check if admin is available
 export const isAdminAvailable = (): boolean => {
-  return !!global._firebaseAdminApp;
+  return !!adminAuth && !!adminDb;
 };
