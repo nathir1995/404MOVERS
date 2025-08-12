@@ -2,12 +2,15 @@ import { MOVE_STATUS } from "@/constants/move_status";
 import { ROLE } from "@/constants/roles";
 import { User } from "@/features/auth/utils/AuthContextType";
 import Move from "@/models/Move/Move.model";
+import { findSafe } from "@/utils/safeArray";
 
 export const isUserAlreadyAcceptedMove = (user: User, move: Move): boolean => {
-  if (!move?.movers || !Array.isArray(move.movers) || !user?.id) {
+  if (!user?.id || !move) {
     return false;
   }
-  return move.movers.find((mover) => mover.id === user.id) !== undefined;
+  
+  // ✅ FIXED: Use safe find to prevent TypeError
+  return findSafe(move.movers, (mover) => mover.id === user.id) !== undefined;
 };
 
 export const isRemainingDrivers = (move: Move): boolean => {
@@ -57,7 +60,7 @@ export const checkIfMoverCanStart = (
   role: ROLE,
   user: User
 ): boolean => {
-  if (!move?.movers || !Array.isArray(move.movers) || !user?.id) {
+  if (!move || !user?.id) {
     return false;
   }
 
@@ -65,7 +68,8 @@ export const checkIfMoverCanStart = (
     return false;
   }
 
-  const targetMover = move.movers.find((mover) => mover.id === user.id);
+  // ✅ FIXED: Use safe find to prevent TypeError
+  const targetMover = findSafe(move.movers, (mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
   }
@@ -78,7 +82,7 @@ export const checkIfMoverCanFinish = (
   role: ROLE,
   user: User
 ): boolean => {
-  if (!move?.movers || !Array.isArray(move.movers) || !user?.id) {
+  if (!move || !user?.id) {
     return false;
   }
 
@@ -86,7 +90,8 @@ export const checkIfMoverCanFinish = (
     return false;
   }
 
-  const targetMover = move.movers.find((mover) => mover.id === user.id);
+  // ✅ FIXED: Use safe find to prevent TypeError
+  const targetMover = findSafe(move.movers, (mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
   }
@@ -99,7 +104,7 @@ export const checkIfMoverShouldStreamLocation = (
   role: ROLE,
   user: User
 ): boolean => {
-  if (!move?.movers || !Array.isArray(move.movers) || !user?.id) {
+  if (!move || !user?.id) {
     return false;
   }
 
@@ -107,7 +112,8 @@ export const checkIfMoverShouldStreamLocation = (
     return false;
   }
 
-  const targetMover = move.movers.find((mover) => mover.id === user.id);
+  // ✅ FIXED: Use safe find to prevent TypeError
+  const targetMover = findSafe(move.movers, (mover) => mover.id === user.id);
   if (!targetMover) {
     return false;
   }
