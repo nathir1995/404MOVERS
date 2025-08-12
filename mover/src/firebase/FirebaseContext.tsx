@@ -91,9 +91,17 @@ export const FirebaseContextProvider = ({
               if (tokenError?.code === 'messaging/permission-blocked') {
                 console.info("FCM permission was revoked - updating state");
                 setNotificationPermission("denied");
+              } else if (tokenError?.code === 'messaging/permission-denied') {
+                console.info("FCM permission denied by user");
+                setNotificationPermission("denied");
+              } else if (tokenError?.code === 'messaging/notifications-blocked') {
+                console.info("Notifications are blocked in browser settings");
+                setNotificationPermission("denied");
               } else {
                 console.info("FCM token generation failed:", tokenError?.code || 'unknown error');
               }
+              // Ensure we don't throw unhandled errors that crash the app
+              return;
             }
           } catch (firebaseError: any) {
             // ✅ FIXED: Handle Firebase initialization errors
@@ -187,6 +195,12 @@ export const FirebaseContextProvider = ({
       } catch (tokenError: any) {
         if (tokenError?.code === 'messaging/permission-blocked') {
           console.info("FCM permission was blocked during token generation");
+          setNotificationPermission("denied");
+        } else if (tokenError?.code === 'messaging/permission-denied') {
+          console.info("FCM permission denied during token generation");
+          setNotificationPermission("denied");
+        } else if (tokenError?.code === 'messaging/notifications-blocked') {
+          console.info("Notifications blocked in browser during token generation");
           setNotificationPermission("denied");
         } else {
           console.info("FCM token generation failed:", tokenError?.code || 'unknown error');

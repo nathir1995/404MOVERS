@@ -82,12 +82,13 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.gstatic.com https://firebasestorage.googleapis.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: blob: https://maps.googleapis.com https://maps.gstatic.com https://storage.googleapis.com https://firebasestorage.googleapis.com",
-              "connect-src 'self' https://maps.googleapis.com https://api.404movers.ca https://firestore.googleapis.com",
+              "img-src 'self' data: blob: https://maps.googleapis.com https://maps.gstatic.com https://khms0.googleapis.com https://khms1.googleapis.com https://storage.googleapis.com https://firebasestorage.googleapis.com",
+              "connect-src 'self' https://maps.googleapis.com https://khms0.googleapis.com https://khms1.googleapis.com https://api.404movers.ca https://firestore.googleapis.com https://fcm.googleapis.com",
               "frame-src 'self'",
+              "worker-src 'self' blob:",
             ].join('; '),
           },
           {

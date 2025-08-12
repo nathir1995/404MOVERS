@@ -40,7 +40,7 @@ const CategoryButton = ({
   const item_ids = formik.values.item_ids;
 
   const numberOfSelectedProducts: number = React.useMemo(() => {
-    return item_ids.reduce((prev, curr) => {
+    return (item_ids || []).reduce((prev, curr) => {
       if ("item_category_id" in curr && curr.item_category_id === currentId) {
         return prev + curr.quantity;
       }
@@ -68,20 +68,21 @@ const Item = ({ item }: { item: MoveItem }) => {
   const currentId = item.id;
 
   const targetItem = React.useMemo(
-    () => item_ids.find((_it) => _it.id === item.id),
+    () => (item_ids || []).find((_it) => _it.id === item.id),
     [item_ids, currentId]
   );
   const quantity = targetItem?.quantity;
 
   const handleClick = () => {
+    const safeItemIds = item_ids || [];
     if (targetItem === undefined) {
       formik.setFieldValue("item_ids", [
-        ...item_ids,
+        ...safeItemIds,
         { id: currentId, quantity: 1, item_category_id: item.item_category_id },
       ]);
       return;
     }
-    const newItems = item_ids.map((_it) =>
+    const newItems = safeItemIds.map((_it) =>
       _it.id !== currentId
         ? _it
         : {
@@ -93,7 +94,7 @@ const Item = ({ item }: { item: MoveItem }) => {
   };
 
   const handleRemove = () => {
-    const newItems = item_ids.filter((_it) => _it.id !== item.id);
+    const newItems = (item_ids || []).filter((_it) => _it.id !== item.id);
     formik.setFieldValue("item_ids", newItems);
   };
 
