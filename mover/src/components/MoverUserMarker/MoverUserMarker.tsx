@@ -14,10 +14,29 @@ type IProps = {
 
 const MoverUserMarker = ({ mover, onClick, isClicked = false }: IProps) => {
   const Icon = React.useMemo(() => {
+    // ✅ FIXED: Safety checks for mover and user_role
+    if (!mover || !mover.user_role || !mover.user_role.key) {
+      return FaHouseUser; // Default fallback icon
+    }
+
     if (mover.user_role.key === ROLE.DRIVER) return FaTruck;
     if (mover.user_role.key === ROLE.LABOR) return FaUser;
     return FaHouseUser;
   }, [mover]);
+
+  // ✅ FIXED: Early return if mover is invalid
+  if (!mover) {
+    return (
+      <button
+        type="button"
+        className={styles.btn}
+        data-is-clicked={false}
+        onClick={() => onClick?.()}
+      >
+        <FaHouseUser size={20} color="#fff" />
+      </button>
+    );
+  }
 
   return (
     <button
