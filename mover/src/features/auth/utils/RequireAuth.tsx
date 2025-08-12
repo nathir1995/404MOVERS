@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import useAuth from "./useAuth";
 import FallbackPage from "@/components/FallbackPage";
 import { ROLE } from "@/constants/roles";
+import { safeFind } from "@/utility/arraySafety";
 
 type IProps = {
   children: React.ReactNode;
@@ -22,8 +23,8 @@ const RequireAuth = ({
   const canAccess = React.useMemo(
     () =>
       isAuthenticated &&
-      (!allowedRoles || allowedRoles.find((r) => r === role)),
-    [isAuthenticated, role]
+      (!allowedRoles || safeFind(allowedRoles, (r) => r === role)),
+    [isAuthenticated, role, allowedRoles]
   );
 
   React.useEffect(() => {
@@ -34,7 +35,7 @@ const RequireAuth = ({
         router.replace(redirectTo);
       }
     }
-  }, [canAccess, isAuthenticated, loadingInitial]);
+  }, [canAccess, isAuthenticated, loadingInitial, redirectTo, router]);
 
   if (loadingInitial || !canAccess) {
     return <FallbackPage withLoading={true} />;

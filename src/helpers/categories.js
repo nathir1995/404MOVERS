@@ -1,12 +1,18 @@
+/**
+ * Safe array utilities for category operations
+ */
+const safeFind = (array, predicate) => {
+  return Array.isArray(array) ? array.find(predicate) : undefined;
+};
+
 export const getCategoryFullName = (arr, category) => {
   const { parent_id } = category;
   if (parent_id === null || parent_id === category.id) {
     return category.name;
   }
 
-  const parent = Array.isArray(arr)
-    ? arr.find((cat) => cat.id === parent_id)
-    : null;
+  // Use safe array utilities to prevent TypeError
+  const parent = safeFind(arr, (cat) => cat.id === parent_id);
   if (!parent) {
     return category.name;
   }
