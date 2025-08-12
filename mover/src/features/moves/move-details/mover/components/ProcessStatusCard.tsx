@@ -5,6 +5,7 @@ import useAuth from "@/features/auth/utils/useAuth";
 import StartMoveButton from "../actions/StartMoveButton";
 import FinishMoveButton from "../actions/FinishMoveButton";
 import StatusProgress from "./StatusProgress";
+import { findSafe } from "@/utils/safeArray";
 
 type IProps = {
   move: Move;
@@ -15,11 +16,12 @@ const ProcessStatusCard = ({ move }: IProps) => {
   const userId = user?.id;
   
   const meAsMover = React.useMemo(() => {
-    if (!move?.movers || !Array.isArray(move.movers) || !userId) {
+    if (!userId || !move) {
       return null;
     }
     
-    return move.movers.find((mover) => mover.id === userId) || null;
+    // ✅ FIXED: Use safe find to prevent TypeError
+    return findSafe(move.movers, (mover) => mover.id === userId) || null;
   }, [move, userId]);
 
   if (!meAsMover) {
