@@ -76,7 +76,7 @@ const AcceptedMovers = ({ movers, mover_type }: IProps) => {
           </h5>
           <hr />
           <ul style={{ marginBlock: "1rem", marginInlineStart: "1em" }}>
-            {safeMovers.map((mover) => (
+            {safeMap(safeMovers, (mover) => (
               <li key={mover.id}>
                 <p>
                   {mover.first_name} {mover.last_name}{" "}

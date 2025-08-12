@@ -134,7 +134,7 @@ const MoversManagementCard = ({ move }: IProps) => {
         Movers
       </h5>
 
-      {safeMovers.map((mover, index) => (
+      {safeMap(safeMovers, (mover, index) => (
         <MoverDetails
           key={mover?.id ?? `${index}`}
           mover={mover}

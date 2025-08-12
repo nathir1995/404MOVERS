@@ -1,4 +1,5 @@
 import React from "react";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 // Define the interface for props
 interface IProps {
@@ -23,10 +24,10 @@ const OpenedChatBox = ({ openedChat, openedChatId, closeChat }: IProps) => {
       </div>
       
       <div className="chat-messages">
-        {messages.length === 0 ? (
+        {!hasItems(messages) ? (
           <p>No messages yet</p>
         ) : (
-          messages.map((message: any, index: number) => (
+          safeMap(messages, (message: any, index: number) => (
             <div key={message.id || index} className="message">
               <p>{message.content || ""}</p>
             </div>

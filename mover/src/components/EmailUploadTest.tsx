@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { safeMap, hasItems } from '@/utility/arraySafety';
 
 // ====== MAIN COMPONENT ======
 const EmailUploadTest: React.FC = () => {
@@ -266,11 +267,11 @@ const EmailUploadTest: React.FC = () => {
         justifyContent: 'center',
         flexWrap: 'wrap',
       }}>
-        {[
+        {safeMap([
           { key: 'basic', label: '🔧 Basic API', desc: 'Test connectivity' },
           { key: 'upload', label: '📁 File Upload', desc: 'Upload files' },
           { key: 'webhook', label: '🔗 Webhook Simulation', desc: 'Simulate email' },
-        ].map(({ key, label, desc }) => (
+        ], ({ key, label, desc }) => (
           <button
             key={key}
             onClick={() => setTestMode(key as any)}
@@ -464,7 +465,7 @@ const EmailUploadTest: React.FC = () => {
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {results.map((result, index) => (
+            {safeMap(results, (result, index) => (
               <div
                 key={index}
                 style={{

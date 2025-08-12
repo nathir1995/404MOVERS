@@ -3,6 +3,7 @@ import { Mover } from "@/models/Move/Move.model";
 import styles from "./StatusProgress.module.scss";
 import { BsCheckLg } from "react-icons/bs";
 import { formatDateTime } from "@/utility/date";
+import { safeMap } from "@/utility/arraySafety";
 
 type IProps = {
   mover: Mover;
@@ -49,7 +50,7 @@ const StatusProgress = ({ mover }: IProps) => {
 
   return (
     <div className={styles.container}>
-      {steps.map((step, index) => (
+      {safeMap(steps, (step, index) => (
         <React.Fragment key={step.label}>
           <div
             className={`${styles.step_container} ${

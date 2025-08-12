@@ -4,6 +4,7 @@ import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 
 import styles from "./PinnedMap.module.scss";
 import colors from "@/assets/scss/colors.module.scss";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const comingSoonDot = "https://maps.google.com/mapfiles/ms/icons/red-dot.png";
 const currentDot = "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
@@ -46,7 +47,7 @@ const PinnedMap = () => {
             style={{ width: "100%", height: "100%" }}
             gestureHandling="greedy"
           >
-            {locations.map((location, index) => (
+            {safeMap(locations, (location, index) => (
               <AdvancedMarker
                 key={index}
                 position={{ lat: location.lat, lng: location.lng }}

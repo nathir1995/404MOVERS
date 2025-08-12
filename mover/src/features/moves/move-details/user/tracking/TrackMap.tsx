@@ -39,7 +39,7 @@ const TrackMap = ({ move }: IProps) => {
       // Use safe array utilities to prevent TypeError
       const exists = safeFind(prev, (i) => i.mover.id === mover.id) !== undefined;
       if (exists)
-        return prev.map((item) =>
+        return safeMap(prev, (item) =>
           item.mover.id === mover.id ? { mover, longitude, latitude } : item
         );
       else return [...prev, { mover, longitude, latitude }];
@@ -89,7 +89,7 @@ const TrackMap = ({ move }: IProps) => {
           zoomControl
           onLoad={handleMapLoad}
         >
-          {hasItems(moversTracker) && moversTracker.map(({ latitude, longitude, mover }) => (
+          {hasItems(moversTracker) && safeMap(moversTracker, ({ latitude, longitude, mover }) => (
             <AdvancedMarker
               key={mover.id}
               position={{ lat: latitude, lng: longitude }}

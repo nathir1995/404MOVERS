@@ -12,6 +12,7 @@ import bookOptions from "@/data/bookOptions";
 import Hero from "@/components/Hero";
 import { NextPageWithLayout } from "@/layout/types";
 import MainLayout from "@/layout/MainLayout";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const GetStartedPage: NextPageWithLayout = () => {
   return (
@@ -58,7 +59,7 @@ const GetStartedPage: NextPageWithLayout = () => {
             <div
               className={`${homeStyles.items_container} ${styles.items_container}`}
             >
-              {bookOptions.map((item) => (
+              {safeMap(bookOptions, (item) => (
                 <div
                   className={`${homeStyles.item} ${styles.item}`}
                   key={item.title}

@@ -16,6 +16,7 @@ import {
   VEHICLE_TYPES_AS_OPTIONS,
 } from "@/constants/vehicle";
 import SelectField from "@/components/SelectField";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 type IProps = {
   isLoading?: boolean;
@@ -31,7 +32,7 @@ const VehicleForm = ({ isLoading = false, onPrevClick }: IProps) => {
 
       <p style={{ marginBottom: "1rem", fontSize: ".9em" }}>
         You must have a{" "}
-        {VEHICLE_TYPES_AS_OPTIONS.map((v) => v.label).join(", ")} to become a
+        {safeMap(VEHICLE_TYPES_AS_OPTIONS, (v) => v.label).join(", ")} to become a
         Driver.
       </p>
 

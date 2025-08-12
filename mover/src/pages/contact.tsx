@@ -10,6 +10,7 @@ import LOGO from "@/assets/images/logo.png";
 import socialMedia from "@/data/social_media";
 import { NextPageWithLayout } from "@/layout/types";
 import MainLayout from "@/layout/MainLayout";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const ContactUsPage: NextPageWithLayout = () => {
   return (
@@ -21,7 +22,7 @@ const ContactUsPage: NextPageWithLayout = () => {
             <div>
               <Image className={styles.logo} src={LOGO} alt="" />
               <div className={styles.social_media_container}>
-                {socialMedia.map(({ link, Icon }) => (
+                {safeMap(socialMedia, ({ link, Icon }) => (
                   <a
                     href={link}
                     key={link}

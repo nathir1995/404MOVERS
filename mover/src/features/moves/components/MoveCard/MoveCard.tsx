@@ -50,7 +50,7 @@ export default function MoveCard({
       </div>
 
       <ul>
-        {items.map((it: any, i: number) => (
+        {safeMap(items, (it: any, i: number) => (
           <li key={it?.id ?? i}>{it?.name ?? "Item"}</li>
         ))}
       </ul>
