@@ -5,8 +5,8 @@ const nextConfig = {
   trailingSlash: true,
   swcMinify: true,
   
-  // ====== RAILWAY DEPLOYMENT OPTIMIZATION ======
-  output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
+  // ====== RAILWAY DEPLOYMENT ======
+  output: 'standalone',
   
   // ====== PERFORMANCE OPTIMIZATIONS ======
   images: { 
@@ -19,66 +19,16 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
   },
 
-  // ====== DEVELOPMENT FEATURES ======
-  productionBrowserSourceMaps: false, // Disabled for faster builds
-  
-  // ====== SECURITY HEADERS ======
-  async headers() {
-    return [
-      {
-        source: '/api/:path*',
-        headers: [
-          { key: 'Access-Control-Allow-Origin', value: '*' },
-          { key: 'Access-Control-Allow-Methods', value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT' },
-          { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization' },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'X-XSS-Protection', value: '1; mode=block' },
-        ],
-      },
-      {
-        source: '/(.*)',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'X-XSS-Protection', value: '1; mode=block' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-        ],
-      },
-    ];
-  },
-
-  // ====== API ROUTES CONFIGURATION ======
-  async rewrites() {
-    return [
-      {
-        source: '/backend/:path*',
-        destination: 'https://api.404movers.ca/:path*',
-      },
-    ];
-  },
-
-  // ====== REDIRECTS ======
-  async redirects() {
-    return [
-      {
-        source: '/old-upload',
-        destination: '/test-upload',
-        permanent: true,
-      },
-    ];
-  },
-
-  // ====== WEBPACK CONFIGURATION ======
-  webpack(config, { buildId, dev, isServer, defaultLoaders, webpack }) {
-    // ====== SVG SUPPORT ======
+  // ====== SIMPLIFIED WEBPACK FOR RAILWAY ======
+  webpack(config, { dev, isServer }) {
+    // SVG Support
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
       use: ["@svgr/webpack"],
     });
 
-    // ====== FILE UPLOAD OPTIMIZATION ======
+    // Server-side optimizations
     if (isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
@@ -88,45 +38,25 @@ const nextConfig = {
       };
     }
 
-    // ====== PRODUCTION OPTIMIZATIONS ======
-    if (!dev) {
-      config.plugins.push(
-        new webpack.DefinePlugin({
-          __DEV__: JSON.stringify(false),
-        })
-      );
-    }
-
     return config;
+  },
+
+  // ====== BUILD OPTIMIZATIONS ======
+  experimental: {
+    optimizePackageImports: ['react-icons'],
+  },
+
+  // ====== ERROR HANDLING ======
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 
   // ====== ENVIRONMENT VARIABLES ======
   env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
     UPLOAD_MAX_SIZE: process.env.UPLOAD_MAX_SIZE || '52428800',
-  },
-
-  // ====== EXPERIMENTAL FEATURES ======
-  experimental: {
-    serverComponentsExternalPackages: ['formidable'],
-    optimizePackageImports: ['react-icons'],
-  },
-
-  // ====== COMPILER OPTIONS ======
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn'],
-    } : false,
-  },
-
-  // ====== TYPESCRIPT CONFIGURATION ======
-  typescript: {
-    ignoreBuildErrors: true, // Allow deployment with TypeScript warnings
-  },
-
-  // ====== ESLint CONFIGURATION ======
-  eslint: {
-    ignoreDuringBuilds: true, // Allow deployment with ESLint warnings
   },
 };
 
