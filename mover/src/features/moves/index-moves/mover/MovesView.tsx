@@ -6,8 +6,6 @@ import MoveCard from "../../components/MoveCard";
 import styles from "../styles.module.scss";
 import Move from "@/models/Move/Move.model";
 import { safeMap, hasItems, safeLength } from "@/utility/arraySafety";
-import { safeMap, hasItems } from "@/utility/arraySafety";
-main
 
 const emptyContainerStyles: React.CSSProperties = {
   minHeight: "20rem",
