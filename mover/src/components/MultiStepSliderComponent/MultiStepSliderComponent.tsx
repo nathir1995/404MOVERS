@@ -15,39 +15,38 @@ const MultiStepSliderComponent = ({
   childClassName = "",
   containerStyles = {},
 }: IProps) => {
-  // const nodeRef = React.useRef();
-  const childrenArray = React.useMemo(
-    () => React.Children.toArray(children),
-    [children]
-  );
-  // const childrenLength = childrenArray.length;
+  // ✅ FIXED: Safe children array handling
+  const childrenArray = React.useMemo(() => {
+    const childArray = React.Children.toArray(children);
+    return Array.isArray(childArray) ? childArray : [];
+  }, [children]);
+
+  // ✅ FIXED: Bounds checking for activeStep
+  const safeActiveStep = React.useMemo(() => {
+    if (childrenArray.length === 0) return 0;
+    if (activeStep < 0) return 0;
+    if (activeStep >= childrenArray.length) return childrenArray.length - 1;
+    return activeStep;
+  }, [activeStep, childrenArray.length]);
+
+  // ✅ FIXED: Early return if no children
+  if (childrenArray.length === 0) {
+    return (
+      <div className={styles.outside_container} style={containerStyles}>
+        <div className={childClassName}>
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <p>No content available</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.outside_container} style={containerStyles}>
-      {/* <div style={{ width: `calc(${childrenLength} * 100%)`, display: "flex" }}>
-        {childrenArray.map((child, idx) => (
-          <div
-            className={`${styles.child} ${
-              idx === activeStep ? styles.active : ""
-            } ${childClassName}`}
-            key={idx}
-            style={{
-              width: `calc(100% / ${childrenLength})`,
-              transform: `translateX(calc(-100% * ${activeStep}))`,
-            }}
-          >
-            {child}
-          </div>
-        ))}
-      </div> */}
-      {/* <div className={`${styles.child} ${childClassName}`}>
-        {childrenArray[activeStep]}
-      </div> */}
-
       <SwitchTransition>
         <CSSTransition
-          key={activeStep}
-          // nodeRef={nodeRef}
+          key={safeActiveStep}
           addEndListener={(node, done) =>
             node.addEventListener("transitionend", done, false)
           }
@@ -58,7 +57,9 @@ const MultiStepSliderComponent = ({
             exitActive: styles.fade_exit_active,
           }}
         >
-          <div className={childClassName}>{childrenArray[activeStep]}</div>
+          <div className={childClassName}>
+            {childrenArray[safeActiveStep] || <div>Content not found</div>}
+          </div>
         </CSSTransition>
       </SwitchTransition>
     </div>
