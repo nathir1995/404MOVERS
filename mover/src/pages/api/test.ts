@@ -51,7 +51,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<ApiRes
           availableEndpoints: [
             'GET /api/test - This endpoint',
             'POST /api/test - Echo test',
-            'POST /api/email/upload - File upload & email processing',
+            'POST /api/upload - File upload & processing',  // ✅ CORRECTED: Updated endpoint reference
           ],
         },
       };
