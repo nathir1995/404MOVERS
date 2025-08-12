@@ -16,14 +16,17 @@ type IProps = {
 };
 
 const ListOfLinks = ({
-  items: navItems,
+  items: navItems = [], // ✅ FIXED: Default empty array
   setSidebarOpen,
 }: IProps & { items: NavItem[] }) => {
   const router = useRouter();
 
+  // ✅ FIXED: Safety check for navItems
+  const safeNavItems = Array.isArray(navItems) ? navItems : [];
+
   return (
     <>
-      {navItems.map((nav) => (
+      {safeNavItems.map((nav) => (
         <li
           key={nav.navLink}
           className={router.pathname === nav.navLink ? styles.active : ""}
@@ -46,22 +49,27 @@ const LinksElements = ({ setSidebarOpen }: IProps) => {
   const showNeedAuth: boolean = !loadingInitial && isAuthenticated;
   const showNotNeedAuth: boolean = !loadingInitial && !isAuthenticated;
 
+  // ✅ FIXED: Safety checks for navigation configs
+  const safeCommonNav = Array.isArray(commonNavigationConfig) ? commonNavigationConfig : [];
+  const safeNeedAuthNav = Array.isArray(needAuthNavigationConfig) ? needAuthNavigationConfig : [];
+  const safeNotNeedAuthNav = Array.isArray(notNeedAuthNavigationConfig) ? notNeedAuthNavigationConfig : [];
+
   return (
     <>
       <ListOfLinks
-        items={commonNavigationConfig}
+        items={safeCommonNav}
         setSidebarOpen={setSidebarOpen}
       />
 
       {showNeedAuth && (
         <ListOfLinks
-          items={needAuthNavigationConfig}
+          items={safeNeedAuthNav}
           setSidebarOpen={setSidebarOpen}
         />
       )}
       {showNotNeedAuth && (
         <ListOfLinks
-          items={notNeedAuthNavigationConfig}
+          items={safeNotNeedAuthNav}
           setSidebarOpen={setSidebarOpen}
         />
       )}
