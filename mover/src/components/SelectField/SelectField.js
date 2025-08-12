@@ -2,6 +2,7 @@ import React from "react";
 import Select from "react-select";
 import PropTypes from "prop-types";
 import { useFormikContext, useField } from "formik";
+import { safeFind } from "@/utility/arraySafety";
 
 const SelectField = ({ label, name, options, ...props }) => {
   const formik = useFormikContext();
@@ -9,9 +10,9 @@ const SelectField = ({ label, name, options, ...props }) => {
   
   // Always use an array for options
   const safeOptions = Array.isArray(options) ? options : [];
-  // Pick the selected option object or null
+  // Pick the selected option object or null using safe array utilities
   const selected =
-    safeOptions.find((opt) => opt.value === formik.values[name]) ?? null;
+    safeFind(safeOptions, (opt) => opt.value === formik.values[name]) ?? null;
 
   const hasError = meta.touched && meta.error;
 

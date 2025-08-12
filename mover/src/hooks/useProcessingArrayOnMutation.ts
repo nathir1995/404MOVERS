@@ -1,4 +1,5 @@
 import React from "react";
+import { safeFind } from "@/utility/arraySafety";
 
 const useProcessingArrayOnMutation = <T>() => {
   const [processingIDs, setProccesingIDs] = React.useState<T[]>([]);
@@ -14,7 +15,7 @@ const useProcessingArrayOnMutation = <T>() => {
   );
 
   const isProcessing = React.useCallback(
-    (id: T) => processingIDs.find((_id) => _id === id) !== undefined,
+    (id: T) => safeFind(processingIDs, (_id) => _id === id) !== undefined,
     [processingIDs]
   );
 

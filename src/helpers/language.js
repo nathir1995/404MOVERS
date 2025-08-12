@@ -1,4 +1,11 @@
 /**
+ * Safe array utilities for language mapping
+ */
+const safeFind = (array, predicate) => {
+  return Array.isArray(array) ? array.find(predicate) : undefined;
+};
+
+/**
  *
  */
 export const mapTranslatedProperties = (
@@ -9,7 +16,9 @@ export const mapTranslatedProperties = (
   if (!Array.isArray(arrayOfDetails) || !properties || !language_id) return "";
   if (arrayOfDetails.length === 0) return "";
 
-  const target = arrayOfDetails.find(
+  // Use safe array utilities to prevent TypeError
+  const target = safeFind(
+    arrayOfDetails,
     (item) => item.language_id === language_id
   );
   if (!target) {

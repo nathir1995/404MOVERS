@@ -1,17 +1,19 @@
 import useAuth from "@/features/auth/utils/useAuth";
 import React from "react";
 import { useCreateChat, useGetAllChats } from "./chat.api";
+import { safeFind, safeMap } from "@/utility/arraySafety";
 
 const transformChat = (chat: any, userId: any) => {
   const users = Array.isArray(chat.users) ? chat.users : [];
-  const counter_user = users.find((user: any) => user.id !== userId);
-  const current_user = users.find((user: any) => user.id === userId);
+  // Use safe array utilities to prevent TypeError
+  const counter_user = safeFind(users, (user: any) => user.id !== userId);
+  const current_user = safeFind(users, (user: any) => user.id === userId);
 
   return {
     id: chat.id,
     counter_user,
     messages: Array.isArray(chat.messages)
-      ? chat.messages.map((message: any) => ({
+      ? safeMap(chat.messages, (message: any) => ({
           ...message,
           sender: message.user_id === current_user?.id ? current_user : counter_user,
         }))
@@ -26,7 +28,7 @@ const useContactUser = () => {
 
   const chats = React.useMemo(() => {
     if (!Array.isArray(data)) return [];
-    return data.map((chat: any) => transformChat(chat, userId));
+    return safeMap(data, (chat: any) => transformChat(chat, userId));
   }, [data, userId]);
 
   const { mutate: createChat, isLoading } = useCreateChat({
@@ -40,7 +42,9 @@ const useContactUser = () => {
 
   const handleContact = (user_id: number) => {
     if (!isSuccess) return;
-    const chatExists = chats.find(
+    // Use safe array utilities to prevent TypeError
+    const chatExists = safeFind(
+      chats,
       (chat: any) => chat?.counter_user?.id === user_id
     );
     if (chatExists) {
