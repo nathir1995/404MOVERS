@@ -146,15 +146,17 @@ const ItemsForm = ({
   >(null);
   const ref = React.useRef<HTMLDivElement>(null);
   const items: MoveItem[] = React.useMemo(() => {
-    if (!selectedCategoryId) return [];
+    if (!selectedCategoryId || !item_categories) return [];
     return (
       item_categories.find((cat) => cat.id === selectedCategoryId)?.items ?? []
     );
-  }, [selectedCategoryId]);
+  }, [selectedCategoryId, item_categories]);
 
   React.useLayoutEffect(() => {
-    setSelectedCategoryId(item_categories.at(0)?.id ?? null);
-  }, []);
+    if (item_categories && item_categories.length > 0) {
+      setSelectedCategoryId(item_categories.at(0)?.id ?? null);
+    }
+  }, [item_categories]);
 
   const handleLeftScroll = React.useCallback(() => {
     if (ref.current?.scrollLeft !== undefined) {
@@ -182,7 +184,7 @@ const ItemsForm = ({
             <AiOutlineCaretLeft />
           </Button>
           <div className={styles.swipeable_categoris} ref={ref}>
-            {item_categories.map((category) => (
+            {(item_categories || []).map((category) => (
               <CategoryButton
                 key={category.id}
                 category={category}
