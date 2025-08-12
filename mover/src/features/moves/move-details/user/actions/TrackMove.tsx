@@ -11,7 +11,7 @@ type IProps = {
 const TrackMove = ({ move }: IProps) => {
   if (
     ![MOVE_STATUS_ENUM.ONGOING, MOVE_STATUS_ENUM.STARTED].includes(
-      move.move_status.key
+      move?.move_status?.key
     )
   ) {
     return null;
@@ -26,7 +26,7 @@ const TrackMove = ({ move }: IProps) => {
         justifyContent: "flex-end",
       }}
     >
-      <Link href={sm.portal.user.moves.track.navLink(move.id)}>
+      <Link href={sm.portal.user.moves.track.navLink(move?.id || 0)}>
         <Button
           type="button"
           style={{

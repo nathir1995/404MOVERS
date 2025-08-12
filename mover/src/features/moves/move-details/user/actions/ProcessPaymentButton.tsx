@@ -22,7 +22,7 @@ const ProcessPaymentButton = ({ move }: IProps) => {
         justifyContent: "flex-end",
       }}
     >
-      <Link href={sm.portal.user.moves.pay.navLink(move.id)}>
+      <Link href={sm.portal.user.moves.pay.navLink(move?.id || 0)}>
         <Button
           type="button"
           style={{

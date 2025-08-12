@@ -110,7 +110,9 @@ const FinishMoveButton = ({ move }: IProps) => {
             type="button"
             onClick={() => {
               finishMovePopup.handleClose();
-              finishMove({ move_id: move.id });
+              if (move?.id) {
+                finishMove({ move_id: move.id });
+              }
             }}
           >
             Confirm

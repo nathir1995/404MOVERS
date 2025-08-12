@@ -22,11 +22,11 @@ const AddressCard = ({ move, type }: IProps) => {
 
   const { point_name, apartment_number } = React.useMemo(
     () => ({
-      point_name: move[`${type}_point_name`],
-      // building_number: move[`${type}_building_number`],
-      apartment_number: move[`${type}_apartment_number`],
+      point_name: move?.[`${type}_point_name`] || "",
+      // building_number: move?.[`${type}_building_number`],
+      apartment_number: move?.[`${type}_apartment_number`] || null,
     }),
-    [move]
+    [move, type]
   );
 
   return (

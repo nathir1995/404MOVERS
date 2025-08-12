@@ -24,17 +24,17 @@ const MoverMoveDetails = ({ moveId }: IProps) => {
   const move = React.useMemo(() => data?.data["move-details"], [data]);
   const { role, user } = useAuth();
 
-  if (isLoading || isError || move === undefined) {
+  if (isLoading || isError || move === undefined || move === null) {
     return (
       <QueryStatus isError={isError} isLoading={isLoading} refetch={refetch} />
     );
   }
 
-  const moverShouldStreamLocation = checkIfMoverShouldStreamLocation(
+  const moverShouldStreamLocation = move && role && user ? checkIfMoverShouldStreamLocation(
     move,
-    role!,
-    user!
-  );
+    role,
+    user
+  ) : false;
   return (
     <>
       {moverShouldStreamLocation && <LocationTracker move_id={move.id} />}

@@ -20,17 +20,19 @@ const MoveTrack = ({ moveId }: IProps) => {
   const { data, isLoading, isError, refetch } = useGetMoveDetails(moveId);
   const move = React.useMemo(() => data?.data["move-details"], [data]);
 
-  if (isLoading || isError || move === undefined) {
+  if (isLoading || isError || move === undefined || move === null) {
     return (
       <QueryStatus isError={isError} isLoading={isLoading} refetch={refetch} />
     );
   }
   if (
     ![MOVE_STATUS_ENUM.ONGOING, MOVE_STATUS_ENUM.STARTED].includes(
-      move.move_status.key
+      move?.move_status?.key
     )
   ) {
-    router.replace(sm.portal.user.moves.details.navLink(move.id));
+    if (move?.id) {
+      router.replace(sm.portal.user.moves.details.navLink(move.id));
+    }
     return <QueryStatus isError={false} isLoading={true} />;
   }
   return (
@@ -48,7 +50,7 @@ const MoveTrack = ({ moveId }: IProps) => {
           move={move}
           contentStyles={{ gridTemplateColumns: "auto" }}
           footer={
-            <Link href={sm.portal.user.moves.details.navLink(move.id)}>
+            <Link href={sm.portal.user.moves.details.navLink(move?.id || 0)}>
               View Details
             </Link>
           }
