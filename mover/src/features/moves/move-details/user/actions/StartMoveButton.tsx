@@ -27,7 +27,7 @@ const StartMoveButton = ({ move }: IProps) => {
     },
   });
 
-  if (move.move_status.key !== MOVE_STATUS_ENUM.ONGOING) {
+  if (move?.move_status?.key !== MOVE_STATUS_ENUM.ONGOING) {
     return null;
   }
   return (
@@ -85,7 +85,9 @@ const StartMoveButton = ({ move }: IProps) => {
             type="button"
             onClick={() => {
               startMovePopup.handleClose();
-              startMove({ move_id: move.id });
+              if (move?.id) {
+                startMove({ move_id: move.id });
+              }
             }}
           >
             Confirm

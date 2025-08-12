@@ -6,6 +6,7 @@ import moveCardStyles from "@/features/moves/components/MoveCard/MoveCard.module
 
 import styles from "../MoveDetails.module.scss";
 import SelectableItem from "@/components/SelectableItem";
+import { safeMap, hasItems, safeLength } from "@/utility/arraySafety";
 
 type IProps = {
   move: Move;
@@ -24,11 +25,11 @@ const ItemsCard = ({ move }: IProps) => {
         >
           ITEMS
         </h5>
-        <p>Total: {move.items.length}</p>
+        <p>Total: {safeLength(move.items)}</p>
       </div>
 
       <div className={styles.items_card_content}>
-        {move.items.map((item) => (
+        {safeMap(move.items, (item) => (
           <SelectableItem
             // isSelected
             key={item.id}

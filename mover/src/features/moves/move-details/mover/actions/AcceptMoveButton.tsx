@@ -108,7 +108,9 @@ const AcceptMoveButton = ({ move }: IProps) => {
             type="button"
             onClick={() => {
               acceptPopup.handleClose();
-              acceptMove({ move_id: move.id });
+              if (move?.id) {
+                acceptMove({ move_id: move.id });
+              }
             }}
           >
             Confirm

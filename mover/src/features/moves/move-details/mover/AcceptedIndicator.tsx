@@ -15,7 +15,7 @@ const AcceptedIndicator = ({ move }: IProps) => {
     [move, user]
   );
 
-  if (isAccepted && move.move_status.key === MOVE_STATUS.PENDING) {
+  if (isAccepted && move?.move_status?.key === MOVE_STATUS.PENDING) {
     return (
       <p
         style={{

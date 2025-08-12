@@ -10,13 +10,13 @@ type Props = {
 export default function MovesView({ moves, currentUserId }: Props) {
   const list = a(moves);
 
-  if (list.length === 0) {
+  if (!hasItems(list)) {
     return <div>No upcoming moves</div>;
   }
 
   return (
     <div className="grid gap-4">
-      {list.map((move) => {
+      {safeMap(list, (move) => {
         const assigned = findSafe(move?.movers, (m: any) => m?.id === currentUserId);
         return (
           <MoveCard

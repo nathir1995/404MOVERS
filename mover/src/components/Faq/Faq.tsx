@@ -9,11 +9,12 @@ import {
 
 import "react-accessible-accordion/dist/fancy-example.css";
 import faqItems from "@/data/faq";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const Faq = () => {
   return (
     <Accordion allowMultipleExpanded allowZeroExpanded>
-      {faqItems.map((item, idx) => (
+      {safeMap(faqItems, (item, idx) => (
         <AccordionItem key={idx}>
           <AccordionItemHeading>
             <AccordionItemButton>

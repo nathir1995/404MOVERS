@@ -13,6 +13,7 @@ import { ValuesType } from "../forms/formUtils";
 import TextField from "@/components/TextField";
 import AddressIndicator from "./AddressIndicator";
 import { MdLocationPin } from "react-icons/md";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const getErrorMessage = (status: string): string => {
   if (status === "ZERO_RESULTS") return "No Results";
@@ -99,9 +100,9 @@ const PlacesAutocomplete = ({ type, onSelect, onFocus }: IProps) => {
                 </ul>
               )}
 
-              {status === "OK" && (
+              {status === "OK" && hasItems(data) && (
                 <ul className={styles.suggestions_container}>
-                  {data.map((option) => (
+                  {safeMap(data, (option) => (
                     <li
                       key={option.place_id}
                       onClick={() => handleSelectOption(option)}

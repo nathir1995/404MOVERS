@@ -39,20 +39,20 @@ const customStyles = {
 };
 
 const AddressMapPopup = ({ popup, move, type }: IProps) => {
-  const { start_lat, start_lang, end_lat, end_lang } = move;
+  const { start_lat, start_lang, end_lat, end_lang } = move || {};
 
   const start = React.useMemo(
     () => ({
-      lat: parseFloat(start_lat),
-      lng: parseFloat(start_lang),
+      lat: parseFloat(start_lat || "0"),
+      lng: parseFloat(start_lang || "0"),
     }),
     [start_lat, start_lang]
   );
   
   const end = React.useMemo(
     () => ({
-      lat: parseFloat(end_lat),
-      lng: parseFloat(end_lang),
+      lat: parseFloat(end_lat || "0"),
+      lng: parseFloat(end_lang || "0"),
     }),
     [end_lat, end_lang]
   );

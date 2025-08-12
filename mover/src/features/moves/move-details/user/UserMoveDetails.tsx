@@ -22,14 +22,14 @@ const UserMoveDetails = ({ moveId }: IProps) => {
   const { data, isLoading, isError, refetch } = useGetMoveDetails(moveId);
   const move = React.useMemo(() => data?.data["move-details"], [data]);
 
-  if (isLoading || isError || move === undefined) {
+  if (isLoading || isError || move === undefined || move === null) {
     return (
       <QueryStatus isError={isError} isLoading={isLoading} refetch={refetch} />
     );
   }
 
   const canShowMoversManagement = React.useMemo(() => {
-    if (!move) return false;
+    if (!move || move === null) return false;
     
     const hasMovers = move.movers && Array.isArray(move.movers) && move.movers.length > 0;
     const noRemainingDrivers = move.remaining_number_of_drivers === 0;

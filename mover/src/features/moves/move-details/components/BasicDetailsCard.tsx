@@ -42,7 +42,7 @@ const BasicDetailsCard = ({ move, contentStyles = {}, footer }: IProps) => {
     [move]
   );
 
-  if (!move) {
+  if (!move || move === null) {
     return null;
   }
 

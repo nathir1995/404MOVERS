@@ -15,6 +15,7 @@ import advantageItems from "@/data/advantages";
 import DocumentTitle from "@/components/meta/DocumentTitle";
 import { NextPageWithLayout } from "@/layout/types";
 import MainLayout from "@/layout/MainLayout";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const MoreInfoIndividualsPage: NextPageWithLayout = () => {
   return (
@@ -63,7 +64,7 @@ const MoreInfoIndividualsPage: NextPageWithLayout = () => {
               </span>
             </h3>
             <div className={styles.items_container}>
-              {advantageItems.map((item) => (
+              {safeMap(advantageItems, (item) => (
                 <div className={styles.item} key={item.title}>
                   <div>
                     <item.Icon size={48} style={{ color: colors.primary }} />

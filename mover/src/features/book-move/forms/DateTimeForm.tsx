@@ -12,6 +12,7 @@ import React from "react";
 import Calendar from "react-calendar";
 import { twoDigitsNumber } from "@/utility/number";
 import Button from "@/components/Button";
+import { safeMap } from "@/utility/arraySafety";
 
 // const today = new Date().toISOString().slice(0, 16);
 const today = new Date();
@@ -131,7 +132,7 @@ const DateTimeForm = ({ controls }: IProps) => {
             <div
               className={`${styles.time_options_container} styled-scrollbar`}
             >
-              {timeOptions.map((timeOption) => (
+              {safeMap(timeOptions, (timeOption) => (
                 <TimeOptionButton
                   key={timeOption.value}
                   option={timeOption}

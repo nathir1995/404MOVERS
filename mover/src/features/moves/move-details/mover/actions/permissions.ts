@@ -5,7 +5,7 @@ import Move from "@/models/Move/Move.model";
 import { findSafe } from "@/utils/safeArray";
 
 export const isUserAlreadyAcceptedMove = (user: User, move: Move): boolean => {
-  if (!user?.id || !move) {
+  if (!user?.id || !move || move === null) {
     return false;
   }
   
@@ -29,7 +29,7 @@ export const checkIfMoverCanAccept = (
   role: ROLE,
   user: User
 ): boolean => {
-  if (!move || !user) return false;
+  if (!move || move === null || !user) return false;
   
   if (move.move_status.key !== MOVE_STATUS.PENDING) {
     return false;
@@ -59,7 +59,7 @@ export const checkIfMoverCanStart = (
   role: ROLE,
   user: User
 ): boolean => {
-  if (!move || !user?.id) {
+  if (!move || move === null || !user?.id) {
     return false;
   }
 
@@ -80,7 +80,7 @@ export const checkIfMoverCanFinish = (
   role: ROLE,
   user: User
 ): boolean => {
-  if (!move || !user?.id) {
+  if (!move || move === null || !user?.id) {
     return false;
   }
 
@@ -101,7 +101,7 @@ export const checkIfMoverShouldStreamLocation = (
   role: ROLE,
   user: User
 ): boolean => {
-  if (!move || !user?.id) {
+  if (!move || move === null || !user?.id) {
     return false;
   }
 

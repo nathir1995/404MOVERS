@@ -49,7 +49,7 @@ const FinishMoveButton = ({ move }: IProps) => {
     },
   });
 
-  if (move.move_status.key !== MOVE_STATUS_ENUM.STARTED) {
+  if (move?.move_status?.key !== MOVE_STATUS_ENUM.STARTED) {
     return null;
   }
   return (
@@ -107,7 +107,9 @@ const FinishMoveButton = ({ move }: IProps) => {
             type="button"
             onClick={() => {
               finishMoveButton.handleClose();
-              finishMove({ move_id: move.id });
+              if (move?.id) {
+                finishMove({ move_id: move.id });
+              }
             }}
           >
             Confirm

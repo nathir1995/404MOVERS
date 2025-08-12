@@ -18,6 +18,7 @@ import whyToJoinItems from "@/data/whyToJoin";
 import DocumentTitle from "@/components/meta/DocumentTitle";
 import { NextPageWithLayout } from "@/layout/types";
 import MainLayout from "@/layout/MainLayout";
+import { safeMap, hasItems } from "@/utility/arraySafety";
 
 const MoreInfoMoversPage: NextPageWithLayout = () => {
   return (
@@ -52,7 +53,7 @@ const MoreInfoMoversPage: NextPageWithLayout = () => {
 
           <section style={{ paddingBlock: "2rem" }}>
             <div className={`${styles.items_container} ${styles.helpers}`}>
-              {[
+              {safeMap([
                 {
                   profit: "$2.5 K",
                   Icon: FaTruck,
@@ -65,7 +66,7 @@ const MoreInfoMoversPage: NextPageWithLayout = () => {
                   btnText: "Apply As a Labor",
                   link: "/register/labor",
                 },
-              ].map((item, idx) => (
+              ], (item, idx) => (
                 <div className={styles.item} key={idx}>
                   <div>
                     <item.Icon size={62} style={{ color: colors.primary }} />
@@ -111,7 +112,7 @@ const MoreInfoMoversPage: NextPageWithLayout = () => {
               <span style={{ color: colors.primary }}>404Movers</span>
             </h3>
             <div className={`${styles.items_container} ${styles.why_to_join}`}>
-              {whyToJoinItems.map((item) => (
+              {safeMap(whyToJoinItems, (item) => (
                 <div className={styles.item} key={item.title}>
                   <div>
                     <item.Icon size={48} style={{ color: colors.primary }} />

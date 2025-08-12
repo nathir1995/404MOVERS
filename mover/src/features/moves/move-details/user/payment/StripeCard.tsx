@@ -37,13 +37,17 @@ const Content = ({ move }: IProps) => {
   } = usePayForMove({
     onSuccess() {
       toast.success("Payment Succeeded");
-      router.replace(sm.portal.user.moves.details.navLink(move.id));
+      if (move?.id) {
+        router.replace(sm.portal.user.moves.details.navLink(move.id));
+      }
     },
   });
 
-  const amount = move.expected_price;
+  const amount = move?.expected_price || 0;
   const handlePay = () => {
-    pay({ move_id: move.id, amount });
+    if (move?.id) {
+      pay({ move_id: move.id, amount });
+    }
   };
 
   if (!stripe) {
@@ -57,7 +61,7 @@ const Content = ({ move }: IProps) => {
       <ConfirmPaymentPopup
         popup={confirmPopup}
         onConfirm={handlePay}
-        amount={move.expected_price}
+        amount={move?.expected_price || 0}
       />
       <div className={moveCardStyles.header} style={{ marginBottom: "1rem" }}>
         <h5 style={{ textTransform: "uppercase" }}>

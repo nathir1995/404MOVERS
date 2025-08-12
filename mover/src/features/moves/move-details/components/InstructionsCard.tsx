@@ -9,7 +9,7 @@ type IProps = {
 };
 
 const InstructionsCard = ({ move }: IProps) => {
-  if (!move.instruction) {
+  if (!move?.instruction) {
     return null;
   }
   return (

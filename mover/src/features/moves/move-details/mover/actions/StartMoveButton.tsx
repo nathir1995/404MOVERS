@@ -110,7 +110,9 @@ const StartMoveButton = ({ move }: IProps) => {
             type="button"
             onClick={() => {
               startMovePopup.handleClose();
-              startMove({ move_id: move.id });
+              if (move?.id) {
+                startMove({ move_id: move.id });
+              }
             }}
           >
             Confirm
