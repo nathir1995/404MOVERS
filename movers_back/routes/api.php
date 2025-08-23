@@ -33,6 +33,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 /* ... */
 
+// Payments
+Route::middleware(['auth:sanctum', 'app_localization'])->group(function () {
+    Route::post('/pay', [MoveController::class, 'pay']);
+    Route::post('/process-payment', [MoveController::class, 'processPayment']);
+});
+
 Route::prefix('email')->group(function () {
     Route::group(['middleware' => 'app_localization'], function () {
         Route::post('/send-verification-code', [UserauthController::class, 'sendVerificationCode'])

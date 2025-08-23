@@ -97,12 +97,10 @@ class MoveController extends Controller
             $labor_rate = $move_package->labor_rate;
             $gst_percentage = Settings::where('option_type', 'g_s_t_percentage(%)')->first()->option_value ?? 0;
             $distance_time_data = get_distance_time($request->end_lat, $request->end_lang, $request->start_lat, $request->start_lang);
-            // $distance = $distance_time_data['rows'][0]['elements'][0]['distance']['value'];
-            $distance = 1000;
-            $distance = $distance / 1000;
-            // $time = $distance_time_data['rows'][0]['elements'][0]['duration']['value'];
-            $time = 60;
-            $time = $time / 60;
+            $distance = (int) data_get($distance_time_data, 'rows.0.elements.0.distance.value', 0);
+            $distance = $distance / 1000; // meters to km
+            $time = (int) data_get($distance_time_data, 'rows.0.elements.0.duration.value', 0);
+            $time = $time / 60; // seconds to minutes
             $expected_price = $base_fee + ($km_rate * $distance) + ($labor_rate * $time);
             if ($gst_percentage > 0) {
                 $expected_price = $expected_price + ($expected_price * ($gst_percentage / 100));
