@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use Laravel\Cashier\Http\Controllers\WebhookController as CashierWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,9 @@ Route::get('/', function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
+
+// Stripe webhook
+Route::post('/stripe/webhook', [CashierWebhookController::class, 'handleWebhook']);
 
 // Add your other routes below this line
 // Example:

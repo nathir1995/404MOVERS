@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Config;
 
 function notfound_error()
 {
@@ -218,9 +219,8 @@ function send_sms($otp, $mobile_number)
 function get_distance_start($lat, $lang, $start_lat, $start_lang)
 {
     try {
-        //mover google map key: AIzaSyCr-jsRzxypuW0o1qyJfV5UUcRb51x8PV8
-        // wayyak google map key: AIzaSyAjRdt55TubrKTBDVUWXd0BcRJBMU8Pup8
-        $res = Http::get("https://maps.googleapis.com/maps/api/distancematrix/json?destinations={$lat},{$lang}&origins={$start_lat},{$start_lang}&key=AIzaSyBhIn6vgXVVL5t6Hl-1j2qejO6w7JZnBWw");
+        $apiKey = Config::get('services.google.maps_key');
+        $res = Http::get("https://maps.googleapis.com/maps/api/distancematrix/json?destinations={$lat},{$lang}&origins={$start_lat},{$start_lang}&key={$apiKey}");
         $data = $res->json();
         $distance = $data['rows'][0]['elements'][0]['distance']['value'];
         $distance_get = (float)($distance / 1000);
@@ -233,7 +233,8 @@ function get_distance_start($lat, $lang, $start_lat, $start_lang)
 function get_distance_time($lat, $lang, $start_lat, $start_lang)
 {
     try {
-        $res = Http::get("https://maps.googleapis.com/maps/api/distancematrix/json?destinations={$lat},{$lang}&origins={$start_lat},{$start_lang}&key=AIzaSyBhIn6vgXVVL5t6Hl-1j2qejO6w7JZnBWw");
+        $apiKey = Config::get('services.google.maps_key');
+        $res = Http::get("https://maps.googleapis.com/maps/api/distancematrix/json?destinations={$lat},{$lang}&origins={$start_lat},{$start_lang}&key={$apiKey}");
         $data = $res->json();
         return  $data;
     } catch (\Throwable $th) {
@@ -254,7 +255,8 @@ function distanceBetweenTowPoints($lat1, $lon1, $lat2, $lon2)
 function get_directions($end_lat, $end_lang, $start_lat, $start_lang)
 {
     try {
-        $res = Http::get("https://maps.googleapis.com/maps/api/directions/json?destination={$end_lat},{$end_lang}&origin={$start_lat},{$start_lang}&key=AIzaSyBhIn6vgXVVL5t6Hl-1j2qejO6w7JZnBWw");
+        $apiKey = Config::get('services.google.maps_key');
+        $res = Http::get("https://maps.googleapis.com/maps/api/directions/json?destination={$end_lat},{$end_lang}&origin={$start_lat},{$start_lang}&key={$apiKey}");
         $data = $res->json();
         return $data;
     } catch (\Throwable $th) {
